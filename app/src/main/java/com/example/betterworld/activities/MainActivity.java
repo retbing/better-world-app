@@ -1,8 +1,10 @@
-package com.example.betterworld;
+package com.example.betterworld.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.betterworld.R;
 
 public class MainActivity extends AppCompatActivity {
 
