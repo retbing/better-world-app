@@ -54,6 +54,7 @@ android {
         implementation "com.google.firebase:firebase-firestore:$firebase_firestore"
         implementation "com.google.android.gms:play-services-auth:$play_services_auth"
 
+
         implementation "com.google.dagger:hilt-android:$hilt_version"
         kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
@@ -65,4 +66,9 @@ android {
         implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
         implementation "androidx.paging:paging-runtime:$paging"
     }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 }

@@ -1,6 +1,9 @@
 package com.example.betterworld.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+
     final String uuid;
     final String username;
     final String firstname;
