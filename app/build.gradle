@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -50,11 +53,12 @@ android {
         implementation "com.google.firebase:firebase-auth:$firebase_auth"
         implementation "com.google.firebase:firebase-firestore:$firebase_firestore"
         implementation "com.google.android.gms:play-services-auth:$play_services_auth"
-        implementation "com.google.dagger:dagger:$dagger"
-        annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-        implementation "com.google.dagger:dagger-android:$dagger"
-        implementation "com.google.dagger:dagger-android-support:$dagger"
-        annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+
+        implementation "com.google.dagger:hilt-android:$hilt_version"
+        kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
+
         implementation "androidx.navigation:navigation-fragment:$navigation"
         implementation "androidx.navigation:navigation-ui:$navigation"
         implementation "com.github.bumptech.glide:glide:$glide"
