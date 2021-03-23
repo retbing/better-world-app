@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    final String uuid;
+    final String userId;
     final String username;
     final String firstname;
     final String lastname;
@@ -15,7 +15,7 @@ public class User implements Serializable {
     final String nameOfInstution;
 
     public User(String uuid, String username, String firstname, String lastname, String phoneNumber, String imageUrl, String address, String socialMediaAccount, String nameOfInstution) {
-        this.uuid = uuid;
+        this.userId = uuid;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -27,7 +27,7 @@ public class User implements Serializable {
     }
 
     public String getUuid() {
-        return uuid;
+        return userId;
     }
 
     public String getUsername() {
