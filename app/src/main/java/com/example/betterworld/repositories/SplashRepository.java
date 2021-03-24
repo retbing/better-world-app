@@ -21,10 +21,11 @@ public class SplashRepository {
     private CollectionReference _usersRef;
 
     @Inject
-    public SplashRepository(FirebaseAuth _firebaseAuth, @Named(USERS_REF) CollectionReference _usersRef) {
-        this._firebaseAuth = _firebaseAuth;
-        this._usersRef = _usersRef;
+    public SplashRepository(FirebaseAuth firebaseAuth, @Named(USERS_REF) CollectionReference usersRef) {
+        this._firebaseAuth = firebaseAuth;
+        this._usersRef = usersRef;
     }
+
     public boolean checkIfUserIsAuthenticatedInFirebase() {
         return _firebaseAuth.getCurrentUser() != null;
     }
@@ -35,19 +36,22 @@ public class SplashRepository {
     }
 
     public MutableLiveData<DataOrException<User, Exception>> getUserDataFromFirestore(String uid) {
+
         MutableLiveData<DataOrException<User, Exception>> userMutableLiveData = new MutableLiveData<>();
-        _usersRef.document(uid).get().addOnCompleteListener(userTask -> {
-            DataOrException<User, Exception> dataOrException = new DataOrException<>();
-            if (userTask.isSuccessful()) {
-                DocumentSnapshot userDoc = userTask.getResult();
-                if (userDoc.exists()) {
-                    dataOrException.data = userDoc.toObject(User.class);
-                }
-            } else {
-                dataOrException.exception = userTask.getException();
-            }
-            userMutableLiveData.setValue(dataOrException);
-        });
+
+        _usersRef.document(uid).get().addOnCompleteListener(
+                userTask -> {
+                    DataOrException<User, Exception> dataOrException = new DataOrException<>();
+                    if (userTask.isSuccessful()) {
+                        DocumentSnapshot userDoc = userTask.getResult();
+                        if (userDoc.exists()) {
+                            dataOrException.data = userDoc.toObject(User.class);
+                        }
+                    } else {
+                        dataOrException.exception = userTask.getException();
+                    }
+                    userMutableLiveData.setValue(dataOrException);
+                });
         return userMutableLiveData;
     }
 }
