@@ -4,4 +4,10 @@
     <string name="easiest_way_to">Easiest way to </string>
     <string name="help_others"> help others</string>
     <string name="powered_by_retbing">Powered by Retbing</string>
+    <string name="hello">Hello!</string>
+    <string name="charities">Charities</string>
+    <string name="homePageCardTitle">Change the world with your little help</string>
+    <string name="target">Target:</string>
+
+    <string name="btnDonate">Donate</string>
 </resources>
