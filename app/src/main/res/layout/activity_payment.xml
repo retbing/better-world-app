@@ -33,8 +33,7 @@
                 android:layout_weight="1"
                 android:onClick="getNotification"
                 android:src="@drawable/ic_payment_back"
-                app:tint="@color/black"
-                />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tv_hello"
@@ -61,8 +60,7 @@
                     android:id="@+id/charity_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_payment_avatar"
-                    />
+                    android:src="@drawable/ic_payment_avatar" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,18 +93,17 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="@dimen/box_size"
-            android:background="@drawable/button_bg_donate"
+            android:background="@drawable/button_bg_blue"
+            android:gravity="center"
             android:text="Donate as anonymous"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            app:textAlignment="center" />
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -118,37 +115,33 @@
                 android:id="@+id/radioGroup1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="15dp"
-                >
+                android:paddingVertical="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radio01"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
-                        android:padding="5dp"
                         android:background="@color/bw_blue"
-                        >
+                        android:padding="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/gordita_medium"
                             android:text="Credit Card"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                            android:fontFamily="@font/gordita_medium"
 
                             />
 
@@ -161,12 +154,12 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radio02"
@@ -178,17 +171,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
-                        android:padding="5dp"
                         android:background="@color/bw_blue"
-                        >
+                        android:padding="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/gordita_medium"
                             android:text="Bank Transfer"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                            android:fontFamily="@font/gordita_medium"
 
                             />
 
@@ -201,35 +193,32 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radio03"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                         />
+                        android:layout_height="wrap_content" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
-                        android:padding="5dp"
                         android:background="@color/bw_blue"
-                        >
+                        android:padding="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:text="Paypal"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:fontFamily="@font/gordita_medium"
-                            />
+                            android:text="Paypal"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -242,51 +231,49 @@
                 </LinearLayout>
 
             </RadioGroup>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:padding="5dp"
-                >
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Total"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:fontFamily="@font/gordita_medium"
-                    />
+                    android:text="Total"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
+                    android:fontFamily="@font/gordita_medium"
                     android:text="₺710.00"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:fontFamily="@font/gordita_medium"
-                    />
+                    android:textColor="@color/black" />
             </RelativeLayout>
 
 
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
-            android:padding="5dp"
             android:background="@color/bw_blue"
-            >
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Paypal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:fontFamily="@font/gordita_medium"
-                />
+                android:text="Paypal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -297,7 +284,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -314,10 +300,10 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/button_bg_donate"
-            android:text="Donate"
             android:layout_marginHorizontal="15px"
-            android:textAlignment="center"
+            android:background="@drawable/button_bg_blue"
+            android:gravity="center"
+            android:text="Donate"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>

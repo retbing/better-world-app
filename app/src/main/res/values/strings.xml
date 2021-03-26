@@ -10,4 +10,6 @@
     <string name="target">Target:</string>
 
     <string name="btnDonate">Donate</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

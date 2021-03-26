@@ -1,13 +1,19 @@
 package com.example.betterworld.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.betterworld.R;
 import com.example.betterworld.models.User;
+import com.example.betterworld.utils.Delayer;
 import com.example.betterworld.viewmodels.SplashViewModel;
 
+
+import java.util.concurrent.Delayed;
 
 import javax.inject.Inject;
 
@@ -22,11 +28,20 @@ public class SplashActivity extends AppCompatActivity {
     @Inject
     SplashViewModel splashViewModel;
 
+    private static final String TAG = "SplashActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        checkIfUserIsAuthenticated();
+
+        Delayer.delay(1000, new Delayer.DelayCallback() {
+            @Override
+            public void callback() {
+                checkIfUserIsAuthenticated();
+            }
+        });
+
 
     }
 
@@ -36,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
             String uid = splashViewModel.getUid();
             getUserData(uid);
         } else {
+            Log.d(TAG, "checkIfUserIsAuthenticated: go login page");
             gotoAuthActivity(this);
         }
     }
