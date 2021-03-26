@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bw_green"
+        tools:context=".activities.CharityFormActivity">
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/curved_white_bg"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/gordita_medium"
+                    android:text="@string/start_a_charity"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gordita_regular"
+                    android:lineSpacingExtra="6dp"
+                    android:text="@string/start_a_charity_header"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="4dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_stepper_1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/button_charity_form_current"
+                    android:fontFamily="@font/gordita_medium"
+                    android:text="1"
+                    android:textColor="@color/bw_blue"
+                    android:textSize="16dp">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
+                    android:background="#F5F6F8"></View>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_stepper_2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/button_charity_form_unfocus"
+                    android:fontFamily="@font/gordita_medium"
+                    android:text="2"
+                    android:textColor="@color/bw_light_grey_darker"
+                    android:textSize="16dp">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
+                    android:background="#F5F6F8"></View>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_stepper_3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/button_charity_form_unfocus"
+                    android:fontFamily="@font/gordita_medium"
+                    android:text="3"
+                    android:textColor="@color/bw_light_grey_darker"
+                    android:textSize="16dp">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
+                    android:background="#F5F6F8"></View>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_stepper_4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/button_charity_form_unfocus"
+                    android:fontFamily="@font/gordita_medium"
+                    android:text="4"
+                    android:textColor="@color/bw_light_grey_darker"
+                    android:textSize="16dp">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_bg_blue"
+            android:fontFamily="@font/gordita_medium"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

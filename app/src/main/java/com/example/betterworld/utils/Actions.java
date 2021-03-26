@@ -27,4 +27,9 @@ public class Actions {
         Intent intent = new Intent(activity, RegisterActivity.class);
         activity.startActivity(intent);
     }
+
+    public static void goToCharityFormActivity(Activity activity){
+        Intent intent = new Intent();
+        activity.startActivity(intent);
+    }
 }
