@@ -1,8 +1,6 @@
 package com.example.betterworld.activities;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +11,9 @@ import com.example.betterworld.utils.Delayer;
 import com.example.betterworld.viewmodels.SplashViewModel;
 
 
-import java.util.concurrent.Delayed;
-
 import javax.inject.Inject;
 
-import static com.example.betterworld.utils.Actions.gotoAuthActivity;
+import static com.example.betterworld.utils.Actions.goToLoginActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
@@ -52,12 +48,11 @@ public class SplashActivity extends AppCompatActivity {
             getUserData(uid);
         } else {
             Log.d(TAG, "checkIfUserIsAuthenticated: go login page");
-            gotoAuthActivity(this);
+            goToLoginActivity(this);
         }
     }
 
     private void getUserData(String uid) {
-        splashViewModel.setUid(uid);
         splashViewModel.userLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
                 User user = dataOrException.data;
