@@ -25,7 +25,4 @@ public class SplashViewModel {
         return _splashRepository.getFirebaseUserUid();
     }
 
-    public void setUid(String uid) {
-        userLiveData = _splashRepository.getUserDataFromFirestore(uid);
-    }
 }

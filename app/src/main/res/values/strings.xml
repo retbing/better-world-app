@@ -10,4 +10,17 @@
     <string name="target">Target:</string>
 
     <string name="btnDonate">Donate</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_account">Already have account? </string>
+    <string name="sign_in">Sign in</string>
+    <string name="to_continue">to continue</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="dont_you_have_account">Don\'t you have account? </string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="or_login_with">Or Login With</string>
+    <string name="google_logo">google_logo</string>
 </resources>

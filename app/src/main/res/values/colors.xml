@@ -12,4 +12,10 @@
     <color name="bw_green">#2BE5A6</color>
     <color name="bw_blue">#0091FF</color>
     <color name="bw_dark">#012B4A</color>
+    <color name="bw_light_grey">#F5F6F8</color>
+    <color name="bw_light_grey_darker">#DEDEDE</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
 </resources>
