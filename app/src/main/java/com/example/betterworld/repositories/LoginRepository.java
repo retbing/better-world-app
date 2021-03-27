@@ -29,6 +29,8 @@ public class LoginRepository {
 
     public MutableLiveData<DataOrException<User, Exception>> firebaseSignInWithGoogle(AuthCredential googleAuthCredential) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+
+        auth = FirebaseAuth.getInstance();
         auth.signInWithCredential(googleAuthCredential).addOnCompleteListener(authTask -> {
             DataOrException<User, Exception> dataOrException = new DataOrException<>();
             if (authTask.isSuccessful()) {
@@ -54,18 +56,4 @@ public class LoginRepository {
         return new User(uid,name,photoUrl);
     }
 
-    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(User authenticatedUser) {
-        MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
-        DocumentReference uidRef = usersRef.document(authenticatedUser.getUuid());
-        uidRef.set(authenticatedUser).addOnCompleteListener(userCreationTask -> {
-            DataOrException<User, Exception> dataOrException = new DataOrException<>();
-            if (userCreationTask.isSuccessful()) {
-                dataOrException.data = authenticatedUser;
-            } else {
-                dataOrException.exception = userCreationTask.getException();
-            }
-            dataOrExceptionMutableLiveData.setValue(dataOrException);
-        });
-        return dataOrExceptionMutableLiveData;
-    }
 }
