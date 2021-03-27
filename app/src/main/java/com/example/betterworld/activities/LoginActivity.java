@@ -12,6 +12,9 @@ import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityLoginBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
     TextView tv_create_new_account;
     ActivityLoginBinding activityLoginBinding;

@@ -4,17 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
+import com.example.betterworld.models.User;
+import com.example.betterworld.viewmodels.RegisterViewModel;
+
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
-import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 
+@AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding activityRegisterBinding;
+    @Inject RegisterViewModel registerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // TODO: bind register function here
         // responsible: biniyam
+        registerViewModel.createUser(email, password,username);
     }
+
 }

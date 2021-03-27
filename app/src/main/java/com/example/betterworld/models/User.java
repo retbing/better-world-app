@@ -14,6 +14,17 @@ public class User implements Serializable {
     final String socialMediaAccount;
     final String nameOfInstution;
 
+    public User(String uuid, String username,  String imageUrl) {
+        this.userId = uuid;
+        this.username = username;
+        this.firstname = "";
+        this.lastname = "";
+        this.phoneNumber = "";
+        this.imageUrl = imageUrl;
+        this.address = "";
+        this.socialMediaAccount = "";
+        this.nameOfInstution = "";
+    }
     public User(String uuid, String username, String firstname, String lastname, String phoneNumber, String imageUrl, String address, String socialMediaAccount, String nameOfInstution) {
         this.userId = uuid;
         this.username = username;
