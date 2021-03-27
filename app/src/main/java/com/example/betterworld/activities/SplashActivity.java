@@ -2,6 +2,7 @@ package com.example.betterworld.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,7 +46,8 @@ public class SplashActivity extends AppCompatActivity {
         boolean isUserAuthenticated = splashViewModel.checkIfUserIsAuthenticated();
         if (isUserAuthenticated) {
             String uid = splashViewModel.getUid();
-            getUserData(uid);
+            Toast.makeText(this, "User "+uid, Toast.LENGTH_LONG).show();
+            goToLoginActivity(this);
         } else {
             Log.d(TAG, "checkIfUserIsAuthenticated: go login page");
             goToLoginActivity(this);

@@ -44,15 +44,32 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = activityRegisterBinding.etEmail.getText().toString();
         final String password = activityRegisterBinding.etPassword.getText().toString();
 
-        registerViewModel.createUser(email, password,username);
+        registerViewModel.createNewAuthUser(email, password);
+        logErrorMessage("Hey There");
         registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
-                FirebaseUser authenticatedUser = dataOrException.data;
+                User authenticatedUser = dataOrException.data;
                 // TODO: //Create User Here
+                createNewUser(authenticatedUser);
             }
 
             if (dataOrException.exception != null) {
-                Toast.makeText(RegisterActivity.this, "User has been registered", Toast.LENGTH_LONG).show();
+                logErrorMessage(dataOrException.exception.getMessage());
+            }
+        });
+    }
+    private void createNewUser(User authenticatedUser) {
+//        displayProgressBar();
+        registerViewModel.createUser(authenticatedUser);
+        registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
+            if (dataOrException.data != null) {
+                User createdUser = dataOrException.data;
+                logErrorMessage("User created In fire Store");
+//                gotoMainActivity(this, createdUser);
+//                hideProgressBar();
+            }
+
+            if (dataOrException.exception != null) {
                 logErrorMessage(dataOrException.exception.getMessage());
             }
         });

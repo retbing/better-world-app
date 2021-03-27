@@ -4,6 +4,7 @@ package com.example.betterworld.repositories;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.models.DataOrException;
+import com.example.betterworld.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -26,21 +27,29 @@ public class RegisterRepository {
         this.auth = auth;
         this.usersRef = usersRef;
     }
+    public User getUser(FirebaseUser firebaseUser) {
+        String uid = firebaseUser.getUid();
+        String name = firebaseUser.getDisplayName();
+        String email = firebaseUser.getEmail();
+        return new User(uid, name, email);
+    }
 
-    public MutableLiveData<DataOrException<FirebaseUser, Exception>> createUserInFirestore(String email, String password,String username) {
-        MutableLiveData<DataOrException<FirebaseUser, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(String email, String password) {
+        MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-            DataOrException<FirebaseUser, Exception> dataOrException = new DataOrException<>();
+            DataOrException<User, Exception> dataOrException = new DataOrException<>();
             if(task.isSuccessful()){
+                FirebaseUser user = auth.getCurrentUser();
+                dataOrException.data = getUser(user);;
                 logErrorMessage("User Have been Created ");
-                 FirebaseUser user = auth.getCurrentUser();
-                 dataOrException.data = user;
+
             }
             else {
                 dataOrException.exception = task.getException();
                 logErrorMessage("User creation Unsuccessful");
             }
+            dataOrExceptionMutableLiveData.setValue(dataOrException);
         });
         return dataOrExceptionMutableLiveData;
     }
