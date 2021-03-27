@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
 import com.example.betterworld.models.User;
+import com.example.betterworld.utils.HelperClass;
 import com.example.betterworld.viewmodels.RegisterViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import javax.inject.Inject;
@@ -16,6 +19,8 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.Actions.gotoMainActivity;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
@@ -39,9 +44,18 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = activityRegisterBinding.etEmail.getText().toString();
         final String password = activityRegisterBinding.etPassword.getText().toString();
 
-        // TODO: bind register function here
-        // responsible: biniyam
         registerViewModel.createUser(email, password,username);
+        registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
+            if (dataOrException.data != null) {
+                FirebaseUser authenticatedUser = dataOrException.data;
+                // TODO: //Create User Here
+            }
+
+            if (dataOrException.exception != null) {
+                Toast.makeText(RegisterActivity.this, "User has been registered", Toast.LENGTH_LONG).show();
+                logErrorMessage(dataOrException.exception.getMessage());
+            }
+        });
     }
 
 }
