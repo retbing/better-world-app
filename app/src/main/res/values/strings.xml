@@ -28,9 +28,27 @@
     <string name="start_a_charity">Start a Charity</string>
     <string name="start_a_charity_detail">Choose the type of your charity program</string>
     <string name="next">Next</string>
-    <string name="start_a_charity_header">Complete your personal information to proceed this charity program</string>
 
     <!--Category Form Activity-->
+    <string name="start_a_charity_header">Complete your personal information to proceed this charity program</string>
+
+    <string name="tv_1_page_1">Your Profession</string>
+    <string name="tv_2_page_1">Name of Institutaion</string>
+    <string name="tv_3_page_1">Social Media Account</string>
+    <string name="tv_4_page_1">Address</string>
+
+    <string name="tv_1_page_2">Title for This Program</string>
+    <string name="tv_2_page_2">Who are the benefit recipients</string>
+    <string name="tv_3_page_2">Target</string>
+    <string name="tv_4_page_2">Deadline</string>
+    <string name="previous">Previous</string>
+    <string name="tv_1_page_4">Your Phone Number</string>
+    <string name="successful">Successful!</string>
+    <string name="successful_detail">Your charity program has been successfully created. Now you can check and maintain it in your ‘activity’ menu</string>
+    <string name="home">Home</string>
+    <string name="done">Done</string>
+    <string name="tv_date_started">Date the program started</string>
+    <string name="tv_date_ended">Date the program ended</string>
 
 
 </resources>
