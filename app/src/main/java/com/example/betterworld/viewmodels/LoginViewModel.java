@@ -12,8 +12,8 @@ import com.google.firebase.auth.AuthCredential;
 import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
+    public LiveData<DataOrException<User, Exception>> authenticatedUserLiveData;
     private LoginRepository loginRepository;
-    LiveData<DataOrException<User, Exception>> authenticatedUserLiveData;
 
     @Inject
     LoginViewModel(LoginRepository loginRepository) {
@@ -21,7 +21,11 @@ public class LoginViewModel extends ViewModel {
     }
 
     void signInWithGoogle(AuthCredential googleAuthCredential) {
-        authenticatedUserLiveData = loginRepository.firebaseSignInWithGoogle(googleAuthCredential);
+//        authenticatedUserLiveData = loginRepository.firebaseSignInWithGoogle(googleAuthCredential);
+    }
+
+    public void signInWithEmailAndPassword(String email, String password) {
+        authenticatedUserLiveData = loginRepository.firebaseSignInWithEmailAndPassword( email, password);
     }
 
 

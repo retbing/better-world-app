@@ -46,10 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerViewModel.createNewAuthUser(email, password);
         logErrorMessage("Hey There");
-        registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
+        registerViewModel.createdAuthUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
-                User authenticatedUser = dataOrException.data;
+                User authenticatedUser = new User(username);
                 // TODO: //Create User Here
+                logErrorMessage("User created In fire Store in _createNewAccount");
                 createNewUser(authenticatedUser);
             }
 
@@ -64,8 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
                 User createdUser = dataOrException.data;
-                logErrorMessage("User created In fire Store");
-//                gotoMainActivity(this, createdUser);
+                logErrorMessage("User created In fire Store in go to Main Activity : name"+createdUser.getUsername());
+                gotoMainActivity(this, createdUser);
 //                hideProgressBar();
             }
 

@@ -1,17 +1,12 @@
 package com.example.betterworld.models;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class User implements Serializable {
 
     final String userId;
     final String username;
-    final String email;
-
-    public String getEmail() {
-        return email;
-    }
-
     final String firstname;
     final String lastname;
     final String phoneNumber;
@@ -20,22 +15,25 @@ public class User implements Serializable {
     final String socialMediaAccount;
     final String nameOfInstution;
 
-    public User(String uuid, String username,  String email) {
-        this.userId = uuid;
+    public User( String username) {
+        this.userId = UUID.randomUUID().toString();
         this.username = username;
         this.firstname = "";
         this.lastname = "";
         this.phoneNumber = "";
-        this.email = email;
         this.imageUrl = "";
         this.address = "";
         this.socialMediaAccount = "";
         this.nameOfInstution = "";
     }
-    public User(String uuid, String username, String email, String firstname, String lastname, String phoneNumber, String imageUrl, String address, String socialMediaAccount, String nameOfInstution) {
+
+    public User(String uuid, String username, String firstname,
+                String lastname, String phoneNumber,
+                String imageUrl, String address,
+                String socialMediaAccount,
+                String nameOfInstution) {
         this.userId = uuid;
         this.username = username;
-        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phoneNumber = phoneNumber;
@@ -45,13 +43,15 @@ public class User implements Serializable {
         this.nameOfInstution = nameOfInstution;
     }
 
-    public String getUuid() {
+
+    public String getUserId() {
         return userId;
     }
 
     public String getUsername() {
         return username;
     }
+
 
     public String getFirstname() {
         return firstname;
@@ -80,4 +80,6 @@ public class User implements Serializable {
     public String getNameOfInstution() {
         return nameOfInstution;
     }
+
+
 }

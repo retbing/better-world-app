@@ -10,9 +10,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.inject.Named;
-
+import javax.inject.Singleton;
 
 import static com.example.betterworld.utils.Constants.USERS_REF;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
@@ -20,34 +19,47 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 @Singleton
 public class RegisterRepository {
     private FirebaseAuth auth;
-    private CollectionReference usersRef;
+    private CollectionReference db;
 
     @Inject
-    RegisterRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference usersRef) {
+    RegisterRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference db) {
         this.auth = auth;
-        this.usersRef = usersRef;
-    }
-    public User getUser(FirebaseUser firebaseUser) {
-        String uid = firebaseUser.getUid();
-        String name = firebaseUser.getDisplayName();
-        String email = firebaseUser.getEmail();
-        return new User(uid, name, email);
+        this.db = db;
     }
 
-    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(String email, String password) {
+
+    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(User authenticatedUser) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
-        auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-            DataOrException<User, Exception> dataOrException = new DataOrException<>();
-            if(task.isSuccessful()){
-                FirebaseUser user = auth.getCurrentUser();
-                dataOrException.data = getUser(user);;
-                logErrorMessage("User Have been Created ");
+        // Add a new document with a generated ID
+                db
+                .add(authenticatedUser)
+                .addOnCompleteListener(userCreationTask -> {
+                    DataOrException<User, Exception> dataOrException = new DataOrException<>();
+                    if (userCreationTask.isSuccessful()) {
+                        dataOrException.data = authenticatedUser;
+                        logErrorMessage("User Have been Created createUserInFirestore");
+                    } else {
+                        logErrorMessage("error on createAuthUserInFirestore");
+                        dataOrException.exception = userCreationTask.getException();
+                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
+    }
 
-            }
-            else {
+    public MutableLiveData<DataOrException<FirebaseUser, Exception>> createAuthUserInFirestore(String email, String password) {
+        MutableLiveData<DataOrException<FirebaseUser, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            DataOrException<FirebaseUser, Exception> dataOrException = new DataOrException<>();
+            if (task.isSuccessful()) {
+                FirebaseUser user = auth.getCurrentUser();
+                dataOrException.data = user;
+                logErrorMessage("User Have been Created createAuthUserInFirestore");
+
+            } else {
                 dataOrException.exception = task.getException();
-                logErrorMessage("User creation Unsuccessful");
+                logErrorMessage("User creation Unsuccessful createAuthUserInFirestore");
             }
             dataOrExceptionMutableLiveData.setValue(dataOrException);
         });

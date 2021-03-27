@@ -19,6 +19,7 @@ public class RegisterViewModel extends ViewModel {
 
     private RegisterRepository registerRepository;
 
+    public LiveData<DataOrException<FirebaseUser, Exception>> createdAuthUserLiveData;
     public LiveData<DataOrException<User, Exception>> createdUserLiveData;
 
     @Inject
@@ -29,9 +30,10 @@ public class RegisterViewModel extends ViewModel {
 
     public void createUser(User user) {
 
+        createdUserLiveData = registerRepository.createUserInFirestore(user);
     }
 
     public void createNewAuthUser(String email, String password) {
-        createdUserLiveData = registerRepository.createUserInFirestore( email, password);
+        createdAuthUserLiveData = registerRepository.createAuthUserInFirestore( email, password);
     }
 }

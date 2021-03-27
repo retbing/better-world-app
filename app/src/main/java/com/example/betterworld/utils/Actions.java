@@ -7,13 +7,16 @@ import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.RegisterActivity;
 import com.example.betterworld.models.User;
 
+import static com.example.betterworld.utils.Constants.USER;
+
 public class Actions {
     private static final String TAG = "Actions";
     public static void gotoMainActivity(Activity activity, User user) {
 //        Intent intent = new Intent(activity, MainActivity.class);
-//        intent.putExtra(USER, user);
-//        activity.startActivity(intent);
-//        activity.finish();
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.putExtra(USER, user);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
     public static void goToLoginActivity(Activity activity) {
