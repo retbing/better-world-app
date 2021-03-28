@@ -4,17 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
+import com.example.betterworld.models.User;
+import com.example.betterworld.utils.HelperClass;
+import com.example.betterworld.viewmodels.RegisterViewModel;
+import com.google.firebase.auth.FirebaseUser;
+
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
-import static com.example.betterworld.utils.Actions.goToRegisterActivity;
+import static com.example.betterworld.utils.Actions.gotoMainActivity;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
+@AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding activityRegisterBinding;
+    @Inject RegisterViewModel registerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +44,36 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = activityRegisterBinding.etEmail.getText().toString();
         final String password = activityRegisterBinding.etPassword.getText().toString();
 
-        // TODO: bind register function here
-        // responsible: biniyam
+        registerViewModel.createNewAuthUser(email, password);
+        logErrorMessage("Hey There");
+        registerViewModel.createdAuthUserLiveData.observe(this, dataOrException -> {
+            if (dataOrException.data != null) {
+                User authenticatedUser = new User(username);
+                // TODO: //Create User Here
+                logErrorMessage("User created In fire Store in _createNewAccount");
+                createNewUser(authenticatedUser);
+            }
+
+            if (dataOrException.exception != null) {
+                logErrorMessage(dataOrException.exception.getMessage());
+            }
+        });
     }
+    private void createNewUser(User authenticatedUser) {
+//        displayProgressBar();
+        registerViewModel.createUser(authenticatedUser);
+        registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
+            if (dataOrException.data != null) {
+                User createdUser = dataOrException.data;
+                logErrorMessage("User created In fire Store in go to Main Activity : name"+createdUser.getUsername());
+                gotoMainActivity(this, createdUser);
+//                hideProgressBar();
+            }
+
+            if (dataOrException.exception != null) {
+                logErrorMessage(dataOrException.exception.getMessage());
+            }
+        });
+    }
+
 }
