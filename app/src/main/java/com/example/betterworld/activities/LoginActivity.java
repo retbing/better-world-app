@@ -49,8 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private void _loginWithEmailAndPassword() {
         final String email = activityLoginBinding.etEmail.getText().toString();
         final String password = activityLoginBinding.etPassword.getText().toString();
-        // TODO: bind login function here
-        // responsible: biniyam
+
         loginViewModel.signInWithEmailAndPassword(email,password);
         loginViewModel.authenticatedUserLiveData.observe(this, dataOrException ->{
 
@@ -64,15 +63,11 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-
     }
 
     private void _signingWithGoogle() {
-        // TODO: bind sign in with google function here
-        // responsible: biniyam
             Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-//        Toast.makeText(this, "Go to google", Toast.LENGTH_SHORT).show();
     }
 
     @Override
