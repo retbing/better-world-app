@@ -31,8 +31,9 @@ public class RegisterRepository {
     public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(User authenticatedUser) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         // Add a new document with a generated ID
-                db
-                .add(authenticatedUser)
+        db
+                .document(authenticatedUser.getUserId())
+                .set(authenticatedUser)
                 .addOnCompleteListener(userCreationTask -> {
                     DataOrException<User, Exception> dataOrException = new DataOrException<>();
                     if (userCreationTask.isSuccessful()) {
@@ -47,7 +48,7 @@ public class RegisterRepository {
         return dataOrExceptionMutableLiveData;
     }
 
-    public MutableLiveData<DataOrException<FirebaseUser, Exception>> createAuthUserInFirestore(String email, String password) {
+    public MutableLiveData<DataOrException<FirebaseUser, Exception>> createAuthUserInFirebase(String email, String password) {
         MutableLiveData<DataOrException<FirebaseUser, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {

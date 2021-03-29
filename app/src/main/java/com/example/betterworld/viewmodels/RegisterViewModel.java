@@ -6,14 +6,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
 import com.example.betterworld.repositories.RegisterRepository;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Map;
-
 import javax.inject.Inject;
-
-import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 public class RegisterViewModel extends ViewModel {
 
@@ -34,6 +29,6 @@ public class RegisterViewModel extends ViewModel {
     }
 
     public void createNewAuthUser(String email, String password) {
-        createdAuthUserLiveData = registerRepository.createAuthUserInFirestore( email, password);
+        createdAuthUserLiveData = registerRepository.createAuthUserInFirebase(email, password);
     }
 }

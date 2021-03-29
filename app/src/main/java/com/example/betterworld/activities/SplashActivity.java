@@ -7,9 +7,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.betterworld.R;
+import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
 import com.example.betterworld.utils.Delayer;
 import com.example.betterworld.viewmodels.SplashViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import javax.inject.Inject;
@@ -43,28 +45,22 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkIfUserIsAuthenticated() {
-        boolean isUserAuthenticated = splashViewModel.checkIfUserIsAuthenticated();
-        if (isUserAuthenticated) {
-            String uid = splashViewModel.getUid();
-            Toast.makeText(this, "User "+uid, Toast.LENGTH_LONG).show();
-            goToLoginActivity(this);
+        FirebaseUser fbUser = splashViewModel.checkIfUserIsAuthenticated();
+        if (fbUser != null) {
+            splashViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
+                if (dataOrException.data != null) {
+
+                    gotoMainActivity(this, dataOrException.data);
+                } else {
+                    goToLoginActivity(this);
+                }
+            });
+
         } else {
             Log.d(TAG, "checkIfUserIsAuthenticated: go login page");
             goToLoginActivity(this);
         }
     }
 
-    private void getUserData(String uid) {
-        splashViewModel.userLiveData.observe(this, dataOrException -> {
-            if (dataOrException.data != null) {
-                User user = dataOrException.data;
-                gotoMainActivity(this, user);
-            }
-
-            if (dataOrException.exception != null) {
-                logErrorMessage(dataOrException.exception.getMessage());
-            }
-        });
-    }
 
 }
