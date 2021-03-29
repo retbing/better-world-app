@@ -23,4 +23,14 @@
     <string name="create_a_new_account">Create a new account</string>
     <string name="or_login_with">Or Login With</string>
     <string name="google_logo">google_logo</string>
+
+    <!--Choose Category Activity-->
+    <string name="start_a_charity">Start a Charity</string>
+    <string name="start_a_charity_detail">Choose the type of your charity program</string>
+    <string name="next">Next</string>
+    <string name="start_a_charity_header">Complete your personal information to proceed this charity program</string>
+
+    <!--Category Form Activity-->
+
+
 </resources>

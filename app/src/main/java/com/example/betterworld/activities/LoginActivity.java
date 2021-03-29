@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.betterworld.utils.Actions.goToRegisterActivity;
+import static com.example.betterworld.utils.Actions.gotoMainActivity;
 import static com.example.betterworld.utils.Constants.RC_SIGN_IN;
 
 
@@ -56,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (dataOrException.data != null) {
                 Toast.makeText(LoginActivity.this, "Logged in successfully !", Toast.LENGTH_SHORT).show();
+
+                gotoMainActivity(this, dataOrException.data);
             }
 
             if (dataOrException.exception != null) {

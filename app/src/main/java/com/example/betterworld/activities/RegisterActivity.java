@@ -25,7 +25,8 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding activityRegisterBinding;
-    @Inject RegisterViewModel registerViewModel;
+    @Inject
+    RegisterViewModel registerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
         logErrorMessage("Hey There");
         registerViewModel.createdAuthUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
-                User authenticatedUser = new User(username);
-                // TODO: //Create User Here
-                logErrorMessage("User created In fire Store in _createNewAccount");
+                FirebaseUser user = dataOrException.data;
+                User authenticatedUser = new User(user.getUid(), username, user.getEmail());
                 createNewUser(authenticatedUser);
             }
 
@@ -59,15 +59,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
     private void createNewUser(User authenticatedUser) {
 //        displayProgressBar();
         registerViewModel.createUser(authenticatedUser);
         registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
                 User createdUser = dataOrException.data;
-                logErrorMessage("User created In fire Store in go to Main Activity : name"+createdUser.getUsername());
+
                 gotoMainActivity(this, createdUser);
-//                hideProgressBar();
             }
 
             if (dataOrException.exception != null) {

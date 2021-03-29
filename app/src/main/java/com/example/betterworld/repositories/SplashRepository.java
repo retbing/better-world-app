@@ -26,8 +26,8 @@ public class SplashRepository {
         this._usersRef = usersRef;
     }
 
-    public boolean checkIfUserIsAuthenticatedInFirebase() {
-        return _firebaseAuth.getCurrentUser() != null;
+    public FirebaseUser checkIfUserIsAuthenticatedInFirebase() {
+        return _firebaseAuth.getCurrentUser();
     }
 
     public String getFirebaseUserUid() {
