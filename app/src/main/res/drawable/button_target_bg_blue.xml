@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <solid android:color="@color/bw_blue"/>
+        <corners android:radius="10dp" />
+        <size android:width="38dp" android:height="38dp"/>
+    </shape>
+</item>
+<item android:drawable="@drawable/ic_baseline_attach_money_24"
+    android:width="18dp" android:height="18dp" android:gravity="center"/>
+</layer-list>
