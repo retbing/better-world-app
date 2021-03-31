@@ -10,11 +10,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.components.ActivityComponent;
-import dagger.hilt.android.internal.managers.ApplicationComponentManager;
 import dagger.hilt.components.SingletonComponent;
 
-import static com.example.betterworld.utils.Constants.USER;
 import static com.example.betterworld.utils.Constants.USERS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
 
