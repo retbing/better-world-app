@@ -25,6 +25,7 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding activityRegisterBinding;
+
     @Inject
     RegisterViewModel registerViewModel;
 
