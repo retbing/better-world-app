@@ -9,6 +9,7 @@ import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
 import com.example.betterworld.models.User;
 import com.example.betterworld.viewmodels.RegisterViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import javax.inject.Inject;
