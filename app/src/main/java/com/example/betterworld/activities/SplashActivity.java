@@ -49,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
         if (fbUser != null) {
             splashViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
                 if (dataOrException.data != null) {
-
                     gotoMainActivity(this, dataOrException.data);
                 } else {
                     goToLoginActivity(this);
