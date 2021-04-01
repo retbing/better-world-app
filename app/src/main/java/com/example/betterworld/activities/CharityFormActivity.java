@@ -8,9 +8,18 @@ import android.os.Bundle;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
 import com.example.betterworld.databinding.ActivityChooseCategoryBinding;
+import com.example.betterworld.models.Charity;
+import com.example.betterworld.viewmodels.CharityViewModel;
+
+import javax.inject.Inject;
+
+import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 
 public class CharityFormActivity extends AppCompatActivity {
     private ActivityCharityFormBinding activityCharityFormBinding;
+
+    @Inject
+     CharityViewModel charityViewModel;
     private int step;
 
     @Override
@@ -23,6 +32,15 @@ public class CharityFormActivity extends AppCompatActivity {
 
 
     private void _initComponents() {
+
+        activityCharityFormBinding.btnNext.setOnClickListener(view -> _createCharity());
+
+    }
+
+    private void _createCharity() {
+        charityViewModel.createCharity();
+
+
 
     }
 

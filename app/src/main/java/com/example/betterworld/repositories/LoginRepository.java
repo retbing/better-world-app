@@ -7,24 +7,16 @@ import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.util.Map;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
-import static com.example.betterworld.utils.Constants.USERS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
-import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 public class LoginRepository {
 
