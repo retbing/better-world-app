@@ -19,19 +19,19 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 @Singleton
 public class RegisterRepository {
     private FirebaseAuth auth;
-    private CollectionReference db;
+    private CollectionReference usersRef;
 
     @Inject
-    RegisterRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference db) {
+    RegisterRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference usersRef) {
         this.auth = auth;
-        this.db = db;
+        this.usersRef = usersRef;
     }
 
 
     public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(User authenticatedUser) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         // Add a new document with a generated ID
-        db
+        usersRef
                 .document(authenticatedUser.getUserId())
                 .set(authenticatedUser)
                 .addOnCompleteListener(userCreationTask -> {

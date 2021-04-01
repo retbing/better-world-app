@@ -2,23 +2,20 @@ package com.example.betterworld.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
-import static com.example.betterworld.utils.Constants.RC_SIGN_IN;
 
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityLoginBinding;
-import com.example.betterworld.models.User;
+import com.example.betterworld.models.LoginFields;
 import com.example.betterworld.viewmodels.LoginViewModel;
-import com.example.betterworld.viewmodels.RegisterViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import javax.inject.Inject;
@@ -38,13 +35,29 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        if (savedInstanceState == null) {
+            loginViewModel.init();
+        }
+        activityLoginBinding.setModel(loginViewModel);
         _initComponents();
+        setupButtonClick();
+    }
+
+    private void setupButtonClick() {
+        loginViewModel.getLoginFields().observe(this, new Observer<LoginFields>() {
+            @Override
+            public void onChanged(LoginFields loginModel) {
+                _loginWithEmailAndPassword();
+            }
+        });
     }
 
     private void _initComponents() {
         activityLoginBinding.tvCreateNewAccount.setOnClickListener(view -> goToRegisterActivity(this));
         activityLoginBinding.btnLogin.setOnClickListener(view -> _loginWithEmailAndPassword());
         activityLoginBinding.btnGoogleSignin.setOnClickListener(view -> _signingWithGoogle());
+
+
     }
 
     private void _loginWithEmailAndPassword() {
@@ -55,9 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.authenticatedUserLiveData.observe(this, dataOrException ->{
 
             if (dataOrException.data != null) {
-                Toast.makeText(LoginActivity.this, "Logged in successfully !", Toast.LENGTH_SHORT).show();
-
-                gotoMainActivity(this, dataOrException.data);
+                Toast.makeText(LoginActivity.this, "Logged in successfully as "+dataOrException.data.getUsername(), Toast.LENGTH_SHORT).show();
+                gotoMainActivity(LoginActivity.this,dataOrException.data);
             }
 
             if (dataOrException.exception != null) {
@@ -69,28 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void _signingWithGoogle() {
-            Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                GoogleSignInAccount googleSignInAccount = task.getResult(ApiException.class);
-//                if (googleSignInAccount != null) {
-//                    getGoogleAuthCredential(googleSignInAccount);
-//                }
-//            } catch (ApiException e) {
-//                logErrorMessage(e.getMessage());
-//            }
-            Toast.makeText(this, "Logged in successfully !", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }

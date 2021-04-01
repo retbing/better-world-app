@@ -326,6 +326,41 @@
                     </LinearLayout>
 
                 </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_layout_page_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_1_page_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/gordita_regular"
+                            android:text="@string/tv_1_page_4"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/et_1_page_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:background="@drawable/edit_view_bg_grey"
+                            android:ems="20"
+                            android:inputType="phone"
+                            android:padding="15dp" />
+
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
                 <FrameLayout
                     android:id="@+id/frame_layout_page_4"

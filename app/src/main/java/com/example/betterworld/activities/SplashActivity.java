@@ -10,6 +10,7 @@ import com.example.betterworld.R;
 import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
 import com.example.betterworld.utils.Delayer;
+import com.example.betterworld.viewmodels.LoginViewModel;
 import com.example.betterworld.viewmodels.SplashViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,7 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SplashActivity extends AppCompatActivity {
     @Inject
     SplashViewModel splashViewModel;
-
+    @Inject
+    LoginViewModel loginViewModel;
     private static final String TAG = "SplashActivity";
 
     @Override
@@ -34,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+loginViewModel.signOutUser();
         Delayer.delay(1000, new Delayer.DelayCallback() {
             @Override
             public void callback() {

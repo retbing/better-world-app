@@ -7,18 +7,18 @@ import com.example.betterworld.repositories.CharityRepository;
 
 import javax.inject.Inject;
 
-import static com.example.betterworld.utils.HelperClass.logErrorMessage;
+public class CharityViewModel extends ViewModel {
 
-public class CharityViewModel  extends ViewModel {
-
-    private  CharityRepository charityRepository;
+    private CharityRepository _charityRepository;
 
     @Inject
-    public CharityViewModel() {
-        this.charityRepository = new CharityRepository();
+    public CharityViewModel(CharityRepository charityRepository) {
+        this._charityRepository = charityRepository;
     }
 
-    public void  createCharity(){
-        charityRepository.createCharity();
+
+
+    public void  createCharity(Charity charity){
+        _charityRepository.createCharityOnFireStore(charity);
     }
 }
