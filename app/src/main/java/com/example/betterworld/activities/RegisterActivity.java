@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
 import com.example.betterworld.models.User;
-import com.example.betterworld.utils.HelperClass;
 import com.example.betterworld.viewmodels.RegisterViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,6 +23,7 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding activityRegisterBinding;
+
     @Inject
     RegisterViewModel registerViewModel;
 

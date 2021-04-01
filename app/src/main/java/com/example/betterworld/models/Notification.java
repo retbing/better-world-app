@@ -1,43 +1,49 @@
 package com.example.betterworld.models;
 
 
+import android.graphics.drawable.Drawable;
+
+import com.example.betterworld.R;
 import com.google.firebase.Timestamp;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.Date;
 
 public class Notification {
 
     final String notificationId;
-    final Timestamp createdAt;
-    final Timestamp updatedAt;
-    final boolean seen;
-    final String type;
-    final float donationAmount;
-    final String userImageUrl;
     final String charityId;
-    final String charityName;
+    final String type;
+    final String content;
+    final Date createdAt;
+    final boolean seen;
 
-    public Notification(String notificationId, Timestamp createdAt, Timestamp updatedAt, boolean seen, String type, float donationAmount, String userImageUrl, String charityId, String charityName) {
+    public Notification(String notificationId, String charityId, String content, String type, long createdAt, boolean seen) {
         this.notificationId = notificationId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Date(createdAt);
         this.seen = seen;
         this.type = type;
-        this.donationAmount = donationAmount;
-        this.userImageUrl = userImageUrl;
         this.charityId = charityId;
-        this.charityName = charityName;
+        this.content = content;
+    }
+
+    public static Notification fromMap(Map<String, Object> map) {
+        final String notificationId = (String) map.get("notificationId");
+        final String charityId = (String) map.get("charityId");
+        final long createdAt = (Long) map.get("createdAt");
+        final boolean seen = (Boolean) map.get("seen");
+        final String type = (String) map.get("type");
+        final String content = (String) map.get("content");
+
+        return new Notification(notificationId, charityId, content, type, createdAt, seen);
     }
 
     public String getNotificationId() {
         return notificationId;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
 
     public boolean isSeen() {
         return seen;
@@ -47,19 +53,28 @@ public class Notification {
         return type;
     }
 
-    public float getDonationAmount() {
-        return donationAmount;
+    public int getNotificationIcon() {
+        if (type == "donation") {
+            return R.drawable.ic_icon_material_attach_money;
+        } else if (type == "achievement") {
+            return R.drawable.ic_icon_material_check_circle;
+        } else {
+            return R.drawable.ic_icon_material_date_range;
+        }
     }
 
-    public String getUserImageUrl() {
-        return userImageUrl;
+    public String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, YYYY");
+
+        return sdf.format(createdAt);
     }
 
     public String getCharityId() {
         return charityId;
     }
 
-    public String getCharityName() {
-        return charityName;
+    public String getContent() {
+        return content;
     }
+
 }

@@ -14,6 +14,7 @@
     <color name="bw_dark">#012B4A</color>
     <color name="bw_black">#3B3B3B</color>
     <color name="bw_red">#FF6262</color>
+    <color name="bw_grey">#F6F7FB</color>
     <color name="bw_light_grey">#F5F6F8</color>
     <color name="bw_light_grey_darker">#DEDEDE</color>
     <color name="light_blue_400">#FF29B6F6</color>
