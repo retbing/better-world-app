@@ -47,6 +47,8 @@
     <string name="done">Done</string>
     <string name="tv_date_started">Date the program started</string>
     <string name="tv_date_ended">Date the program ended</string>
+    <string name="error_format_invalid">Format Invalid</string>
+    <string name="error_too_short">Too Short</string>
 
 
 </resources>

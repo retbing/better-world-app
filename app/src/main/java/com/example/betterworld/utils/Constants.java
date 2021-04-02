@@ -7,7 +7,9 @@ public interface Constants {
     String USERS_COLLECTION = "users";
     String USERS_REF = "usersRef";
     String USER = "user";
+    String CHARITIES_COLLECTION  = "charities";
     String NOTIFICATIONS_COLLECTION = "notifications";
     String NOTIFICATIONS_REF = "notificationsRef";
+    String CHARITIES_REF = "charitiesRef";
     String NOTIFICATIONS = "notifications";
 }

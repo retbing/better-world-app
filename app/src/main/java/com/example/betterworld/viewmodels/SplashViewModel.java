@@ -1,6 +1,5 @@
 package com.example.betterworld.viewmodels;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.models.DataOrException;

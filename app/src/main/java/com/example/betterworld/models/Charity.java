@@ -1,6 +1,8 @@
 package com.example.betterworld.models;
 
-import com.google.type.DateTime;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Charity {
 
@@ -11,14 +13,17 @@ public class Charity {
     final String imageUrl;
     final float target;
     final float donated;
-    final DateTime dueDate;
-    final DateTime startDate;
+    final String dueDate;
+    final String startDate;
     final String categoryId;
     final String categoryName;
     final String userId;
     final String userName;
 
-    public Charity(String charityId, String title, String description, String whoBenefits, String imageUrl, float target, float donated, DateTime dueDate, DateTime startDate, String categoryId, String categoryName, String userId, String userName) {
+    public Charity(String charityId, String title, String description, String whoBenefits,
+                   String imageUrl, float target, float donated, String dueDate,
+                   String startDate, String categoryId, String categoryName, String userId, String userName)
+    {
         this.charityId = charityId;
         this.title = title;
         this.description = description;
@@ -32,6 +37,45 @@ public class Charity {
         this.categoryName = categoryName;
         this.userId = userId;
         this.userName = userName;
+    }
+
+    public static Map<String,Object> charityToMap(Charity charity
+    ) {
+        Map<String,Object> charityMap = new HashMap<>();
+          charityMap.put("charityId",charity.getCharityId());
+         charityMap.put("title",charity.getTitle());
+        charityMap.put("description",charity.getDescription());
+        charityMap.put("whoBenefits",charity.getWhoBenefits());
+         charityMap.put("imageUrl",charity.getImageUrl());
+        charityMap.put("target",charity.getTarget());
+         charityMap.put("donated",charity.getDonated());
+        charityMap.put("dueDate",charity.getDueDate());
+         charityMap.put("startDate",charity.getStartDate());
+          charityMap.put("categoryId",charity.getCategoryId());
+         charityMap.put("categoryName",charity.getCategoryName());
+       charityMap.put("userId",charity.getUserId());
+        charityMap.put("userName",charity.getUserName());
+
+        return  charityMap;
+    }
+
+    @Override
+    public String toString() {
+        return "Charity{" +
+                "charityId='" + charityId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", whoBenefits='" + whoBenefits + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", target=" + target +
+                ", donated=" + donated +
+                ", dueDate='" + dueDate + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 
     public String getCharityId() {
@@ -62,11 +106,11 @@ public class Charity {
         return donated;
     }
 
-    public DateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public DateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
@@ -84,5 +128,23 @@ public class Charity {
 
     public String getUserName() {
         return userName;
+    }
+
+    public static Charity charityFromMap( Map<String, Object> userMap) {
+
+        String  charityId = (String) userMap.get("charityId");
+        String  title = (String) userMap.get("title");
+        String  description = (String) userMap.get("description");
+        String  whoBenefits = (String) userMap.get("whoBenefits");
+        String  imageUrl = (String) userMap.get("imageUrl");
+         float target = (float) userMap.get("target");
+         float donated = (float) userMap.get("donated");
+        String dueDate = (String) userMap.get("dueDate");
+        String startDate = (String) userMap.get("startDate");
+        String  categoryId = (String) userMap.get("categoryId");
+        String  categoryName = (String) userMap.get("categoryName");
+        String  userId = (String) userMap.get("userId");
+        String  userName = (String) userMap.get("userName");
+        return new Charity(charityId,title,description,whoBenefits,imageUrl,target,donated,dueDate,startDate,categoryId,categoryName,userId,userName);
     }
 }
