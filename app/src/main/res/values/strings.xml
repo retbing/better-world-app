@@ -49,6 +49,7 @@
     <string name="tv_date_ended">Date the program ended</string>
     <string name="error_format_invalid">Format Invalid</string>
     <string name="error_too_short">Too Short</string>
+    <string name="tv_1_page_3">Description</string>
 
 
 </resources>

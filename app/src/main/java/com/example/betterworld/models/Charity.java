@@ -1,6 +1,8 @@
 package com.example.betterworld.models;
 
 
+import com.google.type.DateTime;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,16 +15,16 @@ public class Charity {
     final String imageUrl;
     final float target;
     final float donated;
-    final String dueDate;
-    final String startDate;
+    final DateTime dueDate;
+    final DateTime startDate;
     final String categoryId;
     final String categoryName;
     final String userId;
     final String userName;
 
     public Charity(String charityId, String title, String description, String whoBenefits,
-                   String imageUrl, float target, float donated, String dueDate,
-                   String startDate, String categoryId, String categoryName, String userId, String userName)
+                   String imageUrl, float target, float donated, DateTime dueDate,
+                   DateTime startDate, String categoryId, String categoryName, String userId, String userName)
     {
         this.charityId = charityId;
         this.title = title;
@@ -106,11 +108,11 @@ public class Charity {
         return donated;
     }
 
-    public String getDueDate() {
+    public DateTime getDueDate() {
         return dueDate;
     }
 
-    public String getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
@@ -137,10 +139,10 @@ public class Charity {
         String  description = (String) userMap.get("description");
         String  whoBenefits = (String) userMap.get("whoBenefits");
         String  imageUrl = (String) userMap.get("imageUrl");
-         float target = (float) userMap.get("target");
-         float donated = (float) userMap.get("donated");
-        String dueDate = (String) userMap.get("dueDate");
-        String startDate = (String) userMap.get("startDate");
+        float target = (float) userMap.get("target");
+        float donated = (float) userMap.get("donated");
+        DateTime dueDate = (DateTime) userMap.get("dueDate");
+        DateTime startDate = (DateTime) userMap.get("startDate");
         String  categoryId = (String) userMap.get("categoryId");
         String  categoryName = (String) userMap.get("categoryName");
         String  userId = (String) userMap.get("userId");
