@@ -73,19 +73,19 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _initCharityVariables() {
-         title ="";
-         description ="";
+        title ="";
+        description ="";
         whoBenefits ="";
         nameOfInstitution ="";
-         imageUrl ="";
-         target =0;
-         donated =0;
-         dueDate ="";
-         startDate ="";
-         categoryId ="";
-         categoryName ="";
-         userId = FirebaseAuth.getInstance().getUid();
-         userName = "";
+        imageUrl ="";
+        target =0;
+        donated =0;
+        dueDate ="";
+        startDate ="";
+        categoryId ="";
+        categoryName ="";
+        userId = FirebaseAuth.getInstance().getUid();
+        userName = "";
         socialMediaAccount ="";
         address ="";
         profession ="";
@@ -97,7 +97,7 @@ public class CharityFormActivity extends AppCompatActivity {
     private void _initComponents() {
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
-        activityCharityFormBinding.et4Page2.setOnClickListener(view -> _dateTimeFrameLayout());
+        activityCharityFormBinding.etDate.setOnClickListener(view -> _dateTimeFrameLayout());
         activityCharityFormBinding.etDateStarted.setOnClickListener(view -> _dateTimeStartedPopup());
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
@@ -131,16 +131,15 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _createCharity() {
-        title =  activityCharityFormBinding.et1Page1.getText().toString();
-        description =  activityCharityFormBinding.et1Page3.getText().toString();
-        nameOfInstitution =  activityCharityFormBinding.et2Page1.getText().toString();
-        socialMediaAccount =  activityCharityFormBinding.et3Page1.getText().toString();
-        address =  activityCharityFormBinding.et4Page1.getText().toString();
-        profession =  activityCharityFormBinding.et1Page2.getText().toString();
-        nameOfInstitution =  activityCharityFormBinding.et2Page2.getText().toString();
-        target =  Float.parseFloat("0"+activityCharityFormBinding.et3Page2.getText().toString()  );
-        address =  activityCharityFormBinding.et4Page2.getText().toString();
-        phoneNumber =  activityCharityFormBinding.et1Page4.getText().toString();
+        profession =  activityCharityFormBinding.etProfession.getText().toString();
+        nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
+        socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
+        address =  activityCharityFormBinding.etAddress.getText().toString();
+        title =  activityCharityFormBinding.etTitle.getText().toString();
+        whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
+        target =  Float.parseFloat("0"+activityCharityFormBinding.etTarget.getText().toString());
+        description =  activityCharityFormBinding.etDescription.getText().toString();
+        phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
 
         Charity charity =  new Charity("",
                 title,description,whoBenefits,
@@ -308,7 +307,7 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private void _dateTimeDone(){
         String fullDateTime = startedDate + " - " + endedDate;
-        activityCharityFormBinding.et4Page2.setText(fullDateTime);
+        activityCharityFormBinding.etDate.setText(fullDateTime);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.frameLayoutDatePopup.setVisibility(View.INVISIBLE);
     }
