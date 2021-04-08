@@ -4,6 +4,16 @@ public class LoginFields {
     private String email;
     private String password;
 
+    public LoginFields() {
+        this.email = "";
+        this.password = "";
+    }
+
+    public LoginFields(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -13,6 +23,7 @@ public class LoginFields {
     }
 
     public String getPassword() {
+
         return password;
     }
 

@@ -38,6 +38,4 @@ public class FirebaseModule {
     public static CollectionReference provideUsersCollectionReference(FirebaseFirestore rootRef) {
         return rootRef.collection(USERS_COLLECTION);
     }
-
-
 }

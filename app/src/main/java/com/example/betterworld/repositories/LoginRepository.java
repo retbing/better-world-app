@@ -95,8 +95,4 @@ public class LoginRepository {
         return dataOrExceptionMutableLiveData;
     }
 
-    public void signOut() {
-        auth.signOut();
-    }
-
 }

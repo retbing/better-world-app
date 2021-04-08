@@ -40,25 +40,29 @@ public class LoginActivity extends AppCompatActivity {
         }
         activityLoginBinding.setModel(loginViewModel);
         _initComponents();
-        setupButtonClick();
+        setupLoginButtonButtonClick();
     }
 
-    private void setupButtonClick() {
+
+    private void _initComponents() {
+        activityLoginBinding.tvCreateNewAccount.setOnClickListener(view -> goToRegisterActivity(this));
+//        activityLoginBinding.btnLogin.setOnClickListener(view -> _loginWithEmailAndPassword());
+        activityLoginBinding.btnGoogleSignin.setOnClickListener(view -> _signingWithGoogle());
+    }
+
+    private void setupLoginButtonButtonClick() {
         loginViewModel.getLoginFields().observe(this, new Observer<LoginFields>() {
             @Override
-            public void onChanged(LoginFields loginModel) {
+            public void onChanged(LoginFields loginFields) {
+                Toast.makeText(LoginActivity.this,
+                        "Email " + loginFields.getEmail() + ", Password " + loginFields.getPassword().substring(0,((Integer)loginFields.getPassword().length()/2))
+                                .concat(String.format(String.format("%%%ds", (Integer)loginFields.getPassword().length()/2), " ").replace(" ","*")),
+                        Toast.LENGTH_SHORT).show();
                 _loginWithEmailAndPassword();
             }
         });
     }
 
-    private void _initComponents() {
-        activityLoginBinding.tvCreateNewAccount.setOnClickListener(view -> goToRegisterActivity(this));
-        activityLoginBinding.btnLogin.setOnClickListener(view -> _loginWithEmailAndPassword());
-        activityLoginBinding.btnGoogleSignin.setOnClickListener(view -> _signingWithGoogle());
-
-
-    }
 
     private void _loginWithEmailAndPassword() {
         final String email = activityLoginBinding.etEmail.getText().toString();
@@ -81,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void _signingWithGoogle() {
+
     }
 
 

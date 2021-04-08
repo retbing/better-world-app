@@ -8,10 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
-import com.example.betterworld.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -19,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
-import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 public class CharityRepository {
 
