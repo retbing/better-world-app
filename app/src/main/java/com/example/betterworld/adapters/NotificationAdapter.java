@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.betterworld.R;
 import com.example.betterworld.databinding.NotificationDataBinding;
 import com.example.betterworld.models.Notification;
 
@@ -33,6 +34,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
         notificationDataBinding = NotificationDataBinding.inflate(inflater);
         notificationDataBinding.setNotification(notification);
+        notificationDataBinding.ivNotificationIcon.setImageResource(notification.getNotificationIcon());
 
         return notificationDataBinding.getRoot();
     }

@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String password = activityRegisterBinding.etPassword.getText().toString();
 
         registerViewModel.createNewAuthUser(email, password);
-        logErrorMessage("Hey There");
+
         registerViewModel.createdAuthUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
                 FirebaseUser user = dataOrException.data;

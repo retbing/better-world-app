@@ -12,6 +12,8 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
+import static com.example.betterworld.utils.Constants.CHARITIES_COLLECTION;
+import static com.example.betterworld.utils.Constants.CHARITIES_REF;
 import static com.example.betterworld.utils.Constants.NOTIFICATIONS_REF;
 import static com.example.betterworld.utils.Constants.USERS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
@@ -38,6 +40,14 @@ public class FirebaseModule {
     public static CollectionReference provideUsersCollectionReference(FirebaseFirestore rootRef) {
         return rootRef.collection(USERS_COLLECTION);
     }
+
+    @Provides
+    @Singleton
+    @Named(CHARITIES_REF)
+    public static CollectionReference provideCharitiesCollectionReference(FirebaseFirestore rootRef) {
+        return rootRef.collection(CHARITIES_COLLECTION);
+    }
+
 
 
 }

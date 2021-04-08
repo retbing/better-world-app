@@ -2,6 +2,7 @@ package com.example.betterworld.models;
 
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.example.betterworld.R;
 import com.google.firebase.Timestamp;
@@ -49,14 +50,11 @@ public class Notification {
         return seen;
     }
 
-    public String getType() {
-        return type;
-    }
 
     public int getNotificationIcon() {
-        if (type == "donation") {
+        if (type.equals("donation")) {
             return R.drawable.ic_icon_material_attach_money;
-        } else if (type == "achievement") {
+        } else if (type.equals("achievement")) {
             return R.drawable.ic_icon_material_check_circle;
         } else {
             return R.drawable.ic_icon_material_date_range;
