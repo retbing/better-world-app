@@ -64,9 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.createUser(authenticatedUser);
         registerViewModel.createdUserLiveData.observe(this, dataOrException -> {
             if (dataOrException.data != null) {
-                User createdUser = dataOrException.data;
-
-                gotoMainActivity(this, createdUser);
+                gotoMainActivity(this);
             }
 
             if (dataOrException.exception != null) {

@@ -15,16 +15,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import static com.example.betterworld.utils.Constants.USERS_REF;
 
-public class LoginRepository {
+@Singleton
+public class AuthRepository {
 
     private FirebaseAuth auth;
     private CollectionReference userCollection;
+    User user;
 
     @Inject
-    LoginRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference userCollection) {
+    AuthRepository(FirebaseAuth auth, @Named(USERS_REF) CollectionReference userCollection) {
         this.auth = auth;
         this.userCollection = userCollection;
     }
@@ -44,7 +47,7 @@ public class LoginRepository {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                       User user = User.userFromMap(uuid, email, document.getData());
+                       user = User.userFromMap(uuid, email, document.getData());
                        dataOrException.data = user;
                     } else {
                         dataOrException.exception = task.getException();
@@ -75,7 +78,7 @@ public class LoginRepository {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
-                                            User user = User.userFromMap(auth.getCurrentUser().getUid(), auth.getCurrentUser().getEmail(), document.getData());
+                                            user = User.userFromMap(auth.getCurrentUser().getUid(), auth.getCurrentUser().getEmail(), document.getData());
                                             dataOrException.data = user;
                                         } else {
                                             dataOrException.exception = task.getException();
@@ -97,6 +100,10 @@ public class LoginRepository {
 
     public void signOut() {
         auth.signOut();
+    }
+
+    public User getUser() {
+        return user;
     }
 
 }

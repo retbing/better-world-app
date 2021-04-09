@@ -10,36 +10,36 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.betterworld.models.DataOrException;
-import com.example.betterworld.models.LoginFields;
-import com.example.betterworld.models.LoginForm;
+import com.example.betterworld.validatorRules.login.LoginFields;
+import com.example.betterworld.validatorRules.login.LoginForm;
 import com.example.betterworld.models.User;
-import com.example.betterworld.repositories.LoginRepository;
+import com.example.betterworld.repositories.AuthRepository;
 import com.google.firebase.auth.AuthCredential;
 
 import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
     public LiveData<DataOrException<User, Exception>> authenticatedUserLiveData;
-    private LoginRepository loginRepository;
+    private AuthRepository authRepository;
     private LoginForm login;
     private View.OnFocusChangeListener onFocusEmail;
     private View.OnFocusChangeListener onFocusPassword;
 
     @Inject
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
+    LoginViewModel(AuthRepository loginRepository) {
+        this.authRepository = loginRepository;
     }
 
     void signInWithGoogle(AuthCredential googleAuthCredential) {
-//        authenticatedUserLiveData = loginRepository.firebaseSignInWithGoogle(googleAuthCredential);
+//        authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(googleAuthCredential);
     }
 
     public void signInWithEmailAndPassword(String email, String password) {
-        authenticatedUserLiveData = loginRepository.firebaseSignInWithEmailAndPassword( email, password);
+        authenticatedUserLiveData = authRepository.firebaseSignInWithEmailAndPassword( email, password);
     }
 
     public void signOutUser() {
-        loginRepository.signOutAuthUser();
+        authRepository.signOutAuthUser();
     }
 
     @VisibleForTesting

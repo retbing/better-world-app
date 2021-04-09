@@ -7,57 +7,44 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
 import com.example.betterworld.models.Charity;
+import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.viewmodels.CharityViewModel;
 import com.example.betterworld.viewmodels.LoginViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
+
 @AndroidEntryPoint
 public class CharityFormActivity extends AppCompatActivity {
 
 
-    private static final String TAG ="TAG CharityFormActivity" ;
+    private static final String TAG = "TAG CharityFormActivity";
     private ActivityCharityFormBinding activityCharityFormBinding;
     private DatePickerDialog.OnDateSetListener onDateStartedSetListener;
     private DatePickerDialog.OnDateSetListener onDateEndedSetListener;
 
     private int step;
-    String endedDate;
-    String startedDate;
-
-    String title;
-    String description;
-    String whoBenefits;
-    String imageUrl;
-    float target;
-    float donated;
-    String dueDate;
-    String startDate;
-    String categoryId;
-    String categoryName;
-    String userId;
-    String userName;
-    String socialMediaAccount;
-    String address;
-    String profession;
-    String nameOfInstitution;
-    String phoneNumber;
-
+    Date dueDate, startDate;
+    String startedDate, endedDate;
 
 
     @Inject
@@ -67,30 +54,8 @@ public class CharityFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
-        _initCharityVariables();
         _initComponents();
         step = 0;
-    }
-
-    private void _initCharityVariables() {
-        title ="";
-        description ="";
-        whoBenefits ="";
-        nameOfInstitution ="";
-        imageUrl ="";
-        target =0;
-        donated =0;
-        dueDate ="";
-        startDate ="";
-        categoryId ="";
-        categoryName ="";
-        userId = FirebaseAuth.getInstance().getUid();
-        userName = "";
-        socialMediaAccount ="";
-        address ="";
-        profession ="";
-        phoneNumber = "";
-
     }
 
 
@@ -101,6 +66,15 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDateStarted.setOnClickListener(view -> _dateTimeStartedPopup());
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
+        activityCharityFormBinding.btnHome.setOnClickListener(view -> {
+            gotoNotificationActivity(this);
+        });
+        activityCharityFormBinding.frameLayoutTransparent.setOnClickListener(view -> {
+            activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.GONE);
+            activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.GONE);
+            activityCharityFormBinding.frameLayoutDatePopup.setVisibility(View.GONE);
+
+        });
 
         onDateStartedSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -108,9 +82,10 @@ public class CharityFormActivity extends AppCompatActivity {
                 month = month + 1;
                 startedDate = month + "/" + day + "/" + year;
                 activityCharityFormBinding.etDateStarted.setText(startedDate);
+
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
-                startDate = Long.toString(calendar.getTimeInMillis()) ;
+                startDate = new Date(calendar.getTimeInMillis());
             }
         };
 
@@ -123,31 +98,27 @@ public class CharityFormActivity extends AppCompatActivity {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
-                dueDate = Long.toString(calendar.getTimeInMillis()) ;
+                dueDate = new Date(calendar.getTimeInMillis());
             }
         };
 
 
     }
 
-    private void _createCharity() {
-        profession =  activityCharityFormBinding.etProfession.getText().toString();
-        nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
-        socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
-        address =  activityCharityFormBinding.etAddress.getText().toString();
-        title =  activityCharityFormBinding.etTitle.getText().toString();
-        whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
-        target =  Float.parseFloat("0"+activityCharityFormBinding.etTarget.getText().toString());
-        description =  activityCharityFormBinding.etDescription.getText().toString();
-        phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
+    private MutableLiveData<DataOrException<Charity, Exception>> _createCharity() {
+//       String profession =  activityCharityFormBinding.etProfession.getText().toString();
+//       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
+//       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
+//       String address =  activityCharityFormBinding.etAddress.getText().toString();
+//       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
 
-        Charity charity =  new Charity("",
-                title,description,whoBenefits,
-                imageUrl,target,donated,
-                dueDate,startDate,categoryId,categoryName,
-                userId,userName);
-        Log.d(TAG, "charity : \n"  + charity.toString());
-        charityViewModel.createCharity(charity);
+
+        String title = activityCharityFormBinding.etTitle.getText().toString();
+        String whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
+        float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
+        String description = activityCharityFormBinding.etDescription.getText().toString();
+
+        return charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate);
     }
 
     private void _nextStep(int i) {
@@ -179,17 +150,20 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _charityFormPageSuccess() {
-        activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-        activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-        activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-        activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-        activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
-        activityCharityFormBinding.btnStepper4.setText("");
-        activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
-
-        //Create Charity On SuccessPage
-        _createCharity();
+        _createCharity().observe(this, charityOrExp -> {
+            if (charityOrExp.data != null) {
+                activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+                activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+                activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+                activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+                activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
+                activityCharityFormBinding.btnStepper4.setText("");
+                activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
+                activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
+            } else {
+                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void _charityFormPage4() {
@@ -305,9 +279,8 @@ public class CharityFormActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void _dateTimeDone(){
-        String fullDateTime = startedDate + " - " + endedDate;
-        activityCharityFormBinding.etDate.setText(fullDateTime);
+    private void _dateTimeDone() {
+        activityCharityFormBinding.etDate.setText(startedDate + " - " + endedDate);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.frameLayoutDatePopup.setVisibility(View.INVISIBLE);
     }

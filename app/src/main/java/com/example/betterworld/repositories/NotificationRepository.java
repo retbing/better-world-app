@@ -25,10 +25,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import dagger.hilt.android.scopes.ActivityScoped;
+
 import static com.example.betterworld.utils.Constants.NOTIFICATIONS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
 
-@Singleton
+@ActivityScoped
 public class NotificationRepository {
     private final CollectionReference _notificationRef;
     private final FirebaseAuth firebaseAuth;

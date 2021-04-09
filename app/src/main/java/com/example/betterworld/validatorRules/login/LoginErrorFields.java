@@ -1,13 +1,8 @@
-package com.example.betterworld.models;
+package com.example.betterworld.validatorRules.login;
 
-public class RegisterErrorFields {
+public class LoginErrorFields {
     private Integer email;
     private Integer password;
-    private Integer username;
-
-    public Integer getUsername() { return username; }
-
-    public void setUsername(Integer username) { this.username = username; }
 
     public Integer getEmail() {
         return email;

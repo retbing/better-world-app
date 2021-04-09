@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
-import com.example.betterworld.repositories.LoginRepository;
+import com.example.betterworld.repositories.AuthRepository;
 import com.example.betterworld.repositories.SplashRepository;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -12,12 +12,12 @@ import javax.inject.Inject;
 
 public class SplashViewModel {
     private SplashRepository _splashRepository;
-    private LoginRepository _loginRepository;
+    private AuthRepository _authRepository;
 
     @Inject
-    SplashViewModel(SplashRepository splashRepository, LoginRepository loginRepository) {
+    SplashViewModel(SplashRepository splashRepository, AuthRepository authRepository) {
         this._splashRepository = splashRepository;
-        this._loginRepository = loginRepository;
+        this._authRepository = authRepository;
     }
 
     public FirebaseUser checkIfUserIsAuthenticated() {
@@ -25,7 +25,7 @@ public class SplashViewModel {
     }
 
     public MutableLiveData<DataOrException<User, Exception>> getUserFromFirestore(String uuid, String email) {
-        return  _loginRepository.getUserFromFirestore(uuid, email);
+        return  _authRepository.getUserFromFirestore(uuid, email);
     }
 
     public String getUid() {
