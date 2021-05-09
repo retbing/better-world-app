@@ -1,4 +1,4 @@
-package com.example.betterworld.models;
+package com.example.betterworld.validatorRules.register;
 
 public class RegisterFields {
     private String email;

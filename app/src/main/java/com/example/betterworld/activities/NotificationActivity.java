@@ -29,7 +29,6 @@ public class NotificationActivity extends AppCompatActivity {
     NotificationViewModel notificationViewModel;
 
     private ActivityNotificationBinding activityNotificationBinding;
-    private User user;
 
     private static final String TAG = "NotificationActivity";
     @Override
@@ -50,8 +49,6 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
-        user = (User) getIntent().getSerializableExtra(USER);
-        activityNotificationBinding.textView.setText(user.getUsername());
     }
 
     private void _setNotificationListViewAdapter(List<Notification> notifications) {

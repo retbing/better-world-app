@@ -1,4 +1,4 @@
-package com.example.betterworld.models;
+package com.example.betterworld.validatorRules.login;
 
 public class LoginFields {
     private String email;

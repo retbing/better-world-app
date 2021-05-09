@@ -14,7 +14,7 @@ import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityLoginBinding;
-import com.example.betterworld.models.LoginFields;
+import com.example.betterworld.validatorRules.login.LoginFields;
 import com.example.betterworld.viewmodels.LoginViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
@@ -64,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         final String email = activityLoginBinding.etEmail.getText().toString();
         final String password = activityLoginBinding.etPassword.getText().toString();
 
-        loginViewModel.signInWithEmailAndPassword(email,password);
-        loginViewModel.authenticatedUserLiveData.observe(this, dataOrException ->{
+        loginViewModel.signInWithEmailAndPassword(email, password);
+        loginViewModel.authenticatedUserLiveData.observe(this, dataOrException -> {
 
             if (dataOrException.data != null) {
-                Toast.makeText(LoginActivity.this, "Logged in successfully as "+dataOrException.data.getUsername(), Toast.LENGTH_SHORT).show();
-                gotoMainActivity(LoginActivity.this,dataOrException.data);
+                Toast.makeText(LoginActivity.this, "Logged in successfully as " + dataOrException.data.getUsername(), Toast.LENGTH_SHORT).show();
+                gotoMainActivity(LoginActivity.this);
             }
 
             if (dataOrException.exception != null) {

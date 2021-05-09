@@ -24,27 +24,29 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 public class CharityRepository {
 
     private CollectionReference charityCollection;
+
     @Inject
     public CharityRepository(@Named(CHARITIES_REF) CollectionReference charitiesRef) {
         this.charityCollection = charitiesRef;
     }
 
 
-    public void createCharityOnFireStore(Charity charity) {
+    public MutableLiveData<DataOrException<Charity, Exception>> createCharityOnFireStore(Charity charity) {
         MutableLiveData<DataOrException<Charity, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         charityCollection
-                .add(Charity.charityToMap(charity))
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                .document(charity.getCharityId())
+                .set(charity.toMap())
+                .addOnCompleteListener(charityTask -> {
+                    DataOrException<Charity, Exception> dataOrException = new DataOrException<>();
+                    if (charityTask.isSuccessful()) {
+                        dataOrException.data = charity;
+                        logErrorMessage("Charity has been Created");
+                    } else {
+                        logErrorMessage("error on");
+                        dataOrException.exception = charityTask.getException();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error adding document", e);
-                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
                 });
+        return dataOrExceptionMutableLiveData;
     }
 }

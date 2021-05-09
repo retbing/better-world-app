@@ -1,4 +1,4 @@
-package com.example.betterworld.models;
+package com.example.betterworld.validatorRules.register;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -7,14 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.betterworld.BR;
 import com.example.betterworld.R;
 
-public class LoginForm extends BaseObservable {
-    private LoginFields fields = new LoginFields();
-    private LoginErrorFields errors = new LoginErrorFields();
-    private MutableLiveData<LoginFields> buttonClick = new MutableLiveData<>();
+public class RegisterValidator extends BaseObservable {
+    private RegisterFields fields = new RegisterFields();
+    private RegisterErrorFields errors = new RegisterErrorFields();
+    private MutableLiveData<RegisterFields> buttonClick = new MutableLiveData<>();
 
     @Bindable
     public boolean isValid() {
-        boolean valid = isEmailValid(false);
+        boolean valid = isEmailValid(false) && isPasswordValid(false);
         valid = isPasswordValid(false) && valid;
         notifyPropertyChanged(BR.emailError);
         notifyPropertyChanged(BR.passwordError);
@@ -69,11 +69,11 @@ public class LoginForm extends BaseObservable {
         }
     }
 
-    public MutableLiveData<LoginFields> getLoginFields() {
+    public MutableLiveData<RegisterFields> getLoginFields() {
         return buttonClick;
     }
 
-    public LoginFields getFields() {
+    public RegisterFields getFields() {
         return fields;
     }
 
