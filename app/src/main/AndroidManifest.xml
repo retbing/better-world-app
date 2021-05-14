@@ -11,11 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterWorld">
         <activity android:name=".activities.NotificationActivity"></activity>
-        <activity android:name=".activities.CharityFormActivity" />
+        <activity android:name=".activities.LoginActivity" />
 
         <activity android:name=".activities.ChooseCategory" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.LoginActivity" >
+        <activity android:name=".activities.CharityFormActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SplashActivity">
-
-
             <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />

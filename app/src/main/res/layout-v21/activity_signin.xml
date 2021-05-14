@@ -39,7 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingHorizontal="14dp">
+                    android:paddingHorizontal="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp">
 
                     <LinearLayout
                         android:id="@+id/linearLayout3"
@@ -137,7 +139,7 @@
                         android:layout_height="60dp"
                         android:layout_marginStart="14dp"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginRight="14dp"
                         android:layout_marginBottom="20dp"
@@ -145,7 +147,6 @@
                         android:backgroundTint="@color/bw_blue"
                         android:text="@string/login"
                         android:enabled="@{model.login.valid}"
-                        android:onClick="@{() -> model.onButtonClick()}"
                         app:backgroundTint="@color/bw_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

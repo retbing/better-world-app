@@ -150,20 +150,30 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _charityFormPageSuccess() {
-        _createCharity().observe(this, charityOrExp -> {
-            if (charityOrExp.data != null) {
-                activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-                activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-                activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-                activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-                activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
-                activityCharityFormBinding.btnStepper4.setText("");
-                activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
-                activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
-            } else {
-                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
-            }
-        });
+
+        activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+        activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+        activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+        activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+        activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
+        activityCharityFormBinding.btnStepper4.setText("");
+        activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
+        activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
+
+//        _createCharity().observe(this, charityOrExp -> {
+//            if (charityOrExp.data != null) {
+//                activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+//                activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+//                activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+//                activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
+//                activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
+//                activityCharityFormBinding.btnStepper4.setText("");
+//                activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
+//                activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
+//            } else {
+//                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     private void _charityFormPage4() {
