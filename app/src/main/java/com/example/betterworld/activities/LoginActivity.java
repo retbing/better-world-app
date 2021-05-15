@@ -28,9 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient googleSignInClient;
     TextView tv_create_new_account;
     ActivityLoginBinding activityLoginBinding;
+
+    final  String TAG = "LoginActivity";
+
     @Inject
     LoginViewModel loginViewModel;
-    final  String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loginViewModel.init();
         }
+
         activityLoginBinding.setLoginModel(loginViewModel);
         _initComponents();
         setupButtonClick();

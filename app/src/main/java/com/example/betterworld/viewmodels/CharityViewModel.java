@@ -15,8 +15,6 @@ import com.example.betterworld.repositories.AuthRepository;
 import com.example.betterworld.repositories.CharityRepository;
 import com.example.betterworld.validatorRules.createCharity.CharityFields;
 import com.example.betterworld.validatorRules.createCharity.CharityForm;
-import com.example.betterworld.validatorRules.login.LoginFields;
-import com.example.betterworld.validatorRules.login.LoginForm;
 
 import java.util.Date;
 import java.util.UUID;
@@ -27,11 +25,11 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 public class CharityViewModel extends ViewModel {
 
+
     private CharityRepository _charityRepository;
     private AuthRepository _authRepository;
-    private CharityForm charityForm;
-    private View.OnFocusChangeListener onFocusEmail;
-    private View.OnFocusChangeListener onFocusPassword;
+    private CharityForm charity;
+    private View.OnFocusChangeListener onFocusProfession;
 
 
     private static final String TAG = "CharityViewModel";
@@ -65,48 +63,39 @@ public class CharityViewModel extends ViewModel {
 
     @VisibleForTesting
     public void init() {
-        charityForm = new CharityForm();
-        onFocusEmail =  new View.OnFocusChangeListener() {
+        charity = new CharityForm();
 
+        logErrorMessage("Initalizing VisibleForTesting ...");
+        onFocusProfession =  new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focused) {
+
                 EditText et = (EditText) view;
+                logErrorMessage("Initalizing onFocusChange ... "+et.getText());
                 if (et.getText().length() > 0 && !focused) {
-                    charityForm.isEmailValid(true);
+
+                    charity.isProfessionValid(true);
                 }
             }
         };
 
-        onFocusPassword = new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                EditText et = (EditText) view;
-                if (et.getText().length() > 0 && !focused) {
-                    charityForm.isPasswordValid(true);
-                }
-            }
-        };
     }
 
-    public CharityForm getLogin() {
-        return charityForm;
+    public CharityForm getCharity() {
+        return charity;
     }
 
-    public View.OnFocusChangeListener getEmailOnFocusChangeListener() {
-        return onFocusEmail;
-    }
-
-    public View.OnFocusChangeListener getPasswordOnFocusChangeListener() {
-        return onFocusPassword;
+    public View.OnFocusChangeListener getProfessionOnFocusChangeListener() {
+        logErrorMessage("Started getProfessionOnFocusChangeListener ");
+        return onFocusProfession;
     }
 
     public void onButtonClick() {
-        charityForm.onClick();
+        charity.onClick();
     }
 
     public MutableLiveData<CharityFields> getCharityFields() {
-        return charityForm.getCharityFields();
+        return charity.getCharityFields();
     }
 
 

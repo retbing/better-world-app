@@ -17,14 +17,16 @@ public class LoginForm extends BaseObservable {
     @Bindable
     public boolean isValid() {
         boolean valid = isPasswordValid(false) ;
+        valid = isEmailValid(false) && valid;
         notifyPropertyChanged(BR.passwordError);
+        notifyPropertyChanged(BR.emailError);
         return valid;
     }
 
     public boolean isEmailValid(boolean setMessage) {
         // Minimum a@b.c
         String email = fields.getEmail();
-        logErrorMessage(" isEmailValid text is" + email);
+        logErrorMessage(" email text is" + email);
         if (email != null ) {
             int indexOfAt = email.indexOf("@");
             int indexOfDot = email.lastIndexOf(".");
@@ -50,6 +52,8 @@ public class LoginForm extends BaseObservable {
 
     public boolean isPasswordValid(boolean setMessage) {
         String password = fields.getPassword();
+        logErrorMessage("password : "+password);
+
         if (password != null && password.length() >= 6) {
             errors.setPassword(null);
             notifyPropertyChanged(BR.valid);

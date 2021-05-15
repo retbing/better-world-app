@@ -1,22 +1,14 @@
 package com.example.betterworld.validatorRules.createCharity;
 
 public class CharityFields {
-    private String email;
-    private String password;
+    private String profession;
 
-    public String getEmail() {
-        return email;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

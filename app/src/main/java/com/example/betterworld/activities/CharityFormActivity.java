@@ -29,17 +29,18 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
 public class CharityFormActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "TAG CharityFormActivity";
-    private ActivityCharityFormBinding activityCharityFormBinding;
-    private DatePickerDialog.OnDateSetListener onDateStartedSetListener;
-    private DatePickerDialog.OnDateSetListener onDateEndedSetListener;
+     static final String TAG = "TAG CharityFormActivity";
+     ActivityCharityFormBinding activityCharityFormBinding;
+     DatePickerDialog.OnDateSetListener onDateStartedSetListener;
+     DatePickerDialog.OnDateSetListener onDateEndedSetListener;
 
-    private int step;
+     int step;
     Date dueDate, startDate;
     String startedDate, endedDate;
 
@@ -50,23 +51,23 @@ public class CharityFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
 
+        activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
         if (savedInstanceState == null) {
             charityViewModel.init();
         }
-
         activityCharityFormBinding.setCharityModel(charityViewModel);
         _initComponents();
-        setupButtonClick();
+
         step = 0;
     }
 
     private void setupButtonClick() {
+        logErrorMessage("Started observing  ButtonClick");
         charityViewModel.getCharityFields().observe(this, new Observer<CharityFields>() {
+
             @Override
             public void onChanged(CharityFields charityFields) {
-
                 Toast.makeText(CharityFormActivity.this, "Data changed on form", Toast.LENGTH_LONG).show();
             }
         });
@@ -74,6 +75,7 @@ public class CharityFormActivity extends AppCompatActivity {
 
 
     private void _initComponents() {
+        setupButtonClick();
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.etDate.setOnClickListener(view -> _dateTimeFrameLayout());

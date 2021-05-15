@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.BR;
 import com.example.betterworld.R;
-import com.example.betterworld.validatorRules.login.LoginErrorFields;
-import com.example.betterworld.validatorRules.login.LoginFields;
 
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
@@ -19,44 +17,30 @@ public class CharityForm extends BaseObservable {
 
     @Bindable
     public boolean isValid() {
-        boolean valid = isPasswordValid(false) ;
-        notifyPropertyChanged(BR.passwordError);
+        logErrorMessage("Inside isValod");
+        boolean valid = isProfessionValid(false) ;
+        notifyPropertyChanged(BR.professionError);
         return valid;
     }
 
-    public boolean isEmailValid(boolean setMessage) {
+    public boolean  isProfessionValid(boolean setMessage) {
 
-        String password = fields.getPassword();
-        if (password != null && password.length() >= 6) {
-            errors.setPassword(null);
+        String password = fields.getProfession();
+
+        logErrorMessage("Profession : "+password);
+        if (password != null) {
+            errors.setProfession(null);
             notifyPropertyChanged(BR.valid);
             return true;
-        } else {
-            if (setMessage) {
-                errors.setPassword(R.string.error_too_short);
-                notifyPropertyChanged(BR.valid);
-            }
-
-            return false;
         }
-
-    }
-
-    public boolean isPasswordValid(boolean setMessage) {
-        String password = fields.getPassword();
-        if (password != null && password.length() >= 6) {
-            errors.setPassword(null);
+        if (setMessage) {
+            errors.setProfession(R.string.error_too_short);
             notifyPropertyChanged(BR.valid);
-            return true;
-        } else {
-            if (setMessage) {
-                errors.setPassword(R.string.error_too_short);
-                notifyPropertyChanged(BR.valid);
-            }
-
-            return false;
         }
+
+        return false;
     }
+
 
     public void onClick() {
         if (isValid()) {
@@ -73,12 +57,7 @@ public class CharityForm extends BaseObservable {
     }
 
     @Bindable
-    public Integer getEmailError() {
-        return errors.getEmail();
-    }
-
-    @Bindable
-    public Integer getPasswordError() {
-        return errors.getPassword();
+    public Integer getProfessionError() {
+        return errors.getProfession();
     }
 }

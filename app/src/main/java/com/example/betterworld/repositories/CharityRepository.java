@@ -17,10 +17,13 @@ import com.google.firebase.firestore.DocumentReference;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
+
+@Singleton
 public class CharityRepository {
 
     private CollectionReference charityCollection;
