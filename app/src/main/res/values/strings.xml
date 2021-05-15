@@ -50,6 +50,7 @@
     <string name="error_format_invalid">Format Invalid</string>
     <string name="error_too_short">Too Short</string>
     <string name="tv_1_page_3">Description</string>
+    <string name="tv_2_page_3">Upload a photo as a thumbnail</string>
 
 
 </resources>

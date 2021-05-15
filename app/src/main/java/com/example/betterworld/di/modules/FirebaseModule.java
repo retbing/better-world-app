@@ -3,6 +3,8 @@ package com.example.betterworld.di.modules;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -14,6 +16,7 @@ import dagger.hilt.components.SingletonComponent;
 
 import static com.example.betterworld.utils.Constants.CHARITIES_COLLECTION;
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
+import static com.example.betterworld.utils.Constants.CHARITIES_STORAGE_REF;
 import static com.example.betterworld.utils.Constants.NOTIFICATIONS_REF;
 import static com.example.betterworld.utils.Constants.USERS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
@@ -36,6 +39,20 @@ public class FirebaseModule {
 
     @Provides
     @Singleton
+    public static FirebaseStorage provideFirebaseStorage() {
+        return FirebaseStorage.getInstance();
+    }
+
+
+    @Provides
+    @Singleton
+    @Named(CHARITIES_STORAGE_REF)
+    public static StorageReference provideCharitiesStorageReference(FirebaseStorage storage) {
+        return storage.getReference().child(CHARITIES_STORAGE_REF);
+    }
+
+    @Provides
+    @Singleton
     @Named(USERS_REF)
     public static CollectionReference provideUsersCollectionReference(FirebaseFirestore rootRef) {
         return rootRef.collection(USERS_COLLECTION);
@@ -47,6 +64,8 @@ public class FirebaseModule {
     public static CollectionReference provideCharitiesCollectionReference(FirebaseFirestore rootRef) {
         return rootRef.collection(CHARITIES_COLLECTION);
     }
+
+
 
 
 

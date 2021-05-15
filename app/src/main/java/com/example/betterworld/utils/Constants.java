@@ -12,4 +12,5 @@ public interface Constants {
     String NOTIFICATIONS_REF = "notificationsRef";
     String CHARITIES_REF = "charitiesRef";
     String NOTIFICATIONS = "notifications";
+    String CHARITIES_STORAGE_REF = "charityThumbnails";
 }

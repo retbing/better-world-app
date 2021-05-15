@@ -33,7 +33,7 @@ public class Charity implements Serializable {
         this.title = title;
         this.description = description;
         this.whoBenefits = whoBenefits;
-        this.imageUrl = DEFAULT_IMAGE;
+        this.imageUrl = imageUrl;
         this.target = target;
         this.donated = donated;
         this.dueDate = new Date(dueDate);
