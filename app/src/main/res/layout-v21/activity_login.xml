@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="model"
+            name="loginModel"
             type="com.example.betterworld.viewmodels.LoginViewModel" />
     </data>
 
@@ -98,9 +98,9 @@
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
                             android:textSize="14sp"
-                            android:text="@={model.login.fields.email}"
-                            app:error="@{model.login.emailError}"
-                            app:onFocus="@{model.getEmailOnFocusChangeListener()}"
+                            android:text="@={loginModel.login.fields.email}"
+                            app:error="@{loginModel.login.emailError}"
+                            app:onFocus="@{loginModel.getEmailOnFocusChangeListener()}"
                             ></EditText>
 
                         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
@@ -112,9 +112,9 @@
                             android:background="@drawable/edit_view_bg_grey"
                             android:fontFamily="@font/gordita_regular"
                             android:hint="@string/password"
-                            android:text="@={model.login.fields.password}"
-                            app:error="@{model.login.passwordError}"
-                            app:onFocus="@{model.getPasswordOnFocusChangeListener()}"
+                            android:text="@={loginModel.login.fields.password}"
+                            app:error="@{loginModel.login.passwordError}"
+                            app:onFocus="@{loginModel.getPasswordOnFocusChangeListener()}"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
                             android:textSize="14sp"></EditText>
@@ -144,8 +144,8 @@
                         android:background="@drawable/button_bg_blue"
                         android:backgroundTint="@color/bw_blue"
                         android:text="@string/login"
-                        android:enabled="@{model.login.valid}"
-                        android:onClick="@{() -> model.onButtonClick()}"
+                        android:enabled="@{loginModel.login.valid}"
+                        android:onClick="@{() -> loginModel.onButtonClick()}"
                         app:backgroundTint="@color/bw_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,4 @@
-package com.example.betterworld.validatorRules.login;
+package com.example.betterworld.validatorRules.createCharity;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -6,13 +6,16 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.BR;
 import com.example.betterworld.R;
+import com.example.betterworld.validatorRules.login.LoginErrorFields;
+import com.example.betterworld.validatorRules.login.LoginFields;
 
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
-public class LoginForm extends BaseObservable {
-    private LoginFields fields = new LoginFields();
-    private LoginErrorFields errors = new LoginErrorFields();
-    private MutableLiveData<LoginFields> buttonClick = new MutableLiveData<>();
+
+public class CharityForm extends BaseObservable {
+    private CharityFields fields = new CharityFields();
+    private CharityErrorFields errors = new CharityErrorFields();
+    private MutableLiveData<CharityFields> buttonClick = new MutableLiveData<>();
 
     @Bindable
     public boolean isValid() {
@@ -22,30 +25,21 @@ public class LoginForm extends BaseObservable {
     }
 
     public boolean isEmailValid(boolean setMessage) {
-        // Minimum a@b.c
-        String email = fields.getEmail();
-        logErrorMessage(" isEmailValid text is" + email);
-        if (email != null ) {
-            int indexOfAt = email.indexOf("@");
-            int indexOfDot = email.lastIndexOf(".");
-            if (indexOfAt > 0 && indexOfDot > indexOfAt && indexOfDot < email.length() - 1) {
-                errors.setEmail(null);
-                notifyPropertyChanged(BR.valid);
-                return true;
-            } else {
-                if (setMessage) {
-                    errors.setEmail(R.string.error_format_invalid);
-                    notifyPropertyChanged(BR.valid);
-                }
-                return false;
-            }
-        }
-        if (setMessage) {
-            errors.setEmail(R.string.error_too_short);
+
+        String password = fields.getPassword();
+        if (password != null && password.length() >= 6) {
+            errors.setPassword(null);
             notifyPropertyChanged(BR.valid);
+            return true;
+        } else {
+            if (setMessage) {
+                errors.setPassword(R.string.error_too_short);
+                notifyPropertyChanged(BR.valid);
+            }
+
+            return false;
         }
 
-        return false;
     }
 
     public boolean isPasswordValid(boolean setMessage) {
@@ -70,11 +64,11 @@ public class LoginForm extends BaseObservable {
         }
     }
 
-    public MutableLiveData<LoginFields> getLoginFields() {
+    public MutableLiveData<CharityFields> getCharityFields() {
         return buttonClick;
     }
 
-    public LoginFields getFields() {
+    public CharityFields getFields() {
         return fields;
     }
 

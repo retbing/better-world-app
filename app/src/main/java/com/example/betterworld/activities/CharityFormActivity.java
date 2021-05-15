@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -13,25 +12,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
+import com.example.betterworld.validatorRules.createCharity.CharityFields;
 import com.example.betterworld.viewmodels.CharityViewModel;
-import com.example.betterworld.viewmodels.LoginViewModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
+import static com.example.betterworld.utils.Actions.goToLoginActivity;
 
 @AndroidEntryPoint
 public class CharityFormActivity extends AppCompatActivity {
@@ -54,8 +51,25 @@ public class CharityFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
+
+        if (savedInstanceState == null) {
+            charityViewModel.init();
+        }
+
+        activityCharityFormBinding.setCharityModel(charityViewModel);
         _initComponents();
+        setupButtonClick();
         step = 0;
+    }
+
+    private void setupButtonClick() {
+        charityViewModel.getCharityFields().observe(this, new Observer<CharityFields>() {
+            @Override
+            public void onChanged(CharityFields charityFields) {
+
+                Toast.makeText(CharityFormActivity.this, "Data changed on form", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
@@ -67,7 +81,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
         activityCharityFormBinding.btnHome.setOnClickListener(view -> {
-            gotoNotificationActivity(this);
+            goToLoginActivity(this);
         });
         activityCharityFormBinding.frameLayoutTransparent.setOnClickListener(view -> {
             activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.GONE);
@@ -118,7 +132,7 @@ public class CharityFormActivity extends AppCompatActivity {
         float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
         String description = activityCharityFormBinding.etDescription.getText().toString();
 
-        return charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate);
+        return new MutableLiveData<DataOrException<Charity, Exception>> ();
     }
 
     private void _nextStep(int i) {
@@ -160,20 +174,14 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
 
-//        _createCharity().observe(this, charityOrExp -> {
-//            if (charityOrExp.data != null) {
-//                activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-//                activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-//                activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-//                activityCharityFormBinding.btnStepper4.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
-//                activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.white));
-//                activityCharityFormBinding.btnStepper4.setText("");
-//                activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
-//                activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
-//            } else {
-//                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
-//            }
-//        });
+        _createCharity().observe(this, charityOrExp -> {
+            if (charityOrExp.data != null) {
+                Toast.makeText(this, " creating charity  successfull", Toast.LENGTH_LONG).show();
+
+            } else {
+                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void _charityFormPage4() {

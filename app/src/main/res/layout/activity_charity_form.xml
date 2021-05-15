@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="charityModel"
+            type="com.example.betterworld.viewmodels.CharityViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -158,6 +164,7 @@
                             android:textSize="14dp" />
 
                         <EditText
+                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/et_profession"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
@@ -178,6 +185,7 @@
                             android:textSize="14dp" />
 
                         <EditText
+                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/et_name_of_institution"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
@@ -198,6 +206,7 @@
                             android:textSize="14dp" />
 
                         <EditText
+                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/et_social_media_account"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
@@ -218,6 +227,7 @@
                             android:textSize="14dp" />
 
                         <EditText
+
                             android:id="@+id/et_address"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"

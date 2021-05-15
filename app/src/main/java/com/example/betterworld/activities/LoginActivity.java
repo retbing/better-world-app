@@ -35,12 +35,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(LoginActivity.this, "Fuck me in my pussy", Toast.LENGTH_LONG).show();
         activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         if (savedInstanceState == null) {
             loginViewModel.init();
         }
-        activityLoginBinding.setModel(loginViewModel);
+        activityLoginBinding.setLoginModel(loginViewModel);
         _initComponents();
         setupButtonClick();
     }
