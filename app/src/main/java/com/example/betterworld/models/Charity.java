@@ -164,4 +164,16 @@ public class Charity implements Serializable {
         String userName = (String) userMap.get("userName");
         return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, dueDate, startDate, categoryId, categoryName, userId, userName);
     }
+
+    public String getDonatedToString() {
+        return String.valueOf(donated);
+    }
+
+    public int getPercentToInteger(){
+        return Math.round((donated * 100/target)/100);
+    }
+
+    public String getPercentToString(){
+        return String.valueOf(Math.round((donated * 100/target)/100));
+    }
 }
