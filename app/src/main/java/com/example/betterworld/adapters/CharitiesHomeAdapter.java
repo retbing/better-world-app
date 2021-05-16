@@ -1,5 +1,6 @@
 package com.example.betterworld.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,27 +17,34 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.example.betterworld.utils.Actions.goToCharityDetailsActivity;
+
 
 public class CharitiesHomeAdapter extends RecyclerView.Adapter {
     List<Charity> charityList;
+    Activity activity;
 
-    public CharitiesHomeAdapter(List<Charity> charityList) {
+    public CharitiesHomeAdapter(List<Charity> charityList, Activity activity) {
         this.charityList = charityList;
+        this.activity = activity;
     }
 
     static class CharityViewHolder extends RecyclerView.ViewHolder {
 
-        public static CharityViewHolder create(LayoutInflater inflater, ViewGroup parent) {
+        public static CharityViewHolder create(LayoutInflater inflater, ViewGroup parent, Activity activity) {
             CharityDataBinding  charityDataBinding =  CharityDataBinding.inflate(inflater, parent, false);
-            return new CharityViewHolder(charityDataBinding, parent.getContext());
+            return new CharityViewHolder(charityDataBinding, parent.getContext(), activity);
         }
 
         public CharityDataBinding charityDataBinding;
         public Context context;
-        public CharityViewHolder(@NonNull @NotNull CharityDataBinding binding, Context context) {
+        public Activity activity;
+        public CharityViewHolder(@NonNull @NotNull CharityDataBinding binding, Context context, Activity activity) {
             super(binding.getRoot());
             this.charityDataBinding = binding;
             this.context = context;
+            this.activity = activity;
+            this.charityDataBinding.getRoot().setOnClickListener(view -> goToCharityDetailsActivity(activity));
         }
 
         public void bindTo(Charity charity) {
@@ -49,7 +57,7 @@ public class CharitiesHomeAdapter extends RecyclerView.Adapter {
     @NotNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-       return CharityViewHolder.create(LayoutInflater.from(parent.getContext()), parent);
+       return CharityViewHolder.create(LayoutInflater.from(parent.getContext()), parent, activity);
     }
 
     @Override

@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.example.betterworld.activities.CharityDetailsActivity;
 import com.example.betterworld.activities.CharityFormActivity;
 import com.example.betterworld.activities.ChooseCategoryActivity;
+import com.example.betterworld.activities.DonationDetailActivity;
 import com.example.betterworld.activities.ForgotPasswordActivity;
 import com.example.betterworld.activities.HomeActivity;
 import com.example.betterworld.activities.LoginActivity;
@@ -31,8 +33,19 @@ public class Actions {
     public static void goToPaymentActivity(Activity activity) {
         Intent intent = new Intent(activity, PaymentActivity.class);
         activity.startActivity(intent);
-        activity.finish();
     }
+
+    public static void goToCharityDetailsActivity(Activity activity) {
+        Intent intent = new Intent(activity, CharityDetailsActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void goToDonationDetailActivity(Activity activity) {
+        Intent intent = new Intent(activity, DonationDetailActivity.class);
+        activity.startActivity(intent);
+    }
+
+
 
     public static void gotoNotificationActivity(Activity activity) {
         Intent intent = new Intent(activity, NotificationActivity.class);

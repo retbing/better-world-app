@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void _setCharityAdapter(List<Charity> charityList) {
-        final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList);
+        final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList, this);
         activityHomeBinding.rvCharityCard.setAdapter(adapter);
     }
 }
