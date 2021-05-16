@@ -64,6 +64,23 @@ public class Charity implements Serializable {
         return charityMap;
     }
 
+
+    public static Charity fromMap(Map<String, Object> userMap) {
+        String charityId = (String) userMap.get("charityId");
+        String title = (String) userMap.get("title");
+        String description = (String) userMap.get("description");
+        String whoBenefits = (String) userMap.get("whoBenefits");
+        String imageUrl = (String) userMap.get("imageUrl");
+        float target = (float) userMap.get("target");
+        float donated = (float) userMap.get("donated");
+        long dueDate = (Long) userMap.get("dueDate");
+        long startDate = (Long) userMap.get("startDate");
+        String categoryId = (String) userMap.get("categoryId");
+        String categoryName = (String) userMap.get("categoryName");
+        String userId = (String) userMap.get("userId");
+        String userName = (String) userMap.get("userName");
+        return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, dueDate, startDate, categoryId, categoryName, userId, userName);
+    }
     @Override
     public String toString() {
         return "Charity{" +
@@ -82,6 +99,7 @@ public class Charity implements Serializable {
                 ", userName='" + userName + '\'' +
                 '}';
     }
+
 
     public String getCharityId() {
         return charityId;
@@ -135,20 +153,4 @@ public class Charity implements Serializable {
         return userName;
     }
 
-    public static Charity fromMap(Map<String, Object> userMap) {
-        String charityId = (String) userMap.get("charityId");
-        String title = (String) userMap.get("title");
-        String description = (String) userMap.get("description");
-        String whoBenefits = (String) userMap.get("whoBenefits");
-        String imageUrl = (String) userMap.get("imageUrl");
-        float target = (float) userMap.get("target");
-        float donated = (float) userMap.get("donated");
-        long dueDate = (Long) userMap.get("dueDate");
-        long startDate = (Long) userMap.get("startDate");
-        String categoryId = (String) userMap.get("categoryId");
-        String categoryName = (String) userMap.get("categoryName");
-        String userId = (String) userMap.get("userId");
-        String userName = (String) userMap.get("userName");
-        return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, dueDate, startDate, categoryId, categoryName, userId, userName);
-    }
 }

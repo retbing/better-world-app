@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import com.example.betterworld.activities.CharityFormActivity;
 import com.example.betterworld.activities.ChooseCategoryActivity;
 import com.example.betterworld.activities.ForgotPasswordActivity;
+import com.example.betterworld.activities.HomeActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.RegisterActivity;
@@ -21,7 +22,7 @@ public class Actions {
 
 
     public static void gotoMainActivity(Activity activity) {
-        Intent intent = new Intent(activity, ChooseCategoryActivity.class);
+        Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
         activity.finish();
     }
