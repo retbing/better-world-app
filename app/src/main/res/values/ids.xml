@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="btn_search" type="id">btn_search</item>
-    <item name="btn_charity" type="id">btn_charity</item>
-    <item name="btn_blur" type="id">btn_blur</item>
-    <item name="linearLayoutHome" type="id">linearLayoutHome</item>
-    <item name="tv_username" type="id">tv_username</item>
-    <item name="tv_cardTitle" type="id">tv_cardTitle</item>
-</resources>
