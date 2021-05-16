@@ -18,14 +18,27 @@ import javax.inject.Inject;
 public class PaymentViewModel {
 
     private PaymentRepository _paymentRepository;
+
+
     @Inject
     public PaymentViewModel(PaymentRepository _paymentRepository ) {
         this._paymentRepository =_paymentRepository ;
     }
-    public MutableLiveData<DataOrException<PaymentMethod, Exception>> createCharity(
-            String title, String categoryId, String categoryName,
-            String whoBenefits, String description,
-            float target, Date startDate, Date dueDate, String imageName) {
+    public MutableLiveData<DataOrException<PaymentMethod, Exception>> createPayment(
+              String paymentMethodId,
+            String cardNumber,
+            String cardType,
+            String cardYear,
+            String cardMonth,
+            String cardCVV,
+            String cardFirstName,
+             String cardLastName
+    ) {
+
+        PaymentMethod payment =  new PaymentMethod(paymentMethodId,cardNumber,cardType,cardYear,cardMonth,cardCVV,cardFirstName,cardLastName);
+
+
+        return _paymentRepository.createPaymentOnFireStore(payment);
 
     }
 

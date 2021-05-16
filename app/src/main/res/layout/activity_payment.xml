@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bw_green">
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bw_green">
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/curved_white_bg"
+            android:paddingBottom="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
         android:id="@+id/linearLayoutPayment"
@@ -32,7 +47,6 @@
                 android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:onClick="getNotification"
-                android:src="@drawable/ic_payment_back"
                 app:tint="@color/black" />
 
             <TextView
@@ -112,7 +126,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <RadioGroup
-                android:id="@+id/radioGroup1"
+                android:id="@+id/radioGroupTogglePaymentMtd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp">
@@ -123,7 +137,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <RadioButton
+                    <ToggleButton
                         android:id="@+id/radio01"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -148,8 +162,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            android:layout_alignParentRight="true" />
 
                     </RelativeLayout>
 
@@ -161,7 +174,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <RadioButton
+                    <ToggleButton
                         android:id="@+id/radio02"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -187,8 +200,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            android:layout_alignParentRight="true" />
 
                     </RelativeLayout>
 
@@ -200,7 +212,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <RadioButton
+                    <ToggleButton
                         android:id="@+id/radio03"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -223,8 +235,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            android:layout_alignParentRight="true" />
 
                     </RelativeLayout>
 
@@ -260,13 +271,34 @@
 
         </LinearLayout>
 
+
         <RelativeLayout
+            android:id="@+id/rl_CreditCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:background="@color/bw_blue"
-            android:padding="5dp">
+            android:visibility="gone" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="@font/gordita_medium"
+                android:text="Credit Number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:hint="Credit number ... "
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_BankView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -275,16 +307,38 @@
                 android:text="Paypal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-            <ImageView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                tools:srcCompat="@tools:sample/avatars" />
-
+                android:hint="paypal number"
+                android:layout_alignParentRight="true"/>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_PaypalView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="@font/gordita_medium"
+                android:text="Iban Number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:hint="Iban number ... "
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
 
     </LinearLayout>
 
+        </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -298,6 +352,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/donate_to_charity"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="15px"
@@ -309,3 +364,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

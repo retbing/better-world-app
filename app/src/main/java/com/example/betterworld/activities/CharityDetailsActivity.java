@@ -6,6 +6,10 @@ import android.os.Bundle;
 
 import com.example.betterworld.databinding.ActivityCharityDetailsBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class CharityDetailsActivity extends AppCompatActivity {
 
 

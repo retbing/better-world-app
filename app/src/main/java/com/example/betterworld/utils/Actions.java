@@ -11,6 +11,7 @@ import com.example.betterworld.activities.ForgotPasswordActivity;
 import com.example.betterworld.activities.HomeActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
+import com.example.betterworld.activities.PaymentActivity;
 import com.example.betterworld.activities.RegisterActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -23,6 +24,12 @@ public class Actions {
 
     public static void gotoMainActivity(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
+        activity.startActivity(intent);
+        activity.finish();
+    }
+
+    public static void goToPaymentActivity(Activity activity) {
+        Intent intent = new Intent(activity, PaymentActivity.class);
         activity.startActivity(intent);
         activity.finish();
     }

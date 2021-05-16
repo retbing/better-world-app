@@ -7,7 +7,9 @@ import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.PaymentMethod;
 import com.google.firebase.firestore.CollectionReference;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.hilt.android.scopes.ActivityScoped;
 
@@ -20,13 +22,14 @@ public class PaymentRepository {
 
     private CollectionReference paymentCollection;
 
+    @Inject
     public PaymentRepository(@Named(PAYMENT_METHOD_REF) CollectionReference  _paymentCollection) {
         this.paymentCollection = _paymentCollection;
     }
 
 
 
-    public MutableLiveData<DataOrException<PaymentMethod, Exception>> createCharityOnFireStore(PaymentMethod payment) {
+    public MutableLiveData<DataOrException<PaymentMethod, Exception>> createPaymentOnFireStore(PaymentMethod payment) {
         MutableLiveData<DataOrException<PaymentMethod, Exception>> dataOrExceptionMutableLiveData
                 = new MutableLiveData<>();
         paymentCollection

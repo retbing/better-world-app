@@ -18,6 +18,12 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+import static com.example.betterworld.utils.Actions.goToPaymentActivity;
+
+
+@AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding activityHomeBinding;
@@ -48,6 +54,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
+        _setupRecyclerView();
+        activityHomeBinding.btnDonate.setOnClickListener(view->goToPaymentActivity(this));
+    }
+
+
+    private void _setupRecyclerView() {
         source = new ArrayList<>();
         source.add("Education");
         source.add("Health");
@@ -56,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerViewLayoutManager
                 = new LinearLayoutManager(
                 getApplicationContext());
-         activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(RecyclerViewLayoutManager);
+        activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(RecyclerViewLayoutManager);
 
         adapter = new CategoryBottonAdapter(source);
 

@@ -3,11 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data class="CharityDataBinding">
-        <variable
-            name="charity"
-            type="com.example.betterworld.models.Charity" />
-    </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
@@ -25,8 +20,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="177dp"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@{charity.imageUrl}" />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,8 +38,7 @@
                     android:textSize="16sp"
                     android:fontFamily="@font/gordita_medium"
                     android:layout_marginBottom="15dp"
-                    android:lineHeight="30sp"
-                    android:text="@{charity.title}" />
+                    android:lineHeight="30sp" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -53,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:progressTint="@color/bw_blue"
-                    android:progress="@{charity.percentToInteger}"
                     android:layout_marginBottom="10dp"/>
 
                 <LinearLayout
@@ -78,8 +70,7 @@
                         android:layout_weight="2"
                         android:textSize="14sp"
                         android:textColor="@color/bw_black"
-                        android:fontFamily="@font/gordita_medium"
-                        android:text="@{charity.donatedToString}" />
+                        android:fontFamily="@font/gordita_medium" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -87,8 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/bw_light_grey_2"
-                        android:fontFamily="@font/gordita_regular"
-                        android:text="@{charity.percentToString}" />
+                        android:fontFamily="@font/gordita_regular"/>
                 </LinearLayout>
             </LinearLayout>
 

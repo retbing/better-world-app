@@ -2,6 +2,7 @@ package com.example.betterworld.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
 import com.example.betterworld.models.User;
+import com.example.betterworld.validatorRules.login.LoginFields;
+import com.example.betterworld.validatorRules.register.RegisterFields;
 import com.example.betterworld.viewmodels.RegisterViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -45,6 +48,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
+        registerViewModel.getRegisterFields().observe(this, new Observer<RegisterFields>() {
+            @Override
+            public void onChanged(RegisterFields loginFields) {
+                Toast.makeText(RegisterActivity.this, "Data changed on email and password", Toast.LENGTH_LONG).show();
+            }
+        });
         activityRegisterBinding.tvSignIn.setOnClickListener(view -> goToLoginActivity(this));
         activityRegisterBinding.btnRegister.setOnClickListener(view -> _createNewAccount());
     }
