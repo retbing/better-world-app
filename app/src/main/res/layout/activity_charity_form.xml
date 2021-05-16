@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="charityModel"
+            type="com.example.betterworld.viewmodels.CharityViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_charityForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bw_green">
@@ -13,6 +20,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="25dp"
             android:background="@drawable/curved_white_bg"
+            android:paddingBottom="18dp"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +154,8 @@
                     <FrameLayout
                         android:id="@+id/frame_layout_page_1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -337,12 +346,35 @@
                         android:id="@+id/frame_layout_page_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="invisible">
+                        android:visibility="invisible"
+
+                        >
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_2_page_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_2_page_3"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <ImageButton
+                                android:id="@+id/ib_thumbnail"
+                                android:layout_width="match_parent"
+                                android:layout_height="165dp"
+                                android:backgroundTint="@color/white"
+                                app:srcCompat="@drawable/ic_baseline_image_128"
+                                >
+
+                            </ImageButton>
 
                             <TextView
                                 android:id="@+id/tv_1_page_3"
@@ -355,13 +387,18 @@
                                 android:textColor="@color/black"
                                 android:textSize="14dp" />
 
+
                             <EditText
                                 android:id="@+id/et_description"
                                 android:layout_width="match_parent"
-                                android:layout_height="56dp"
+                                android:layout_height="wrap_content"
                                 android:background="@drawable/edit_view_bg_grey"
                                 android:ems="20"
-                                android:inputType="text"
+                                android:inputType="textMultiLine"
+                                android:lineHeight="56dp"
+                                android:lines="3"
+                                android:maxLines="3"
+                                android:minLines="3"
                                 android:padding="15dp" />
 
 

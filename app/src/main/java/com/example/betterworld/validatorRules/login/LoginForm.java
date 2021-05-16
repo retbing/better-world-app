@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.betterworld.BR;
 import com.example.betterworld.R;
 
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
+
 public class LoginForm extends BaseObservable {
     private LoginFields fields = new LoginFields();
     private LoginErrorFields errors = new LoginErrorFields();
@@ -14,17 +16,18 @@ public class LoginForm extends BaseObservable {
 
     @Bindable
     public boolean isValid() {
-        boolean valid = isEmailValid(false);
-        valid = isPasswordValid(false) && valid;
-        notifyPropertyChanged(BR.emailError);
+        boolean valid = isPasswordValid(false) ;
+        valid = isEmailValid(false) && valid;
         notifyPropertyChanged(BR.passwordError);
+        notifyPropertyChanged(BR.emailError);
         return valid;
     }
 
     public boolean isEmailValid(boolean setMessage) {
         // Minimum a@b.c
         String email = fields.getEmail();
-        if (email != null && email.length() > 5) {
+        logErrorMessage(" email text is" + email);
+        if (email != null ) {
             int indexOfAt = email.indexOf("@");
             int indexOfDot = email.lastIndexOf(".");
             if (indexOfAt > 0 && indexOfDot > indexOfAt && indexOfDot < email.length() - 1) {
@@ -49,7 +52,9 @@ public class LoginForm extends BaseObservable {
 
     public boolean isPasswordValid(boolean setMessage) {
         String password = fields.getPassword();
-        if (password != null && password.length() > 6) {
+        logErrorMessage("password : "+password);
+
+        if (password != null && password.length() >= 6) {
             errors.setPassword(null);
             notifyPropertyChanged(BR.valid);
             return true;

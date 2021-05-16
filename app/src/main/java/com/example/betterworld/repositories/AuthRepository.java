@@ -20,6 +20,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import static com.example.betterworld.utils.Constants.USERS_REF;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @Singleton
 public class AuthRepository {
@@ -65,9 +66,10 @@ public class AuthRepository {
         return dataOrExceptionMutableLiveData;
     }
 
-    public MutableLiveData<DataOrException<User, Exception>> firebaseSignInWithEmailAndPassword(String email, String password) {
+    public MutableLiveData<DataOrException<User, Exception>>
+    firebaseSignInWithEmailAndPassword(String email, String password) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
-
+        logErrorMessage("Email "+email +"  password: "+password);
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     DataOrException<User, Exception> dataOrException = new DataOrException<>();
