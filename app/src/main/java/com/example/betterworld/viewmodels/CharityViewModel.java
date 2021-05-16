@@ -16,7 +16,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-
 public class CharityViewModel extends ViewModel {
 
 

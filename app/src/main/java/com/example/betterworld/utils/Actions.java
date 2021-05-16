@@ -52,6 +52,11 @@ public class Actions {
         activity.startActivity(intent);
     }
 
+    public  static void goToCharityStartActivity(Activity activity) {
+        Intent intent = new Intent(activity, ChooseCategoryActivity.class);
+        activity.startActivity(intent);
+    }
+
     public static void goToCharityFormActivity(Activity activity, String categoryName) {
         Intent intent = new Intent(activity, CharityFormActivity.class);
         intent.putExtra("CATEGORY_NAME", categoryName);
