@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -28,7 +30,7 @@ public class RegisterRepository {
     }
 
 
-    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(User authenticatedUser) {
+    public MutableLiveData<DataOrException<User, Exception>> createUserInFirestore(@NotNull User authenticatedUser) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         // Add a new document with a generated ID
         usersRef

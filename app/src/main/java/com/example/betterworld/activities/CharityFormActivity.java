@@ -1,24 +1,34 @@
 package com.example.betterworld.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
+import com.bumptech.glide.Glide;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
+import com.example.betterworld.utils.Actions;
+import com.example.betterworld.utils.HelperClass;
 import com.example.betterworld.viewmodels.CharityViewModel;
-
+import com.example.betterworld.viewmodels.LoginViewModel;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.theartofdev.edmodo.cropper.CropImage;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,14 +43,17 @@ import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 public class CharityFormActivity extends AppCompatActivity {
 
 
-     static final String TAG = "TAG CharityFormActivity";
-     ActivityCharityFormBinding activityCharityFormBinding;
-     DatePickerDialog.OnDateSetListener onDateStartedSetListener;
-     DatePickerDialog.OnDateSetListener onDateEndedSetListener;
+    static final String TAG = "TAG CharityFormActivity";
+    private static final int GALLERY_REQUEST_CODE = 0x001;
+
+    private ActivityCharityFormBinding activityCharityFormBinding;
+    private DatePickerDialog.OnDateSetListener onDateStartedSetListener;
+    private DatePickerDialog.OnDateSetListener onDateEndedSetListener;
 
      int step;
     Date dueDate, startDate;
     String startedDate, endedDate;
+    Uri imageUri;
 
 
     @Inject
@@ -56,12 +69,34 @@ public class CharityFormActivity extends AppCompatActivity {
         _initComponents();
 
         step = -1;
+      
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                Uri imageUri = data.getData();
+                Actions.launchImageCrop(this, imageUri);
+            }
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            if (resultCode == RESULT_OK && data != null) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri uri = result.getUri();
+                if (uri != null) {
+                    _setImage(uri);
+                    this.imageUri = uri;
+                }
+            }
+        }
     }
 
     private void _initComponents() {
         logErrorMessage("Making _initComponents");
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
+        activityCharityFormBinding.ibThumbnail.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
         activityCharityFormBinding.etDate.setOnClickListener(view -> _dateTimeFrameLayout());
         activityCharityFormBinding.etDateStarted.setOnClickListener(view -> _dateTimeStartedPopup());
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
@@ -105,23 +140,39 @@ public class CharityFormActivity extends AppCompatActivity {
 
     }
 
-    private MutableLiveData<DataOrException<Charity, Exception>> _createCharity() {
+    private void _createCharity() {
 //       String profession =  activityCharityFormBinding.etProfession.getText().toString();
 //       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
 //       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
 //       String address =  activityCharityFormBinding.etAddress.getText().toString();
 //       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
+      
+        charityViewModel.uploadImage(imageUri).observe(this, fileNameOrExp -> {
+            if (fileNameOrExp.data != null) {
+                final String fileName = fileNameOrExp.data;
 
+                String title = activityCharityFormBinding.etTitle.getText().toString();
+                String whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
+                float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
+                String description = activityCharityFormBinding.etDescription.getText().toString();
 
-        String title = activityCharityFormBinding.etTitle.getText().toString();
-        String whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
-        float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
-        String description = activityCharityFormBinding.etDescription.getText().toString();
-
-        return new MutableLiveData<DataOrException<Charity, Exception>> ();
+                charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate, fileName).observe(
+                        this, charityOrExp -> {
+                            if (charityOrExp.data != null) {
+                                _charityFormPageSuccess();
+                            } else {
+                                Snackbar.make(activityCharityFormBinding.clCharityForm, "Error while creating charity. Please try again later.", Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                );
+            } else {
+                Snackbar.make(activityCharityFormBinding.clCharityForm, "Error while uploading image. Please try again later", Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void _nextStep(int i) {
+
+    private void _nextStep(int i) {
         _controlPageStep(i);
         logErrorMessage("Step :"+step);
         switch (step) {
@@ -148,7 +199,6 @@ public class CharityFormActivity extends AppCompatActivity {
 
                 }
                 else{
-
                     _charityFormPage2();
                     break;
                 }
@@ -172,7 +222,6 @@ public class CharityFormActivity extends AppCompatActivity {
                         activityCharityFormBinding.etDate.setError("Fill this filed");
                     }
                     _controlPageStep(-1);
-
                     break;
                 }
                else {
@@ -199,7 +248,7 @@ public class CharityFormActivity extends AppCompatActivity {
                     break;
                 }
                 else {
-                    _charityFormPageSuccess();
+                    _createCharity();
                     break;
                 }
             case -1:
@@ -217,7 +266,6 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _charityFormPageSuccess() {
-
         activityCharityFormBinding.btnStepper1.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
         activityCharityFormBinding.btnStepper2.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
         activityCharityFormBinding.btnStepper3.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.button_charity_form_done));
@@ -226,15 +274,6 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setText("");
         activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
-
-        _createCharity().observe(this, charityOrExp -> {
-            if (charityOrExp.data != null) {
-                Toast.makeText(this, " creating charity  successfull", Toast.LENGTH_LONG).show();
-
-            } else {
-                Toast.makeText(this, "Error creating charity...", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void _charityFormPage4() {
@@ -355,6 +394,10 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDate.setText(startedDate + " - " + endedDate);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.frameLayoutDatePopup.setVisibility(View.INVISIBLE);
+    }
+
+    private void _setImage(Uri uri) {
+        Glide.with(this).load(uri).into(activityCharityFormBinding.ibThumbnail);
     }
 
 }

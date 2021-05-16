@@ -9,407 +9,441 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_charityForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bw_green">
 
-        <LinearLayout
-            android:id="@+id/linear_layout_charity"
+        <ScrollView
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="25dp"
             android:background="@drawable/curved_white_bg"
-            android:orientation="vertical"
-            android:padding="20dp"
+            android:paddingBottom="18dp"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/linear_layout_charity_header"
+                android:id="@+id/linear_layout_charity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
 
-                <TextView
+                android:orientation="vertical"
+                android:padding="20dp">
+
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_charity_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/gordita_medium"
-                    android:text="@string/start_a_charity"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
 
-                <TextView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="@string/start_a_charity"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gordita_regular"
+                        android:lineSpacingExtra="6dp"
+                        android:text="@string/start_a_charity_header"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_charity_stepper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/gordita_regular"
-                    android:lineSpacingExtra="6dp"
-                    android:text="@string/start_a_charity_header"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="4dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_stepper_1"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_charity_form_current"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="1"
+                        android:textColor="@color/bw_blue"
+                        android:textSize="16dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <View
+                        android:id="@+id/line_stepper_1"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="#F5F6F8"></View>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_stepper_2"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_charity_form_unfocus"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="2"
+                        android:textColor="@color/bw_light_grey_darker"
+                        android:textSize="16dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <View
+                        android:id="@+id/line_stepper_2"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="#F5F6F8"></View>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_stepper_3"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_charity_form_unfocus"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="3"
+                        android:textColor="@color/bw_light_grey_darker"
+                        android:textSize="16dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <View
+                        android:id="@+id/line_stepper_3"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="#F5F6F8"></View>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_stepper_4"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_charity_form_unfocus"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="4"
+                        android:textColor="@color/bw_light_grey_darker"
+                        android:textSize="16dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linear_layout_charity_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:id="@+id/frame_layout_page_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_1_page_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_1_page_1"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_profession"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_2_page_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_2_page_1"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_name_of_institution"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_3_page_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_3_page_1"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_social_media_account"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_4_page_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_4_page_1"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/frame_layout_page_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_1_page_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_1_page_2"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_2_page_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_2_page_2"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_who_benefits"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="text"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_3_page_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_3_page_2"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_target"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:drawableLeft="@drawable/button_target_bg_blue"
+                                android:drawablePadding="10dp"
+                                android:ems="20"
+                                android:inputType="numberDecimal"
+                                android:padding="15dp" />
+
+                            <TextView
+                                android:id="@+id/tv_4_page_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_4_page_2"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/et_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:drawableLeft="@drawable/button_deadline_bg_blue"
+                                android:drawablePadding="10dp"
+                                android:ems="20"
+                                android:padding="15dp" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/frame_layout_page_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_2_page_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_2_page_3"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <ImageButton
+                                android:id="@+id/ib_thumbnail"
+                                android:layout_width="match_parent"
+                                android:layout_height="165dp"
+                                android:backgroundTint="@color/white"
+                                app:srcCompat="@drawable/ic_baseline_image_128"
+                                >
+
+                            </ImageButton>
+
+                            <TextView
+                                android:id="@+id/tv_1_page_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_1_page_3"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+
+                            <EditText
+                                android:id="@+id/et_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="textMultiLine"
+                                android:lineHeight="56dp"
+                                android:lines="3"
+                                android:maxLines="3"
+                                android:minLines="3"
+                                android:padding="15dp" />
+
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/frame_layout_page_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_1_page_4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/gordita_regular"
+                                android:text="@string/tv_1_page_4"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                            <EditText
+                                android:id="@+id/et_phone_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/edit_view_bg_grey"
+                                android:ems="20"
+                                android:inputType="phone"
+                                android:padding="15dp" />
+
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_layout_charity_stepper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="4dp">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_stepper_1"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/button_charity_form_current"
-                    android:fontFamily="@font/gordita_medium"
-                    android:text="1"
-                    android:textColor="@color/bw_blue"
-                    android:textSize="16dp">
-
-                </androidx.appcompat.widget.AppCompatButton>
-
-                <View
-                    android:id="@+id/line_stepper_1"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:background="#F5F6F8"></View>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_stepper_2"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/button_charity_form_unfocus"
-                    android:fontFamily="@font/gordita_medium"
-                    android:text="2"
-                    android:textColor="@color/bw_light_grey_darker"
-                    android:textSize="16dp">
-
-                </androidx.appcompat.widget.AppCompatButton>
-
-                <View
-                    android:id="@+id/line_stepper_2"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:background="#F5F6F8"></View>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_stepper_3"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/button_charity_form_unfocus"
-                    android:fontFamily="@font/gordita_medium"
-                    android:text="3"
-                    android:textColor="@color/bw_light_grey_darker"
-                    android:textSize="16dp">
-
-                </androidx.appcompat.widget.AppCompatButton>
-
-                <View
-                    android:id="@+id/line_stepper_3"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:background="#F5F6F8"></View>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_stepper_4"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/button_charity_form_unfocus"
-                    android:fontFamily="@font/gordita_medium"
-                    android:text="4"
-                    android:textColor="@color/bw_light_grey_darker"
-                    android:textSize="16dp">
-
-                </androidx.appcompat.widget.AppCompatButton>
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linear_layout_charity_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <FrameLayout
-                    android:id="@+id/frame_layout_page_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_1_page_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_1_page_1"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/et_profession"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_2_page_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_2_page_1"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/et_name_of_institution"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_3_page_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_3_page_1"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/et_social_media_account"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_4_page_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_4_page_1"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-
-                            android:id="@+id/et_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/frame_layout_page_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_1_page_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_1_page_2"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/et_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_2_page_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_2_page_2"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/et_who_benefits"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_3_page_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_3_page_2"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/et_target"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:drawableLeft="@drawable/button_target_bg_blue"
-                            android:drawablePadding="10dp"
-                            android:ems="20"
-                            android:inputType="numberDecimal"
-                            android:padding="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_4_page_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_4_page_2"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:id="@+id/et_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:drawableLeft="@drawable/button_deadline_bg_blue"
-                            android:drawablePadding="10dp"
-                            android:ems="20"
-                            android:padding="15dp"
-                            />
-                    </LinearLayout>
-
-                </FrameLayout>
-                <FrameLayout
-                    android:id="@+id/frame_layout_page_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_1_page_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_1_page_3"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/et_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="text"
-                            android:padding="15dp" />
-
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/frame_layout_page_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_1_page_4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/tv_1_page_4"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/et_phone_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:background="@drawable/edit_view_bg_grey"
-                            android:ems="20"
-                            android:inputType="phone"
-                            android:padding="15dp" />
-
-
-                    </LinearLayout>
-
-                </FrameLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/linear_layout_buttons"
@@ -471,52 +505,52 @@
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:background="@drawable/frame_layout_success_bg_white"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone">
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
                 android:layout_marginBottom="50dp"
+                android:orientation="vertical"
                 android:padding="30dp">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="114dp"
                     android:layout_marginBottom="20dp"
-                    app:srcCompat="@drawable/ic_success"
-                    />
+                    app:srcCompat="@drawable/ic_success" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/successful"
-                    android:gravity="center"
                     android:fontFamily="@font/gordita_medium"
-                    android:textSize="24dp"
-                    android:textColor="@color/bw_blue"/>
+                    android:gravity="center"
+                    android:text="@string/successful"
+                    android:textColor="@color/bw_blue"
+                    android:textSize="24dp" />
 
                 <TextView
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/successful_detail"
                     android:fontFamily="@font/gordita_regular"
                     android:gravity="center"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:text="@string/successful_detail"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
 
 
             </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_home"
-                android:layout_gravity="center|bottom"
-                android:layout_margin="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_gravity="center|bottom"
+                android:layout_margin="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_bg_blue"
                 android:fontFamily="@font/gordita_medium"
@@ -532,16 +566,16 @@
             android:layout_width="match_parent"
             android:layout_height="330dp"
             android:background="@drawable/frame_layout_success_bg_white"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="invisible">
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginHorizontal="20dp">
+                android:layout_marginHorizontal="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_date_started"
@@ -587,9 +621,9 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_done"
-                    android:layout_gravity="center|bottom"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_gravity="center|bottom"
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg_blue"

@@ -64,8 +64,10 @@ android {
         implementation "androidx.navigation:navigation-fragment:$navigation"
         implementation "androidx.navigation:navigation-ui:$navigation"
         implementation "com.github.bumptech.glide:glide:$glide"
+        annotationProcessor "com.github.bumptech.glide:compiler:$glide"
         implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
         implementation "androidx.paging:paging-runtime:$paging"
+        api "com.theartofdev.edmodo:android-image-cropper:$image_cropper"
     }
 }
 
@@ -74,4 +76,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.firebase:firebase-auth:20.0.3'
     implementation 'com.google.firebase:firebase-firestore:22.1.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
 }

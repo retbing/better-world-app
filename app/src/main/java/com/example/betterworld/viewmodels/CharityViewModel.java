@@ -1,5 +1,6 @@
 package com.example.betterworld.viewmodels;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -37,20 +38,16 @@ public class CharityViewModel extends ViewModel {
         this._authRepository = authRepository;
     }
 
-
-    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(String title, String whoBenefits, String description, float target, Date startDate, Date dueDate) {
-
+    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(String title, String whoBenefits, String description, float target, Date startDate, Date dueDate, String imageName) {
         if (_authRepository.getUser() != null) {
 
             final String username = _authRepository.getUser().getUsername();
             final String userId = _authRepository.getUser().getUserId();
 
-            Charity charity = new Charity(
-                    UUID.randomUUID().toString(), title,
-                    description, whoBenefits, "", target,
-                    0,startDate.getTime(), dueDate.getTime(),
-                    "Health", "health-12345",
-                    userId, username
+
+            Charity charity = new Charity(UUID.randomUUID().toString(), title,
+                    description, whoBenefits, imageName, target, 0, startDate.getTime(), dueDate.getTime(),
+                    "health-12345", "Health", userId, username
             );
 
             return _charityRepository.createCharityOnFireStore(charity);
@@ -61,7 +58,7 @@ public class CharityViewModel extends ViewModel {
         }
     }
 
-    public  boolean  isNextValid = false;
-
-
+    public MutableLiveData<DataOrException<String, Exception>> uploadImage(Uri uri) {
+        return _charityRepository.uploadImageToFirebaseStorage(uri);
+    }
 }
