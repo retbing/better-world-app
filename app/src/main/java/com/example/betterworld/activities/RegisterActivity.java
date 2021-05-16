@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityRegisterBinding;
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
@@ -30,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(RegisterActivity.this, "Data changed on email and password", Toast.LENGTH_LONG).show();
+
         activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         _initComponents();
     }
@@ -51,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseUser user = dataOrException.data;
                 User authenticatedUser = new User(user.getUid(), username, user.getEmail());
                 createNewUser(authenticatedUser);
+                gotoNotificationActivity(RegisterActivity.this);
+
             }
 
             if (dataOrException.exception != null) {

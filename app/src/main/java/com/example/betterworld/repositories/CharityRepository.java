@@ -20,12 +20,14 @@ import com.google.firebase.storage.StorageReference;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.hilt.android.scopes.ActivityScoped;
 
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
 import static com.example.betterworld.utils.Constants.CHARITIES_STORAGE_REF;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
+
 
 @ActivityScoped
 public class CharityRepository {
