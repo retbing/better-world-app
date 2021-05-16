@@ -39,7 +39,10 @@ public class CharityViewModel extends ViewModel {
         this._authRepository = authRepository;
     }
 
-    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(String title, String categoryId, String categoryName, String whoBenefits, String description, float target, Date startDate, Date dueDate, String imageName) {
+    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(
+            String title, String categoryId, String categoryName,
+            String whoBenefits, String description,
+            float target, Date startDate, Date dueDate, String imageName) {
         if (_authRepository.getUser() != null) {
 
             final String username = _authRepository.getUser().getUsername();
