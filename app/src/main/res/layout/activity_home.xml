@@ -103,36 +103,36 @@
 
             </androidx.cardview.widget.CardView>
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15sp"
-                android:orientation="horizontal">
+<!--            <ListView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="15sp"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:id="@+id/btn_category_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10sp"
-                    android:layout_weight="1"
-                    android:text="Button" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_category_1"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginRight="10sp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Button" />-->
 
-                <Button
-                    android:id="@+id/btn_category_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10sp"
-                    android:layout_weight="1"
-                    android:text="Button" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_category_2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginRight="10sp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Button" />-->
 
-                <Button
-                    android:id="@+id/btn_category_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_category_3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Button" />-->
 
-            </ListView>
+<!--            </ListView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -279,6 +279,7 @@
                 android:layout_weight="1"
                 android:src="@mipmap/ic_profile"
                 android:text="Button" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

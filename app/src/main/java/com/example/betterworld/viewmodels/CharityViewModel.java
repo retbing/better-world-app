@@ -18,6 +18,7 @@ import com.example.betterworld.validatorRules.createCharity.CharityFields;
 import com.example.betterworld.validatorRules.createCharity.CharityForm;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -60,5 +61,9 @@ public class CharityViewModel extends ViewModel {
 
     public MutableLiveData<DataOrException<String, Exception>> uploadImage(Uri uri) {
         return _charityRepository.uploadImageToFirebaseStorage(uri);
+    }
+
+    public MutableLiveData<DataOrException<List<Charity>, Exception>> watchCharities(String categoryId) {
+        return _charityRepository.watchCharitiesByCategory(categoryId);
     }
 }

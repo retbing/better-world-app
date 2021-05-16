@@ -148,7 +148,7 @@ public class Charity implements Serializable {
         return userName;
     }
 
-    public static Charity charityFromMap(Map<String, Object> userMap) {
+    public static Charity fromMap(Map<String, Object> userMap) {
         String charityId = (String) userMap.get("charityId");
         String title = (String) userMap.get("title");
         String description = (String) userMap.get("description");
