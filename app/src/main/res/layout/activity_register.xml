@@ -99,6 +99,10 @@
                             android:inputType="textEmailAddress"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
+
+                            android:text="@={registerModel.register.fields.email}"
+                            app:error="@{registerModel.register.emailError}"
+                            app:onFocus="@{registerModel.getEmailOnFocusChangeListener()}"
                             android:textSize="14sp"></EditText>
 
                         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
@@ -112,6 +116,9 @@
                             android:hint="@string/username"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
+                            android:text="@={registerModel.register.fields.username}"
+                            app:error="@{registerModel.register.usernameError}"
+                            app:onFocus="@{registerModel.getUsernameOnFocusChangeListener()}"
                             android:textSize="14sp"></EditText>
 
                         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
@@ -125,6 +132,9 @@
                             android:inputType="textPassword"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
+                            android:text="@={registerModel.register.fields.password}"
+                            app:error="@{registerModel.register.passwordError}"
+                            app:onFocus="@{registerModel.getPasswordOnFocusChangeListener()}"
                             android:textSize="14sp"></EditText>
 
                     </LinearLayout>
@@ -143,6 +153,8 @@
                         android:background="@drawable/button_bg_blue"
                         android:backgroundTint="@color/bw_blue"
                         android:text="@string/create_account"
+                        android:enabled="@{registerModel.register.valid}"
+
                         app:backgroundTint="@color/bw_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
