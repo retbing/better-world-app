@@ -1,6 +1,8 @@
 package com.example.betterworld.activities;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -170,12 +173,18 @@ public class CharityFormActivity extends AppCompatActivity {
         });
     }
 
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
     private void _nextStep(int i) {
         _controlPageStep(i);
         switch (step) {
             case 0:
                 _charityFormPage1();
+                hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage1);
                 break;
             case 1:
                 _charityFormPage2();
