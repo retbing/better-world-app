@@ -35,6 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(RegisterActivity.this, "Data changed on email and password", Toast.LENGTH_LONG).show();
 
         activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+
+        if (savedInstanceState == null) {
+            registerViewModel.init();
+        }
+
+        activityRegisterBinding.setRegisterModel(registerViewModel);
         _initComponents();
     }
 
