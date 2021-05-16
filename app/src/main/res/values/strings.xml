@@ -58,4 +58,5 @@
     <string name="health">Health</string>
     <string name="environment">Environment</string>
     <string name="animal">Animal</string>
+    <string name="remaining">Remaining:</string>
 </resources>
