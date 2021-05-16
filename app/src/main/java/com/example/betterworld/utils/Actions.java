@@ -5,31 +5,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import androidx.annotation.Nullable;
-
 import com.example.betterworld.activities.CharityFormActivity;
-import com.example.betterworld.activities.ChooseCategory;
+import com.example.betterworld.activities.ChooseCategoryActivity;
+import com.example.betterworld.activities.ForgotPasswordActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.RegisterActivity;
-import com.example.betterworld.models.User;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
-import static com.example.betterworld.utils.Constants.USER;
 
 public class Actions {
     private static final String TAG = "Actions";
 
 
     public static void gotoMainActivity(Activity activity) {
-        Intent intent = new Intent(activity, CharityFormActivity.class);
+        Intent intent = new Intent(activity, ChooseCategoryActivity.class);
         activity.startActivity(intent);
         activity.finish();
     }
@@ -52,8 +44,14 @@ public class Actions {
         activity.startActivity(intent);
     }
 
-    public static void goToCharityFormActivity(Activity activity) {
-        Intent intent = new Intent();
+    public static void goToCharityFormActivity(Activity activity, String categoryName) {
+        Intent intent = new Intent(activity, CharityFormActivity.class);
+        intent.putExtra("CATEGORY_NAME", categoryName);
+        activity.startActivity(intent);
+    }
+
+    public static void goToForgotPasswordActivity(Activity activity) {
+        Intent intent = new Intent(activity, ForgotPasswordActivity.class);
         activity.startActivity(intent);
     }
 

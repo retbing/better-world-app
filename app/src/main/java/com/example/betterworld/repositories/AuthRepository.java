@@ -100,6 +100,22 @@ public class AuthRepository {
         return dataOrExceptionMutableLiveData;
     }
 
+    public MutableLiveData<DataOrException<Integer,Exception>> resetPassword(String emailAddress){
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(resetTask -> {
+                    DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                    if (resetTask.isSuccessful()) {
+                        dataOrException.data = 1;
+                    }else{
+                        dataOrException.exception = resetTask.getException();
+                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
+    }
+
     public void signOut() {
         auth.signOut();
     }

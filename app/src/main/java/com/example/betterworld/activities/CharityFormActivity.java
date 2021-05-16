@@ -1,12 +1,15 @@
 package com.example.betterworld.activities;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.theartofdev.edmodo.cropper.CropImage;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,6 +41,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
@@ -50,9 +55,9 @@ public class CharityFormActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener onDateStartedSetListener;
     private DatePickerDialog.OnDateSetListener onDateEndedSetListener;
 
-     int step;
+    int step;
     Date dueDate, startDate;
-    String startedDate, endedDate;
+    String startedDate, endedDate, categoryName, categoryId;
     Uri imageUri;
 
 
@@ -69,7 +74,9 @@ public class CharityFormActivity extends AppCompatActivity {
         _initComponents();
 
         step = -1;
-      
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -93,7 +100,8 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
-        logErrorMessage("Making _initComponents");
+        categoryName = getIntent().getStringExtra("CATEGORY_NAME");
+        categoryId = "#" + categoryName.toLowerCase();
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.ibThumbnail.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
@@ -102,7 +110,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
         activityCharityFormBinding.btnHome.setOnClickListener(view -> {
-            goToLoginActivity(this);
+            gotoNotificationActivity(this);
         });
         activityCharityFormBinding.frameLayoutTransparent.setOnClickListener(view -> {
             activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.GONE);
@@ -140,13 +148,18 @@ public class CharityFormActivity extends AppCompatActivity {
 
     }
 
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     private void _createCharity() {
 //       String profession =  activityCharityFormBinding.etProfession.getText().toString();
 //       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
 //       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
 //       String address =  activityCharityFormBinding.etAddress.getText().toString();
 //       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
-      
+
         charityViewModel.uploadImage(imageUri).observe(this, fileNameOrExp -> {
             if (fileNameOrExp.data != null) {
                 final String fileName = fileNameOrExp.data;
@@ -156,7 +169,7 @@ public class CharityFormActivity extends AppCompatActivity {
                 float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
                 String description = activityCharityFormBinding.etDescription.getText().toString();
 
-                charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate, fileName).observe(
+                charityViewModel.createCharity(title, categoryId, categoryName, whoBenefits, description, target, startDate, dueDate, fileName).observe(
                         this, charityOrExp -> {
                             if (charityOrExp.data != null) {
                                 _charityFormPageSuccess();
@@ -174,80 +187,74 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private void _nextStep(int i) {
         _controlPageStep(i);
-        logErrorMessage("Step :"+step);
+        logErrorMessage("Step :" + step);
         switch (step) {
             case 0:
-                if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etAddress.getText().toString().isEmpty()
-                ){
-                    if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()){
+                if (activityCharityFormBinding.etProfession.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etAddress.getText().toString().isEmpty()
+                ) {
+                    if (activityCharityFormBinding.etProfession.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etProfession.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etNameOfInstitution.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etSocialMediaAccount.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etAddress.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etAddress.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etAddress.setError("Fill this filed");
                     }
                     _controlPageStep(-1);
                     break;
 
-                }
-                else{
+                } else {
                     _charityFormPage2();
                     break;
                 }
 
             case 1:
-                if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
-                        ||activityCharityFormBinding.etDate.getText().toString().isEmpty()
-                ){
-                    if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()){
+                if (activityCharityFormBinding.etTitle.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        || activityCharityFormBinding.etDate.getText().toString().isEmpty()
+                ) {
+                    if (activityCharityFormBinding.etTitle.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etTitle.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etWhoBenefits.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etTarget.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etTarget.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etTarget.setError("Fill this filed");
                     }
-                    if(activityCharityFormBinding.etDate.getText().toString().isEmpty()){
+                    if (activityCharityFormBinding.etDate.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etDate.setError("Fill this filed");
                     }
                     _controlPageStep(-1);
                     break;
-                }
-               else {
+                } else {
                     _charityFormPage3();
                     break;
                 }
 
             case 2:
-                if(activityCharityFormBinding.etDescription.getText().toString().isEmpty())
-                {
+                if (activityCharityFormBinding.etDescription.getText().toString().isEmpty()) {
                     activityCharityFormBinding.etDescription.setError("Fill this filed");
                     _controlPageStep(-1);
                     break;
-                }
-                else {
+                } else {
                     _charityFormPage4();
                     break;
                 }
             case 3:
-                if(activityCharityFormBinding.etPhoneNumber.getText().toString().isEmpty())
-                {
+                if (activityCharityFormBinding.etPhoneNumber.getText().toString().isEmpty()) {
                     activityCharityFormBinding.etPhoneNumber.setError("Fill this filed");
                     _controlPageStep(-1);
                     break;
-                }
-                else {
+                } else {
                     _createCharity();
                     break;
                 }
@@ -311,6 +318,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
 
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage3);
 
     }
 
@@ -336,6 +344,7 @@ public class CharityFormActivity extends AppCompatActivity {
 
         activityCharityFormBinding.btnPrevious.setVisibility(View.VISIBLE);
 
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage2);
 
     }
 
@@ -357,6 +366,9 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
         activityCharityFormBinding.btnPrevious.setVisibility(View.GONE);
+
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage1);
+
     }
 
     private void _previousStep() {

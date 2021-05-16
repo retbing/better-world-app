@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.betterworld.utils.Actions.goToForgotPasswordActivity;
 import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_create_new_account;
     ActivityLoginBinding activityLoginBinding;
 
-    final  String TAG = "LoginActivity";
+    final String TAG = "LoginActivity";
 
     @Inject
     LoginViewModel loginViewModel;
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void _initComponents() {
         Toast.makeText(this, "Initiating elements", Toast.LENGTH_LONG).show();
+        activityLoginBinding.tvForgotPassword.setOnClickListener(view -> goToForgotPasswordActivity(this));
         activityLoginBinding.tvCreateNewAccount.setOnClickListener(view ->
                 goToRegisterActivity(this));
         activityLoginBinding.btnLogin.setOnClickListener(view ->
@@ -73,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         final String email = activityLoginBinding.etEmail.getText().toString();
         final String password = activityLoginBinding.etPassword.getText().toString();
 
-        Toast.makeText(this, "Email :"+email
-                +"  password: "+password
+        Toast.makeText(this, "Email :" + email
+                        + "  password: " + password
                 , Toast.LENGTH_LONG).show();
         loginViewModel.signInWithEmailAndPassword(email, password);
         loginViewModel.authenticatedUserLiveData.observe(this, dataOrException -> {

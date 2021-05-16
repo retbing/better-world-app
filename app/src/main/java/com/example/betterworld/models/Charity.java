@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Charity implements Serializable {
-    final static String DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/better-world-app.appspot.com/o/default_charity_image.png?alt=media&token=39dea2da-d450-47d8-8aad-af2977d42925";
+    final public static String DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/better-world-app.appspot.com/o/default_charity_image.png?alt=media&token=39dea2da-d450-47d8-8aad-af2977d42925";
     final String charityId;
     final String title;
     final String description;

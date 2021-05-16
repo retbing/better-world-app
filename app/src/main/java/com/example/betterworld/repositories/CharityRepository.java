@@ -43,7 +43,12 @@ public class CharityRepository {
 
     public MutableLiveData<DataOrException<String, Exception>> uploadImageToFirebaseStorage(Uri uri) {
         MutableLiveData<DataOrException<String, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
-        final String fileName = HelperClass.createUniqueImageName(uri);
+        String fileName;
+        if (uri == null) {
+            fileName = Charity.DEFAULT_IMAGE;
+        } else {
+            fileName = HelperClass.createUniqueImageName(uri);
+        }
         charityStorage.child(fileName).putFile(uri).addOnCompleteListener(uploadTask -> {
             DataOrException<String, Exception> dataOrException = new DataOrException<>();
             if (uploadTask.isSuccessful()) {
