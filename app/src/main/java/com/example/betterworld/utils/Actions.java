@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.betterworld.activities.CharityFormActivity;
 import com.example.betterworld.activities.ChooseCategory;
+import com.example.betterworld.activities.ForgotPasswordActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.RegisterActivity;
@@ -39,8 +40,14 @@ public class Actions {
         activity.startActivity(intent);
     }
 
-    public static void goToCharityFormActivity(Activity activity) {
-        Intent intent = new Intent();
+    public static void goToCharityFormActivity(Activity activity, String categoryName) {
+        Intent intent = new Intent(activity, CharityFormActivity.class);
+        intent.putExtra("CATEGORY_NAME", categoryName);
+        activity.startActivity(intent);
+    }
+
+    public static void goToForgotPasswordActivity(Activity activity) {
+        Intent intent = new Intent(activity, ForgotPasswordActivity.class);
         activity.startActivity(intent);
     }
 }

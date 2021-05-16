@@ -44,7 +44,7 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private int step;
     Date dueDate, startDate;
-    String startedDate, endedDate;
+    String startedDate, endedDate, categoryName, categoryId;
 
 
     @Inject
@@ -60,6 +60,8 @@ public class CharityFormActivity extends AppCompatActivity {
 
 
     private void _initComponents() {
+        categoryName = getIntent().getStringExtra("CATEGORY_NAME");
+        categoryId = "#" + categoryName.toLowerCase();
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.etDate.setOnClickListener(view -> _dateTimeFrameLayout());
@@ -117,8 +119,7 @@ public class CharityFormActivity extends AppCompatActivity {
         String whoBenefits = activityCharityFormBinding.etWhoBenefits.getText().toString();
         float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
         String description = activityCharityFormBinding.etDescription.getText().toString();
-
-        return charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate);
+        return charityViewModel.createCharity(title, categoryId, categoryName, whoBenefits, description, target, startDate, dueDate);
     }
 
     private void _nextStep(int i) {

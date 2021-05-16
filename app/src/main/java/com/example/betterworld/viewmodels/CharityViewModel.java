@@ -29,7 +29,7 @@ public class CharityViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(String title, String whoBenefits, String description, float target, Date startDate, Date dueDate) {
+    public MutableLiveData<DataOrException<Charity, Exception>> createCharity(String title,String categoryId, String categoryName, String whoBenefits, String description, float target, Date startDate, Date dueDate) {
 
         if (_authRepository.getUser() != null) {
 
@@ -38,7 +38,7 @@ public class CharityViewModel extends ViewModel {
 
             Charity charity = new Charity(UUID.randomUUID().toString(), title,
                     description, whoBenefits, "", target, 0, startDate.getTime(), dueDate.getTime(),
-                    "Health", "health-12345", userId, username
+                    categoryId, categoryName, userId, username
             );
 
             return _charityRepository.createCharityOnFireStore(charity);

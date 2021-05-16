@@ -50,6 +50,12 @@
     <string name="error_format_invalid">Format Invalid</string>
     <string name="error_too_short">Too Short</string>
     <string name="tv_1_page_3">Description</string>
+    <string name="forgot_password_detail">Enter your email associated with your account and we’ll send an email with instruction to reset your password</string>
+    <string name="submit_forgot_password">Submit</string>
+    <string name="education">Education</string>
+    <string name="health">Health</string>
+    <string name="environment">Environment</string>
+    <string name="animal">Animal</string>
 
 
 </resources>

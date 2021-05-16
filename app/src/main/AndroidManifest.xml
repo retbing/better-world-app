@@ -10,12 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterWorld">
-        <activity android:name=".activities.NotificationActivity"></activity>
-        <activity android:name=".activities.CharityFormActivity" />
+        <activity android:name=".activities.ForgotPasswordActivity"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".activities.ChooseCategory" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".activities.NotificationActivity" />
+        <activity android:name=".activities.CharityFormActivity" />
+        <activity android:name=".activities.ChooseCategory" > </activity>
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.LoginActivity" >
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SplashActivity">
-
-
             <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />

@@ -1,5 +1,7 @@
 package com.example.betterworld.repositories;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -104,6 +106,23 @@ public class AuthRepository {
 
     public User getUser() {
         return user;
+    }
+
+    public MutableLiveData<DataOrException<Integer,Exception>> resetPassword(String emailAddress){
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(resetTask -> {
+                    DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                    if (resetTask.isSuccessful()) {
+                        dataOrException.data = 1;
+                        Log.d("TAG", "Email sent.");
+                    }else{
+                        dataOrException.exception = resetTask.getException();
+                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
     }
 
 }
