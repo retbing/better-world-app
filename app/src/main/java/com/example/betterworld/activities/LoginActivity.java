@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.betterworld.utils.Actions.goToForgotPasswordActivity;
 import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
@@ -58,15 +59,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
-        Toast.makeText(this, "Initiating elements", Toast.LENGTH_LONG).show();
-        activityLoginBinding.tvCreateNewAccount.setOnClickListener(view ->
-                goToRegisterActivity(this));
-        activityLoginBinding.btnLogin.setOnClickListener(view ->
-                _loginWithEmailAndPassword());
-        activityLoginBinding.btnGoogleSignin.setOnClickListener(view ->
-                _signingWithGoogle());
-
-
+        activityLoginBinding.tvForgotPassword.setOnClickListener(view -> goToForgotPasswordActivity(this));
+        activityLoginBinding.tvCreateNewAccount.setOnClickListener(view -> goToRegisterActivity(this));
+        activityLoginBinding.btnLogin.setOnClickListener(view -> _loginWithEmailAndPassword());
+        activityLoginBinding.btnGoogleSignin.setOnClickListener(view -> _signingWithGoogle());
     }
 
     private void _loginWithEmailAndPassword() {

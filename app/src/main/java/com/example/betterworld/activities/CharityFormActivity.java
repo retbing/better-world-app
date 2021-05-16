@@ -52,9 +52,9 @@ public class CharityFormActivity extends AppCompatActivity {
 
      int step;
     Date dueDate, startDate;
-    String startedDate, endedDate;
-    Uri imageUri;
 
+    String startedDate, endedDate, categoryName, categoryId;
+    Uri imageUri;
 
     @Inject
     CharityViewModel charityViewModel;
@@ -93,7 +93,9 @@ public class CharityFormActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
-        logErrorMessage("Making _initComponents");
+        categoryName = getIntent().getStringExtra("CATEGORY_NAME");
+        categoryId = "#" + categoryName.toLowerCase();
+      
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.ibThumbnail.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
@@ -156,7 +158,7 @@ public class CharityFormActivity extends AppCompatActivity {
                 float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
                 String description = activityCharityFormBinding.etDescription.getText().toString();
 
-                charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate, fileName).observe(
+                charityViewModel.createCharity(title,categoryId, categoryName, whoBenefits, description, target, startDate, dueDate, fileName).observe(
                         this, charityOrExp -> {
                             if (charityOrExp.data != null) {
                                 _charityFormPageSuccess();
