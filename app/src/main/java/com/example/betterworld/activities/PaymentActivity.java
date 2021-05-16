@@ -1,6 +1,7 @@
 package com.example.betterworld.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
@@ -29,7 +30,6 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         activityPaymentBinding = DataBindingUtil.setContentView(this, R.layout.activity_payment);
         _initComponents();
     }
@@ -39,20 +39,39 @@ public class PaymentActivity extends AppCompatActivity {
             Toast.makeText(PaymentActivity.this, "Creeating Payment ", Toast.LENGTH_SHORT).show();
             createPayment();
         });
-        activityPaymentBinding.radioGroupTogglePaymentMtd.setOnCheckedChangeListener(ToggleListener);
+        activityPaymentBinding.radioGroupTogglePaymentMtd.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup,  int i) {
+                Toast.makeText(PaymentActivity.this, "I am changed", Toast.LENGTH_SHORT).show();
+                togglePaymentView(i);
+                for (int j = 0; j < radioGroup.getChildCount(); j++) {
+                    AppCompatRadioButton view = (AppCompatRadioButton ) radioGroup.getChildAt(j);
+                    view.setChecked(view.getId() == i);
+                }
+            }
+        });
     }
 
-    public RadioGroup.OnCheckedChangeListener ToggleListener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup radioGroup,  int i) {
-            Toast.makeText(PaymentActivity.this, "I am changed", Toast.LENGTH_SHORT).show();
-            for (int j = 0; j < radioGroup.getChildCount(); j++) {
-                togglePaymentView(i);
-                ToggleButton view = (ToggleButton ) radioGroup.getChildAt(j);
-                view.setChecked(view.getId() == i);
-            }
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        String msg = "";
+        // We'll check which radiobutton is clicked
+        switch (view.getId()) {
+            case R.id.rl_BankView:
+                if (checked)
+                    msg = "You Clicked Bhopal";
+                break;
+            case R.id.rl_CreditCardView:
+                if (checked)
+                    msg = "You Clicked Bangalore ";
+                break;
+            case R.id.rl_PaypalView:
+                if (checked)
+                    msg = "You Clicked Delhi ";
+                break;
         }
-    };
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 
     private void togglePaymentView(int i) {
         switch (i){
