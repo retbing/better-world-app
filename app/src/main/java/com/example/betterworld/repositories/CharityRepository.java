@@ -5,18 +5,27 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
+import com.example.betterworld.models.Notification;
 import com.example.betterworld.models.User;
 import com.example.betterworld.utils.HelperClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +43,9 @@ public class CharityRepository {
 
     private CollectionReference charityCollection;
     private StorageReference charityStorage;
+
+    List<Charity> charityList;
+
 
     @Inject
     public CharityRepository(@Named(CHARITIES_REF) CollectionReference charitiesRef, @Named(CHARITIES_STORAGE_REF) StorageReference charityStorage) {
@@ -80,5 +92,46 @@ public class CharityRepository {
                     dataOrExceptionMutableLiveData.setValue(dataOrException);
                 });
         return dataOrExceptionMutableLiveData;
+    }
+
+    public MutableLiveData<DataOrException<List<Charity>, Exception>> watchCharitiesByCategory(String categoryId) {
+        MutableLiveData<DataOrException<List<Charity>, Exception>> mutableLiveData = new MutableLiveData<>();
+        charityCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                DataOrException<List<Charity>, Exception> dataOrException = new DataOrException<>();
+                if (error != null) {
+                    dataOrException.exception = error;
+                } else {
+
+                    for (DocumentChange dc : value.getDocumentChanges()) {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                charityList.add(Charity.fromMap(dc.getDocument().getData()));
+                                break;
+                            case MODIFIED:
+                                charityList.remove(dc.getOldIndex());
+                                charityList.add(dc.getNewIndex(), Charity.fromMap(dc.getDocument().getData()));
+                                break;
+                            case REMOVED:
+                                charityList.remove(dc.getOldIndex());
+                                break;
+                        }
+                    }
+                    List<Charity> filteredList = new ArrayList<>();
+
+                    for(Charity charity : charityList) {
+                        if(charity.getCategoryId().contains(categoryId)) {
+                            filteredList.add(charity);
+                        }
+                    }
+
+                    dataOrException.data = filteredList;
+                }
+
+                mutableLiveData.setValue(dataOrException);
+            }
+        });
+        return mutableLiveData;
     }
 }
