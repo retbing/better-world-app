@@ -68,6 +68,8 @@ android {
         implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
         implementation "androidx.paging:paging-runtime:$paging"
         api "com.theartofdev.edmodo:android-image-cropper:$image_cropper"
+        implementation "androidx.recyclerview:recyclerview:$recycler_view"
+
     }
 }
 

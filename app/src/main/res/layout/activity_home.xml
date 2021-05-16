@@ -102,7 +102,12 @@
 
             </androidx.cardview.widget.CardView>
 
+            <ListView
+                android:id="@+id/lv_categoryFilters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+                ></ListView>
 
             <LinearLayout
                 android:layout_width="match_parent"

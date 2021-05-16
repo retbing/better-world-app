@@ -42,4 +42,5 @@ ext {
     lifecycle = '2.2.0'
     paging = "2.1.2"
     image_cropper = "2.8.+"
+    recycler_view = "1.2.0"
 }
