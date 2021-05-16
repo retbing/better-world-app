@@ -4,6 +4,7 @@ package com.example.betterworld.models;
 import com.google.type.DateTime;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +110,18 @@ public class Charity implements Serializable {
 
     public float getDonated() {
         return donated;
+    }
+
+    public String getDonatedToString() {
+        return String.valueOf(donated);
+    }
+
+    public int getPercentToInteger(){
+        return Math.round((donated*100/target)/100);
+    }
+
+    public String getPercentToString(){
+        return String.valueOf(Math.round((donated*100/target)/100));
     }
 
     public Date getDueDate() {
