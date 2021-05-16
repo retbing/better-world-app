@@ -2,11 +2,6 @@ package com.example.betterworld.viewmodels;
 
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-
-import androidx.annotation.VisibleForTesting;
-import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,8 +9,6 @@ import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.repositories.AuthRepository;
 import com.example.betterworld.repositories.CharityRepository;
-import com.example.betterworld.validatorRules.createCharity.CharityFields;
-import com.example.betterworld.validatorRules.createCharity.CharityForm;
 
 import java.util.Date;
 import java.util.List;

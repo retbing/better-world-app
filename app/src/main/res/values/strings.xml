@@ -59,4 +59,10 @@
     <string name="environment">Environment</string>
     <string name="animal">Animal</string>
     <string name="remaining">Remaining:</string>
+    <string name="join">Join</string>
+    <string name="donation_detail">Donation Detail</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="paypal">PayPal</string>
+    <string name="total">Total</string>
 </resources>

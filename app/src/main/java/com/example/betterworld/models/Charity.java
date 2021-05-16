@@ -4,7 +4,6 @@ package com.example.betterworld.models;
 import com.google.type.DateTime;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +64,6 @@ public class Charity implements Serializable {
         return charityMap;
     }
 
-
     public static Charity fromMap(Map<String, Object> userMap) {
         String charityId = (String) userMap.get("charityId");
         String title = (String) userMap.get("title");
@@ -82,7 +80,6 @@ public class Charity implements Serializable {
         String userName = (String) userMap.get("userName");
         return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, dueDate, startDate, categoryId, categoryName, userId, userName);
     }
-
 
     public String getCharityId() {
         return charityId;
@@ -111,6 +108,7 @@ public class Charity implements Serializable {
     public double getDonated() {
         return donated;
     }
+
 
     public String getDonatedToString() {
         return String.valueOf(donated);
@@ -151,7 +149,4 @@ public class Charity implements Serializable {
     public String getUserName() {
         return userName;
     }
-
-
-
 }

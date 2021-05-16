@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
 
 @AndroidEntryPoint
@@ -72,6 +73,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void _initComponents() {
+        _setupRecyclerView();
+        activityHomeBinding.btnDonate.setOnClickListener(view->goToPaymentActivity(this));
+    }
+
+
+    private void _setupRecyclerView() {
         source = new ArrayList<>();
         source.add("Education");
         source.add("Health");
@@ -115,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void _setCharityAdapter(List<Charity> charityList) {
-        final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList);
+        final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList, this);
         activityHomeBinding.rvCharityCard.setAdapter(adapter);
     }
 }

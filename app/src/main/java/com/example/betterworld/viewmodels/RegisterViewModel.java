@@ -103,25 +103,9 @@ public class RegisterViewModel extends ViewModel {
         register.onClick();
     }
 
-    public MutableLiveData<RegisterFields> getLoginFields() {
+    public MutableLiveData<RegisterFields> getRegisterFields() {
         return register.getRegisterFields();
     }
 
 
-    @BindingAdapter("error")
-    public static void setError(EditText editText, Object strOrResId) {
-        if (strOrResId instanceof Integer) {
-            editText.setError(
-                    editText.getContext().getString((Integer) strOrResId));
-        } else {
-            editText.setError((String) strOrResId);
-        }
-    }
-
-    @BindingAdapter("onFocus")
-    public static void bindFocusChange(EditText editText, View.OnFocusChangeListener onFocusChangeListener) {
-        if (editText.getOnFocusChangeListener() == null) {
-            editText.setOnFocusChangeListener(onFocusChangeListener);
-        }
-    }
 }
