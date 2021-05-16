@@ -13,8 +13,10 @@ import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.Notification;
 import com.example.betterworld.models.User;
 import com.example.betterworld.utils.HelperClass;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -23,6 +25,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +55,7 @@ public class CharityRepository {
     public CharityRepository(@Named(CHARITIES_REF) CollectionReference charitiesRef, @Named(CHARITIES_STORAGE_REF) StorageReference charityStorage) {
         this.charityCollection = charitiesRef;
         this.charityStorage = charityStorage;
+        charityList = new ArrayList<>();
     }
 
     public MutableLiveData<DataOrException<String, Exception>> uploadImageToFirebaseStorage(Uri uri) {
@@ -64,12 +69,23 @@ public class CharityRepository {
         charityStorage.child(fileName).putFile(uri).addOnCompleteListener(uploadTask -> {
             DataOrException<String, Exception> dataOrException = new DataOrException<>();
             if (uploadTask.isSuccessful()) {
-                dataOrException.data = fileName;
+                charityStorage.child(fileName).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                        DataOrException<String, Exception> dataOrException = new DataOrException<>();
+
+                        if(task.isSuccessful()) {
+                            dataOrException.data = task.getResult().toString();
+                        } else {
+                            dataOrException.exception = task.getException();
+                        }
+                        dataOrExceptionMutableLiveData.setValue(dataOrException);
+                    }
+                });
             } else {
                 dataOrException.exception = uploadTask.getException();
             }
 
-            dataOrExceptionMutableLiveData.setValue(dataOrException);
         });
         return dataOrExceptionMutableLiveData;
     }

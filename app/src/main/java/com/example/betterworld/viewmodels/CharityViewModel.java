@@ -23,8 +23,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import static com.example.betterworld.utils.HelperClass.logErrorMessage;
-
 public class CharityViewModel extends ViewModel {
 
 

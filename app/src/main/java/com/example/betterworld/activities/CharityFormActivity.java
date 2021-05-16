@@ -41,6 +41,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.Actions.gotoMainActivity;
 import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
@@ -110,7 +111,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
         activityCharityFormBinding.btnHome.setOnClickListener(view -> {
-            gotoNotificationActivity(this);
+            gotoMainActivity(this);
         });
         activityCharityFormBinding.frameLayoutTransparent.setOnClickListener(view -> {
             activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.GONE);
