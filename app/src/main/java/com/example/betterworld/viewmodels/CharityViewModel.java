@@ -28,9 +28,6 @@ public class CharityViewModel extends ViewModel {
 
     private CharityRepository _charityRepository;
     private AuthRepository _authRepository;
-    private CharityForm charity;
-    private View.OnFocusChangeListener onFocusProfession;
-
 
     private static final String TAG = "CharityViewModel";
 
@@ -48,9 +45,12 @@ public class CharityViewModel extends ViewModel {
             final String username = _authRepository.getUser().getUsername();
             final String userId = _authRepository.getUser().getUserId();
 
-            Charity charity = new Charity(UUID.randomUUID().toString(), title,
-                    description, whoBenefits, "", target, 0, startDate.getTime(), dueDate.getTime(),
-                    "Health", "health-12345", userId, username
+            Charity charity = new Charity(
+                    UUID.randomUUID().toString(), title,
+                    description, whoBenefits, "", target,
+                    0,startDate.getTime(), dueDate.getTime(),
+                    "Health", "health-12345",
+                    userId, username
             );
 
             return _charityRepository.createCharityOnFireStore(charity);
@@ -61,59 +61,7 @@ public class CharityViewModel extends ViewModel {
         }
     }
 
-    @VisibleForTesting
-    public void init() {
-        charity = new CharityForm();
+    public  boolean  isNextValid = false;
 
-        logErrorMessage("Initalizing VisibleForTesting ...");
-        onFocusProfession =  new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-
-                EditText et = (EditText) view;
-                logErrorMessage("Initalizing onFocusChange ... "+et.getText());
-                if (et.getText().length() > 0 && !focused) {
-
-                    charity.isProfessionValid(true);
-                }
-            }
-        };
-
-    }
-
-    public CharityForm getCharity() {
-        return charity;
-    }
-
-    public View.OnFocusChangeListener getProfessionOnFocusChangeListener() {
-        logErrorMessage("Started getProfessionOnFocusChangeListener ");
-        return onFocusProfession;
-    }
-
-    public void onButtonClick() {
-        charity.onClick();
-    }
-
-    public MutableLiveData<CharityFields> getCharityFields() {
-        return charity.getCharityFields();
-    }
-
-
-    @BindingAdapter("error")
-    public static void setError(EditText editText, Object strOrResId) {
-        if (strOrResId instanceof Integer) {
-            editText.setError(
-                    editText.getContext().getString((Integer) strOrResId));
-        } else {
-            editText.setError((String) strOrResId);
-        }
-    }
-
-    @BindingAdapter("onFocus")
-    public static void bindFocusChange(EditText editText, View.OnFocusChangeListener onFocusChangeListener) {
-        if (editText.getOnFocusChangeListener() == null) {
-            editText.setOnFocusChangeListener(onFocusChangeListener);
-        }
-    }
 
 }

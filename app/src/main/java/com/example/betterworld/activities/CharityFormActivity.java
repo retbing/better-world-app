@@ -12,13 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
-import com.example.betterworld.validatorRules.createCharity.CharityFields;
 import com.example.betterworld.viewmodels.CharityViewModel;
 
 import java.util.Calendar;
@@ -53,29 +51,15 @@ public class CharityFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
-        if (savedInstanceState == null) {
-            charityViewModel.init();
-        }
         activityCharityFormBinding.setCharityModel(charityViewModel);
+        logErrorMessage("Making some changes");
         _initComponents();
 
-        step = 0;
+        step = -1;
     }
-
-    private void setupButtonClick() {
-        logErrorMessage("Started observing  ButtonClick");
-        charityViewModel.getCharityFields().observe(this, new Observer<CharityFields>() {
-
-            @Override
-            public void onChanged(CharityFields charityFields) {
-                Toast.makeText(CharityFormActivity.this, "Data changed on form", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
 
     private void _initComponents() {
-        setupButtonClick();
+        logErrorMessage("Making _initComponents");
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.etDate.setOnClickListener(view -> _dateTimeFrameLayout());
@@ -137,25 +121,92 @@ public class CharityFormActivity extends AppCompatActivity {
         return new MutableLiveData<DataOrException<Charity, Exception>> ();
     }
 
-    private void _nextStep(int i) {
+    public void _nextStep(int i) {
         _controlPageStep(i);
+        logErrorMessage("Step :"+step);
         switch (step) {
             case 0:
+                if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etAddress.getText().toString().isEmpty()
+                ){
+                    if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etProfession.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etNameOfInstitution.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etSocialMediaAccount.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etAddress.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etAddress.setError("Fill this filed");
+                    }
+                    _controlPageStep(-1);
+                    break;
+
+                }
+                else{
+
+                    _charityFormPage2();
+                    break;
+                }
+
+            case 1:
+                if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etDate.getText().toString().isEmpty()
+                ){
+                    if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etTitle.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etWhoBenefits.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etTarget.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etTarget.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etDate.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etDate.setError("Fill this filed");
+                    }
+                    _controlPageStep(-1);
+
+                    break;
+                }
+               else {
+                    _charityFormPage3();
+                    break;
+                }
+
+            case 2:
+                if(activityCharityFormBinding.etDescription.getText().toString().isEmpty())
+                {
+                    activityCharityFormBinding.etDescription.setError("Fill this filed");
+                    _controlPageStep(-1);
+                    break;
+                }
+                else {
+                    _charityFormPage4();
+                    break;
+                }
+            case 3:
+                if(activityCharityFormBinding.etPhoneNumber.getText().toString().isEmpty())
+                {
+                    activityCharityFormBinding.etPhoneNumber.setError("Fill this filed");
+                    _controlPageStep(-1);
+                    break;
+                }
+                else {
+                    _charityFormPageSuccess();
+                    break;
+                }
+            case -1:
                 _charityFormPage1();
                 break;
-            case 1:
-                _charityFormPage2();
-                break;
-            case 2:
-                _charityFormPage3();
-                break;
-            case 3:
-                _charityFormPage4();
-                break;
-            case 4:
-                _charityFormPageSuccess();
-                break;
         }
+
     }
 
     private void _controlPageStep(int i) {
@@ -195,10 +246,10 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.btnStepper3.setText("");
         activityCharityFormBinding.btnStepper4.setText("4");
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage4.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
 
 
@@ -214,10 +265,10 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.bw_light_grey_darker));
         activityCharityFormBinding.btnStepper2.setText("");
         activityCharityFormBinding.btnStepper3.setText("3");
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage3.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
 
@@ -238,10 +289,11 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper1.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
+
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage2.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
 
         activityCharityFormBinding.btnPrevious.setVisibility(View.VISIBLE);
 
@@ -262,9 +314,9 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
         activityCharityFormBinding.btnStepper1.setText("1");
         activityCharityFormBinding.frameLayoutPage1.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
         activityCharityFormBinding.btnPrevious.setVisibility(View.GONE);
     }
 
