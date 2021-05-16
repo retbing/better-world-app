@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -15,29 +14,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterWorld">
-        <activity android:name=".activities.NotificationActivity"></activity>
+        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.NotificationActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.ForgotPasswordActivity"/>
+        <activity android:name=".activities.ForgotPasswordActivity" />
         <activity android:name=".activities.ChooseCategoryActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity
             android:name=".activities.CharityFormActivity"
             android:windowSoftInputMode="adjustPan" />
-
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />
         </activity>
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
     </application>
 
 </manifest>
