@@ -88,9 +88,6 @@ public class LoginViewModel extends ViewModel {
         return login.getLoginFields();
     }
 
-    public LoginForm getForm() {
-        return login;
-    }
 
     @BindingAdapter("error")
     public static void setError(EditText editText, Object strOrResId) {

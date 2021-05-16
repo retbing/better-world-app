@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -33,33 +32,32 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
+import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
 public class CharityFormActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "TAG CharityFormActivity";
+    static final String TAG = "TAG CharityFormActivity";
     private static final int GALLERY_REQUEST_CODE = 0x001;
 
     private ActivityCharityFormBinding activityCharityFormBinding;
     private DatePickerDialog.OnDateSetListener onDateStartedSetListener;
     private DatePickerDialog.OnDateSetListener onDateEndedSetListener;
 
-    private int step;
+     int step;
     Date dueDate, startDate;
-    String startedDate, endedDate;
-    Uri imageUri;
 
+    String startedDate, endedDate, categoryName, categoryId;
+    Uri imageUri;
 
     @Inject
     CharityViewModel charityViewModel;
@@ -67,9 +65,14 @@ public class CharityFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
+        activityCharityFormBinding.setCharityModel(charityViewModel);
+        logErrorMessage("Making some changes");
         _initComponents();
-        step = 0;
+
+        step = -1;
+
     }
 
     @Override
@@ -92,10 +95,12 @@ public class CharityFormActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 
     private void _initComponents() {
+        categoryName = getIntent().getStringExtra("CATEGORY_NAME");
+        categoryId = "#" + categoryName.toLowerCase();
+      
         activityCharityFormBinding.btnNext.setOnClickListener(view -> _nextStep(1));
         activityCharityFormBinding.btnPrevious.setOnClickListener(view -> _previousStep());
         activityCharityFormBinding.ibThumbnail.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
@@ -104,7 +109,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.etDateEnded.setOnClickListener(view -> _dateTimeEndedPopup());
         activityCharityFormBinding.btnDone.setOnClickListener(view -> _dateTimeDone());
         activityCharityFormBinding.btnHome.setOnClickListener(view -> {
-            gotoNotificationActivity(this);
+            goToLoginActivity(this);
         });
         activityCharityFormBinding.frameLayoutTransparent.setOnClickListener(view -> {
             activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.GONE);
@@ -148,7 +153,7 @@ public class CharityFormActivity extends AppCompatActivity {
 //       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
 //       String address =  activityCharityFormBinding.etAddress.getText().toString();
 //       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
-
+      
         charityViewModel.uploadImage(imageUri).observe(this, fileNameOrExp -> {
             if (fileNameOrExp.data != null) {
                 final String fileName = fileNameOrExp.data;
@@ -158,7 +163,7 @@ public class CharityFormActivity extends AppCompatActivity {
                 float target = Float.parseFloat("0" + activityCharityFormBinding.etTarget.getText().toString());
                 String description = activityCharityFormBinding.etDescription.getText().toString();
 
-                charityViewModel.createCharity(title, whoBenefits, description, target, startDate, dueDate, fileName).observe(
+                charityViewModel.createCharity(title,categoryId, categoryName, whoBenefits, description, target, startDate, dueDate, fileName).observe(
                         this, charityOrExp -> {
                             if (charityOrExp.data != null) {
                                 _charityFormPageSuccess();
@@ -181,23 +186,88 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private void _nextStep(int i) {
         _controlPageStep(i);
+        logErrorMessage("Step :"+step);
         switch (step) {
             case 0:
+                if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etAddress.getText().toString().isEmpty()
+                ){
+                    if(activityCharityFormBinding.etProfession.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etProfession.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etNameOfInstitution.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etNameOfInstitution.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etSocialMediaAccount.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etAddress.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etAddress.setError("Fill this filed");
+                    }
+                    _controlPageStep(-1);
+                    break;
+
+                }
+                else{
+                    _charityFormPage2();
+                    break;
+                }
+
+            case 1:
+                if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
+                        ||activityCharityFormBinding.etDate.getText().toString().isEmpty()
+                ){
+                    if(activityCharityFormBinding.etTitle.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etTitle.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etWhoBenefits.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etTarget.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etTarget.setError("Fill this filed");
+                    }
+                    if(activityCharityFormBinding.etDate.getText().toString().isEmpty()){
+                        activityCharityFormBinding.etDate.setError("Fill this filed");
+                    }
+                    _controlPageStep(-1);
+                    break;
+                }
+               else {
+                    _charityFormPage3();
+                    break;
+                }
+
+            case 2:
+                if(activityCharityFormBinding.etDescription.getText().toString().isEmpty())
+                {
+                    activityCharityFormBinding.etDescription.setError("Fill this filed");
+                    _controlPageStep(-1);
+                    break;
+                }
+                else {
+                    _charityFormPage4();
+                    break;
+                }
+            case 3:
+                if(activityCharityFormBinding.etPhoneNumber.getText().toString().isEmpty())
+                {
+                    activityCharityFormBinding.etPhoneNumber.setError("Fill this filed");
+                    _controlPageStep(-1);
+                    break;
+                }
+                else {
+                    _createCharity();
+                    break;
+                }
+            case -1:
                 _charityFormPage1();
                 break;
-            case 1:
-                _charityFormPage2();
-                break;
-            case 2:
-                _charityFormPage3();
-                break;
-            case 3:
-                _charityFormPage4();
-                break;
-            case 4:
-                _createCharity();
-                break;
         }
+
     }
 
     private void _controlPageStep(int i) {
@@ -216,7 +286,6 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setText("");
         activityCharityFormBinding.frameLayoutSuccess.setVisibility(View.VISIBLE);
         activityCharityFormBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
-
     }
 
     private void _charityFormPage4() {
@@ -228,10 +297,10 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.btnStepper3.setText("");
         activityCharityFormBinding.btnStepper4.setText("4");
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage4.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
     }
 
@@ -245,10 +314,10 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.btnStepper4.setTextColor(ContextCompat.getColor(this, R.color.bw_light_grey_darker));
         activityCharityFormBinding.btnStepper2.setText("");
         activityCharityFormBinding.btnStepper3.setText("3");
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage3.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
 
@@ -269,10 +338,11 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper1.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
-        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.INVISIBLE);
+
+        activityCharityFormBinding.frameLayoutPage1.setVisibility(View.GONE);
         activityCharityFormBinding.frameLayoutPage2.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
 
         activityCharityFormBinding.btnPrevious.setVisibility(View.VISIBLE);
 
@@ -293,9 +363,9 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
         activityCharityFormBinding.btnStepper1.setText("1");
         activityCharityFormBinding.frameLayoutPage1.setVisibility(View.VISIBLE);
-        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
-        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
+        activityCharityFormBinding.frameLayoutPage2.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage3.setVisibility(View.GONE);
+        activityCharityFormBinding.frameLayoutPage4.setVisibility(View.GONE);
         activityCharityFormBinding.btnPrevious.setVisibility(View.GONE);
 
         hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage1);

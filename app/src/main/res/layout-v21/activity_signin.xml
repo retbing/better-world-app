@@ -5,9 +5,8 @@
 
     <data>
         <variable
-            name="loginModel"
-            type="com.example.betterworld.viewmodels.LoginViewModel"
-            />
+            name="model"
+            type="com.example.betterworld.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingHorizontal="14dp">
+                    android:paddingHorizontal="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp">
 
                     <LinearLayout
                         android:id="@+id/linearLayout3"
@@ -99,9 +100,9 @@
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
                             android:textSize="14sp"
-                            android:text="@={loginModel.login.fields.email}"
-                            app:error="@{loginModel.login.emailError}"
-                            app:onFocus="@{loginModel.getEmailOnFocusChangeListener()}"
+                            android:text="@={model.login.fields.email}"
+                            app:error="@{model.login.emailError}"
+                            app:onFocus="@{model.getEmailOnFocusChangeListener()}"
                             ></EditText>
 
                         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
@@ -113,16 +114,15 @@
                             android:background="@drawable/edit_view_bg_grey"
                             android:fontFamily="@font/gordita_regular"
                             android:hint="@string/password"
-                            android:text="@={loginModel.login.fields.password}"
-                            app:error="@{loginModel.login.passwordError}"
-                            app:onFocus="@{loginModel.getPasswordOnFocusChangeListener()}"
+                            android:text="@={model.login.fields.password}"
+                            app:error="@{model.login.passwordError}"
+                            app:onFocus="@{model.getPasswordOnFocusChangeListener()}"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/bw_light_grey_darker"
                             android:textSize="14sp"></EditText>
 
 
                         <TextView
-                            android:id="@+id/tv_forgot_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gordita_medium"
@@ -139,15 +139,14 @@
                         android:layout_height="60dp"
                         android:layout_marginStart="14dp"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginRight="14dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/button_bg_blue"
                         android:backgroundTint="@color/bw_blue"
                         android:text="@string/login"
-                        android:enabled="@{loginModel.login.valid}"
-                        android:onClick="@{() -> loginModel.onButtonClick()}"
+                        android:enabled="@{model.login.valid}"
                         app:backgroundTint="@color/bw_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

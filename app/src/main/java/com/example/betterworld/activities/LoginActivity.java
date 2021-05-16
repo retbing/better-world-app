@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.betterworld.utils.Actions.goToForgotPasswordActivity;
 import static com.example.betterworld.utils.Actions.goToRegisterActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
@@ -28,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient googleSignInClient;
     TextView tv_create_new_account;
     ActivityLoginBinding activityLoginBinding;
+
+    final  String TAG = "LoginActivity";
+
     @Inject
     LoginViewModel loginViewModel;
 
@@ -38,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loginViewModel.init();
         }
-        activityLoginBinding.setModel(loginViewModel);
+
+        activityLoginBinding.setLoginModel(loginViewModel);
         _initComponents();
         setupButtonClick();
     }
@@ -46,24 +51,27 @@ public class LoginActivity extends AppCompatActivity {
     private void setupButtonClick() {
         loginViewModel.getLoginFields().observe(this, new Observer<LoginFields>() {
             @Override
-            public void onChanged(LoginFields loginModel) {
+            public void onChanged(LoginFields loginFields) {
+                Toast.makeText(LoginActivity.this, "Data changed on email and password", Toast.LENGTH_LONG).show();
                 _loginWithEmailAndPassword();
             }
         });
     }
 
     private void _initComponents() {
+        activityLoginBinding.tvForgotPassword.setOnClickListener(view -> goToForgotPasswordActivity(this));
         activityLoginBinding.tvCreateNewAccount.setOnClickListener(view -> goToRegisterActivity(this));
         activityLoginBinding.btnLogin.setOnClickListener(view -> _loginWithEmailAndPassword());
         activityLoginBinding.btnGoogleSignin.setOnClickListener(view -> _signingWithGoogle());
-
-
     }
 
     private void _loginWithEmailAndPassword() {
         final String email = activityLoginBinding.etEmail.getText().toString();
         final String password = activityLoginBinding.etPassword.getText().toString();
 
+        Toast.makeText(this, "Email :"+email
+                +"  password: "+password
+                , Toast.LENGTH_LONG).show();
         loginViewModel.signInWithEmailAndPassword(email, password);
         loginViewModel.authenticatedUserLiveData.observe(this, dataOrException -> {
 

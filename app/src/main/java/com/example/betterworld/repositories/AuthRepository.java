@@ -1,5 +1,7 @@
 package com.example.betterworld.repositories;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -18,6 +20,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import static com.example.betterworld.utils.Constants.USERS_REF;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @Singleton
 public class AuthRepository {
@@ -63,9 +66,10 @@ public class AuthRepository {
         return dataOrExceptionMutableLiveData;
     }
 
-    public MutableLiveData<DataOrException<User, Exception>> firebaseSignInWithEmailAndPassword(String email, String password) {
+    public MutableLiveData<DataOrException<User, Exception>>
+    firebaseSignInWithEmailAndPassword(String email, String password) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
-
+        logErrorMessage("Email "+email +"  password: "+password);
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     DataOrException<User, Exception> dataOrException = new DataOrException<>();
@@ -104,6 +108,23 @@ public class AuthRepository {
 
     public User getUser() {
         return user;
+    }
+
+    public MutableLiveData<DataOrException<Integer,Exception>> resetPassword(String emailAddress){
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(resetTask -> {
+                    DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                    if (resetTask.isSuccessful()) {
+                        dataOrException.data = 1;
+                        Log.d("TAG", "Email sent.");
+                    }else{
+                        dataOrException.exception = resetTask.getException();
+                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
     }
 
 }
