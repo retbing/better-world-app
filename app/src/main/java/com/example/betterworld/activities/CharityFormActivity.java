@@ -184,7 +184,6 @@ public class CharityFormActivity extends AppCompatActivity {
         switch (step) {
             case 0:
                 _charityFormPage1();
-                hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage1);
                 break;
             case 1:
                 _charityFormPage2();
@@ -234,8 +233,6 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.frameLayoutPage2.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
-
-
     }
 
     private void _charityFormPage3() {
@@ -255,7 +252,7 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.lineStepper2.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_blue));
         activityCharityFormBinding.lineStepper3.setBackgroundColor(ContextCompat.getColor(this, R.color.bw_light_grey));
 
-
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage3);
     }
 
     private void _charityFormPage2() {
@@ -279,7 +276,7 @@ public class CharityFormActivity extends AppCompatActivity {
 
         activityCharityFormBinding.btnPrevious.setVisibility(View.VISIBLE);
 
-
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage2);
     }
 
     private void _charityFormPage1() {
@@ -300,6 +297,9 @@ public class CharityFormActivity extends AppCompatActivity {
         activityCharityFormBinding.frameLayoutPage3.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.frameLayoutPage4.setVisibility(View.INVISIBLE);
         activityCharityFormBinding.btnPrevious.setVisibility(View.GONE);
+
+        hideKeyboardFrom(getApplicationContext(), activityCharityFormBinding.frameLayoutPage1);
+
     }
 
     private void _previousStep() {
