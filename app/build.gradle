@@ -31,6 +31,10 @@ android {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+        debug{
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+        }
     }
 
     buildFeatures {
@@ -39,6 +43,17 @@ android {
 
     defaultConfig {
         multiDexEnabled true
+    }
+
+    flavorDimensions "dev", "prod"
+    productFlavors {
+        dev{
+            resConfigs  "en","xxhdpi"
+            dimension "dev"
+        }
+        full {
+            dimension "prod"
+        }
     }
 
     dependencies {

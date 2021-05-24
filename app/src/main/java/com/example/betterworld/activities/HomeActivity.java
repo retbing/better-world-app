@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class HomeActivity extends AppCompatActivity {
 
     @Inject
     CharityViewModel charityViewModel;
+
+    @Inject
+    HomeViewModel homeViewModel;
 
     RecyclerView categoryBtnRecyclerView;
 
@@ -53,11 +57,9 @@ public class HomeActivity extends AppCompatActivity {
     // Linear Layout Manager
     LinearLayoutManager horizontalLayoutBtn , horizontalLayoutCard;
 
-    View ChildView;
-    int RecyclerViewItemPosition;
+//    View ChildView;
+//    int RecyclerViewItemPosition;
 
-    @Inject
-    HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class HomeActivity extends AppCompatActivity {
     private void _initComponents() {
         _setupRecyclerView();
         activityHomeBinding.btnDonate.setOnClickListener(view->goToPaymentActivity(this));
+        activityHomeBinding.tvUsername.setText(homeViewModel.getUser().getUsername());
+        activityHomeBinding.notificationIvon.setOnClickListener(view->gotoNotificationActivity(this));
     }
 
 
