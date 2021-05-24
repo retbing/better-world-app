@@ -64,6 +64,33 @@ public class AuthRepository {
         return dataOrExceptionMutableLiveData;
     }
 
+    public MutableLiveData<DataOrException<User, Exception>> getUserFromFirestoreByID(String uuid) {
+        MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        // Add a new document with a generated ID
+        userCollection
+                .document(uuid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DataOrException<User,Exception> dataOrException = new DataOrException<>();
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        user = User.FromMap(document.getData());
+                        dataOrException.data = user;
+                    } else {
+                        dataOrException.exception = task.getException();
+                    }
+                } else {
+                    dataOrException.exception = task.getException();
+                }
+
+                dataOrExceptionMutableLiveData.setValue(dataOrException);
+            }
+        });
+
+        return dataOrExceptionMutableLiveData;
+    }
+
     public MutableLiveData<DataOrException<User, Exception>>
     firebaseSignInWithEmailAndPassword(String email, String password) {
         MutableLiveData<DataOrException<User, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();

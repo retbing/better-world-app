@@ -20,8 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
@@ -104,6 +106,33 @@ public class CharityRepository {
                         dataOrException.exception = charityTask.getException();
                     }
                     dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
+    }
+    public MutableLiveData<DataOrException<Charity, Exception>> getCharityByIDFromFireStore(String charityID) {
+        MutableLiveData<DataOrException<Charity, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        charityCollection
+                .document(charityID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DataOrException<Charity,Exception> dataOrException = new DataOrException<>();
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Charity charity = Charity.fromMap(document.getData());
+                                dataOrException.data = charity;
+                            } else {
+                                dataOrException.exception = task.getException();
+                            }
+                        } else {
+                            dataOrException.exception = task.getException();
+                            logErrorMessage(task.getException().getMessage());
+                        }
+
+                        dataOrExceptionMutableLiveData.setValue(dataOrException);
+                    }
                 });
         return dataOrExceptionMutableLiveData;
     }

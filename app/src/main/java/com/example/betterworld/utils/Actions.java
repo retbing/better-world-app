@@ -15,6 +15,7 @@ import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.PaymentActivity;
 import com.example.betterworld.activities.RegisterActivity;
+import com.example.betterworld.models.Charity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -35,8 +36,9 @@ public class Actions {
         activity.startActivity(intent);
     }
 
-    public static void goToCharityDetailsActivity(Activity activity) {
+    public static void goToCharityDetailsActivity(Activity activity, String CHARITY_ID) {
         Intent intent = new Intent(activity, CharityDetailsActivity.class);
+        intent.putExtra("CHARITY_ID",CHARITY_ID);
         activity.startActivity(intent);
     }
 

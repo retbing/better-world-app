@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.adapters.CategoryBottonAdapter;
@@ -76,9 +77,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void _initComponents() {
         _setupRecyclerView();
-        activityHomeBinding.btnDonate.setOnClickListener(view->goToPaymentActivity(this));
         activityHomeBinding.tvUsername.setText(homeViewModel.getUser().getUsername());
-        activityHomeBinding.notificationIvon.setOnClickListener(view->gotoNotificationActivity(this));
+        activityHomeBinding.notificationIcon.setOnClickListener(view->{
+            Toast.makeText(this, "Come here", Toast.LENGTH_SHORT).show();
+            gotoNotificationActivity(this);
+        });
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.betterworld.viewmodels;
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.EditText;
 
@@ -45,6 +46,7 @@ public class RegisterViewModel extends ViewModel {
     public void createNewAuthUser(String email, String password) {
         createdAuthUserLiveData = registerRepository.createAuthUserInFirebase(email, password);
     }
+
 
 
     @VisibleForTesting
