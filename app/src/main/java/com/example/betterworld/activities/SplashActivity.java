@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Delayer.delay(1000, new Delayer.DelayCallback() {
+        Delayer.delay(200, new Delayer.DelayCallback() {
             @Override
             public void callback() {
                 checkIfUserIsAuthenticated();

@@ -20,6 +20,7 @@ import static com.example.betterworld.utils.Constants.CHARITIES_STORAGE_REF;
 import static com.example.betterworld.utils.Constants.NOTIFICATIONS_REF;
 import static com.example.betterworld.utils.Constants.PAYMENT_METHOD_COLLECTION;
 import static com.example.betterworld.utils.Constants.PAYMENT_METHOD_REF;
+import static com.example.betterworld.utils.Constants.PROFILES_STORAGE_REF;
 import static com.example.betterworld.utils.Constants.USERS_COLLECTION;
 import static com.example.betterworld.utils.Constants.USERS_REF;
 
@@ -51,6 +52,13 @@ public class FirebaseModule {
     @Named(CHARITIES_STORAGE_REF)
     public static StorageReference provideCharitiesStorageReference(FirebaseStorage storage) {
         return storage.getReference().child(CHARITIES_STORAGE_REF);
+    }
+
+    @Provides
+    @Singleton
+    @Named(PROFILES_STORAGE_REF)
+    public static StorageReference provideProfilesStorageReference(FirebaseStorage storage) {
+        return storage.getReference().child(PROFILES_STORAGE_REF);
     }
 
     @Provides

@@ -51,14 +51,26 @@
                             android:textSize="16sp" />
                     </LinearLayout>
 
-
-                    <include
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:background="@drawable/button_notification"
                         android:id="@+id/notification_icon"
-                        layout="@layout/notification"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-                    </include>
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:contentDescription="TODO"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_notification" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/notification_att"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        app:cardBackgroundColor="@color/bw_red"
+                        app:cardCornerRadius="10dp"
+                        app:layout_constraintEnd_toEndOf="@+id/notification_icon"
+                        app:layout_constraintTop_toTopOf="@+id/notification_icon" />
 
                 </LinearLayout>
 

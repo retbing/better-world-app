@@ -14,11 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterWorld">
-
-        <activity android:name=".activities.PaymentActivity"></activity>    
-        <activity android:name=".activities.CharityDetailsActivity"></activity>
-        <activity android:name=".activities.HomeActivity"></activity>
-        <activity android:name=".activities.DonationDetailActivity"/>
+        <activity android:name=".activities.ProfileEdit"></activity>
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.PaymentActivity" />
+        <activity android:name=".activities.CharityDetailsActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.DonationDetailActivity" />
         <activity android:name=".activities.NotificationActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />

@@ -1,5 +1,7 @@
 package com.example.betterworld.repositories;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,13 +12,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import static com.example.betterworld.utils.Constants.TAG;
 import static com.example.betterworld.utils.Constants.USERS_REF;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
@@ -141,6 +148,46 @@ public class AuthRepository {
                     dataOrExceptionMutableLiveData.setValue(dataOrException);
                 });
         return dataOrExceptionMutableLiveData;
+    }
+
+    public MutableLiveData<DataOrException<Integer,Exception>> updateAuthUser(String uuid, Map<String, Object> userMap){
+
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        // Add a new document with a generated ID
+        userCollection
+                .document(uuid)
+                .set(userMap, SetOptions.merge())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull  Task<Void> task) {
+                        DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                        if (task.isSuccessful()) {
+                            dataOrException.data = 1;
+                            if((String) userMap.get("email") != null) {
+                                Log.d(TAG, "Updating email :!"+(String) userMap.get("email"));
+                                auth.getCurrentUser().updateEmail((String) userMap.get("email"))
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull  Task<Void> emailUpdateTask) {
+                                                if (emailUpdateTask.isSuccessful()) {
+                                                    Log.d(TAG, "User email address updated.");
+                                                } else {
+                                                    Log.d(TAG, "Email Not Updated !");
+                                                }
+                                            }
+                                        });
+                            }
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }else{
+                            dataOrException.exception = task.getException();
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                        dataOrExceptionMutableLiveData.setValue(dataOrException);
+                    }
+                });
+
+        return dataOrExceptionMutableLiveData;
+
     }
 
     public void signOut() {
