@@ -21,6 +21,7 @@ import static com.example.betterworld.utils.Actions.goToCharityDetailsActivity;
 
 
 public class CharitiesHomeAdapter extends RecyclerView.Adapter {
+    
     List<Charity> charityList;
     Activity activity;
     int RecyclerViewItemPosition = 0;
