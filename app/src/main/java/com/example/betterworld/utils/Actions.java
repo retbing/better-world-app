@@ -14,7 +14,10 @@ import com.example.betterworld.activities.HomeActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.PaymentActivity;
+import com.example.betterworld.activities.ProfileActivity;
+import com.example.betterworld.activities.ProfileEdit;
 import com.example.betterworld.activities.RegisterActivity;
+import com.example.betterworld.models.Charity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -29,14 +32,24 @@ public class Actions {
         activity.startActivity(intent);
         activity.finish();
     }
+    public  static  void  gotoProfileActivity(Activity activity){
+        Intent intent = new Intent(activity, ProfileActivity.class);
+        activity.startActivity(intent);
+    }
+    public  static  void  goToEditProfileActivity(Activity activity){
+        Intent intent = new Intent(activity, ProfileEdit.class);
+        activity.startActivity(intent);
+    }
+
 
     public static void goToPaymentActivity(Activity activity) {
         Intent intent = new Intent(activity, PaymentActivity.class);
         activity.startActivity(intent);
     }
 
-    public static void goToCharityDetailsActivity(Activity activity) {
+    public static void goToCharityDetailsActivity(Activity activity, String CHARITY_ID) {
         Intent intent = new Intent(activity, CharityDetailsActivity.class);
+        intent.putExtra("CHARITY_ID",CHARITY_ID);
         activity.startActivity(intent);
     }
 
@@ -50,13 +63,11 @@ public class Actions {
     public static void gotoNotificationActivity(Activity activity) {
         Intent intent = new Intent(activity, NotificationActivity.class);
         activity.startActivity(intent);
-        activity.finish();
     }
 
     public static void goToLoginActivity(Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
-        activity.finish();
     }
 
 

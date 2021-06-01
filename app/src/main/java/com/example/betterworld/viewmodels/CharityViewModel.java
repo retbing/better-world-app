@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
+import com.example.betterworld.models.User;
 import com.example.betterworld.repositories.AuthRepository;
 import com.example.betterworld.repositories.CharityRepository;
 
@@ -57,7 +58,14 @@ public class CharityViewModel extends ViewModel {
         return _charityRepository.uploadImageToFirebaseStorage(uri);
     }
 
+    public MutableLiveData<DataOrException<User, Exception>> getUserByID(String UUID) {
+        return _authRepository.getUserFromFirestoreByID(UUID);
+    }
+
     public MutableLiveData<DataOrException<List<Charity>, Exception>> watchCharities(String categoryId) {
         return _charityRepository.watchCharitiesByCategory(categoryId);
+    }
+    public MutableLiveData<DataOrException<Charity, Exception>> getCharityByID(String chariyId) {
+        return _charityRepository.getCharityByIDFromFireStore(chariyId);
     }
 }

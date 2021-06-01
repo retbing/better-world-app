@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.adapters.CategoryBottonAdapter;
@@ -20,6 +21,7 @@ import com.example.betterworld.models.Notification;
 import com.example.betterworld.viewmodels.CharityViewModel;
 import com.example.betterworld.viewmodels.HomeViewModel;
 import com.example.betterworld.utils.Actions;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,11 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static com.example.betterworld.utils.Actions.goToLoginActivity;
 import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
+import static com.example.betterworld.utils.Actions.gotoProfileActivity;
 
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
@@ -38,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
 
     @Inject
     CharityViewModel charityViewModel;
+
+    @Inject
+    HomeViewModel homeViewModel;
 
     RecyclerView categoryBtnRecyclerView;
 
@@ -53,11 +61,6 @@ public class HomeActivity extends AppCompatActivity {
     // Linear Layout Manager
     LinearLayoutManager horizontalLayoutBtn , horizontalLayoutCard;
 
-    View ChildView;
-    int RecyclerViewItemPosition;
-
-    @Inject
-    HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +68,44 @@ public class HomeActivity extends AppCompatActivity {
         activityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         _initComponents();
 
-        charityViewModel.watchCharities("").observe(this, dataOrExp -> {
-            if (dataOrExp.data != null) {
-                _setCharityAdapter(dataOrExp.data);
-            }
-        });
+
     }
 
     private void _initComponents() {
-        _setupRecyclerView();
-        activityHomeBinding.btnDonate.setOnClickListener(view->goToPaymentActivity(this));
+        FirebaseUser fbUser = homeViewModel.checkIfUserIsAuthenticated();
+        if (fbUser != null) {
+            homeViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
+                if (dataOrException.data != null) {
+                    activityHomeBinding.tvUsername.setText(dataOrException.data.getUsername());
+                } else {
+                    goToLoginActivity(this);
+                }
+            });
+            _setupRecyclerView();
+            charityViewModel.watchCharities("").observe(this, dataOrExp -> {
+                if (dataOrExp.data != null) {
+                    _setCharityAdapter(dataOrExp.data);
+                }
+            });
+
+            activityHomeBinding.notificationIcon.setOnClickListener(view->{
+                Toast.makeText(this, "Come here", Toast.LENGTH_SHORT).show();
+                gotoNotificationActivity(this);
+            });
+
+            activityHomeBinding.btnBlur.setOnClickListener(view -> {
+                goToCharityStartActivity(this);
+            });
+            activityHomeBinding.btnProfile.setOnClickListener(view -> {
+                gotoProfileActivity(this);
+            });
+
+        } else {
+            Toast.makeText(this, "\"Not Authenticated: go login page\"", Toast.LENGTH_SHORT).show();
+            goToLoginActivity(this);
+        }
+
+
     }
 
 
@@ -116,9 +147,6 @@ public class HomeActivity extends AppCompatActivity {
 
         activityHomeBinding.categoryBtnRecyclerView.setAdapter(adapter);
 
-        activityHomeBinding.btnBlur.setOnClickListener(view -> {
-            goToCharityStartActivity(this);
-        });
     }
 
     private void _setCharityAdapter(List<Charity> charityList) {

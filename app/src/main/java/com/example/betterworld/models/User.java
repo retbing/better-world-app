@@ -48,6 +48,20 @@ public class User implements Serializable {
         return new User(uuid, username, email, firstName, lastName, phoneNumber, imageUrl, address, socialMediaAccount, nameOfInstitution);
     }
 
+    public static User FromMap( Map<String, Object> userMap) {
+        final String username = (String) userMap.get("username");
+        final String email = (String) userMap.get("email");
+        final String userId = (String) userMap.get("userId");
+        final String firstName = (String) userMap.get("firstName");
+        final String lastName = (String) userMap.get("lastName");
+        final String phoneNumber = (String) userMap.get("phoneNumber");
+        final String imageUrl = (String) userMap.get("imageUrl");
+        final String address = (String) userMap.get("address");
+        final String socialMediaAccount = (String) userMap.get("socialMediaAccount");
+        final String nameOfInstitution = (String) userMap.get("nameOfInstitution");
+        return new User(userId, username, email, firstName, lastName, phoneNumber, imageUrl, address, socialMediaAccount, nameOfInstitution);
+    }
+
 
     public String getUserId() {
         return userId;

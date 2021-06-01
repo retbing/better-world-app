@@ -21,8 +21,10 @@ import static com.example.betterworld.utils.Actions.goToCharityDetailsActivity;
 
 
 public class CharitiesHomeAdapter extends RecyclerView.Adapter {
+    
     List<Charity> charityList;
     Activity activity;
+    int RecyclerViewItemPosition = 0;
 
     public CharitiesHomeAdapter(List<Charity> charityList, Activity activity) {
         this.charityList = charityList;
@@ -44,12 +46,12 @@ public class CharitiesHomeAdapter extends RecyclerView.Adapter {
             this.charityDataBinding = binding;
             this.context = context;
             this.activity = activity;
-            this.charityDataBinding.getRoot().setOnClickListener(view -> goToCharityDetailsActivity(activity));
         }
 
         public void bindTo(Charity charity) {
             charityDataBinding.setCharity(charity);
             Glide.with(context).load(charity.getImageUrl()).into(charityDataBinding.imageView);
+
         }
     }
 
@@ -62,6 +64,7 @@ public class CharitiesHomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
+        ((CharityViewHolder) holder).charityDataBinding.getRoot().setOnClickListener(view -> goToCharityDetailsActivity(activity,charityList.get(position).getCharityId()));
         ((CharityViewHolder) holder).bindTo(charityList.get(position));
     }
 

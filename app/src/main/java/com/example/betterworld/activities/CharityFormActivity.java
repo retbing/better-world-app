@@ -71,7 +71,6 @@ public class CharityFormActivity extends AppCompatActivity {
 
         activityCharityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_form);
         activityCharityFormBinding.setCharityModel(charityViewModel);
-        logErrorMessage("Making some changes");
         _initComponents();
 
         step = -1;
@@ -132,6 +131,7 @@ public class CharityFormActivity extends AppCompatActivity {
                 startDate = new Date(calendar.getTimeInMillis());
             }
         };
+
 
         onDateEndedSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
