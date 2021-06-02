@@ -25,6 +25,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     Drawable bg_active, bg_default;
     String categoryName;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

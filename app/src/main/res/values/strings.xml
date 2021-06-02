@@ -65,4 +65,7 @@
     <string name="bank_transfer">Bank Transfer</string>
     <string name="paypal">PayPal</string>
     <string name="total">Total</string>
+    <string name="thank_you">Thank You</string>
+    <string name="donate_succesful">Your donation has been succeed and will be transfered soon to the needy</string>
+    <string name="donate">Donate</string>
 </resources>

@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bw_green_dark">
+        android:background="@color/bw_green">
 
         <LinearLayout
             android:id="@+id/linearLayoutDonationDetail"
@@ -53,7 +53,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/iv_profile_picture"
                     android:layout_width="120dp"
                     android:layout_height="72dp"
                     android:layout_marginRight="15dp"
@@ -87,16 +87,16 @@
             </LinearLayout>
 
             <TextView
-                android:background="@drawable/button_bg_dark_green"
-                android:textColor="@color/white"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:textAllCaps="false"
-                android:textSize="16dp"
-                android:fontFamily="@font/gordita_medium"
                 android:layout_marginBottom="35dp"
-                android:text="Donate as anonymous" />
+                android:background="@drawable/button_bg_credit_cards_selected"
+                android:fontFamily="@font/gordita_medium"
+                android:gravity="center"
+                android:text="Donate as anonymous"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -123,13 +123,14 @@
                     app:srcCompat="@drawable/ic_empty_circle" />
 
                 <TextView
+                    android:id="@+id/tv_credit_card"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="fill"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bw_light_grey_3"
                     android:layout_height="64dp"
-                    android:background="@drawable/button_bg_dark_green"
+                    android:background="@drawable/button_bg_credit_cards_unselected"
                     android:layout_weight="1"
                     android:text="@string/credit_card" />
             </LinearLayout>
@@ -144,20 +145,21 @@
                     android:id="@+id/btn_bank_transfer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/white"
-                    app:srcCompat="@drawable/ic_circle"
-                    android:text="Button" />
+                    android:text="Button"
+                    app:srcCompat="@drawable/ic_empty_circle" />
 
                 <TextView
+                    android:id="@+id/tv_bank_transfer"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="fill"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bw_light_grey_3"
                     android:layout_height="64dp"
-                    android:background="@drawable/button_bg_dark_green"
+                    android:background="@drawable/button_bg_credit_cards_unselected"
                     android:layout_weight="1"
                     android:text="@string/bank_transfer" />
             </LinearLayout>
@@ -177,13 +179,14 @@
                     app:srcCompat="@drawable/ic_empty_circle" />
 
                 <TextView
+                    android:id="@+id/tv_paypal"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="fill"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bw_light_grey_3"
                     android:layout_height="64dp"
-                    android:background="@drawable/button_bg_dark_green"
+                    android:background="@drawable/button_bg_credit_cards_unselected"
                     android:layout_weight="1"
                     android:text="@string/paypal" />
             </LinearLayout>
@@ -196,7 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gordita_regular"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textColor="@color/bw_black"
                     android:text="@string/total" />
 
@@ -208,7 +211,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/bw_black"
                     android:fontFamily="@font/gordita_bold"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:text="$710.00" />
             </LinearLayout>
         </LinearLayout>
@@ -221,14 +224,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_donate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="10"
             android:layout_height="@dimen/box_size"
             android:background="@drawable/button_bg_light_green_2"
-            android:text="Donate"
-            android:textColor="@color/bw_green_dark"
+            android:text="@string/donate"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </LinearLayout>
 
@@ -243,21 +247,66 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/frame_layout_numbers"
+            android:id="@+id/frame_layout_success"
             android:layout_width="match_parent"
-            android:layout_height="520dp"
+            android:layout_height="500dp"
             android:background="@drawable/frame_layout_success_bg_white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:layout_marginBottom="20dp"
+                    app:srcCompat="@drawable/ic_success" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gordita_medium"
+                    android:gravity="center"
+                    android:text="@string/thank_you"
+                    android:textColor="@color/bw_blue"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gordita_regular"
+                    android:gravity="center"
+                    android:text="@string/donate_succesful"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
 
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_home"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center|bottom"
+                android:layout_margin="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_blue"
+                android:fontFamily="@font/gordita_medium"
+                android:text="@string/home"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </FrameLayout>
 
