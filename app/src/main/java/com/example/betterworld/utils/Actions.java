@@ -53,12 +53,11 @@ public class Actions {
         activity.startActivity(intent);
     }
 
+
     public static void goToDonationDetailActivity(Activity activity) {
         Intent intent = new Intent(activity, DonationDetailActivity.class);
         activity.startActivity(intent);
     }
-
-
 
     public static void gotoNotificationActivity(Activity activity) {
         Intent intent = new Intent(activity, NotificationActivity.class);

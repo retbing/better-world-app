@@ -424,7 +424,7 @@
                         android:layout_width="wrap_content"
                         android:layout_weight="10"
                         android:layout_height="@dimen/box_size"
-                        android:background="@drawable/button_bg_dark_green"
+                        android:background="@drawable/button_bg_credit_cards_selected"
                         android:text="Donate"
                         android:textColor="@color/white"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />

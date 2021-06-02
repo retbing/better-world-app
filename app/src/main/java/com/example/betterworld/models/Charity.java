@@ -110,20 +110,18 @@ public class Charity implements Serializable {
     }
 
 
-    public String getDonatedToString() {
-        return String.valueOf(donated);
-    }
+
 
     public int getPercentToInteger(){
-        return (int) Math.round((donated*100/target)/100);
+        return (int) Math.round((donated*100/target));
     }
 
     public String getPercentToString(){
-        return String.valueOf(Math.round((donated*100/target)/100));
+        return "%" + String.valueOf(Math.round((donated*100/target)));
     }
 
     public String targetToString(){
-        return "Target: "  + String.valueOf(target);
+        return String.valueOf(target) +"$";
     }
 
     public Date getDueDate() {
