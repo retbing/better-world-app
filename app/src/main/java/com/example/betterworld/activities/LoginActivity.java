@@ -97,5 +97,9 @@ public class LoginActivity extends AppCompatActivity {
     private void _signingWithGoogle() {
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        loginViewModel.getLoginFields().remove;
+    }
 }

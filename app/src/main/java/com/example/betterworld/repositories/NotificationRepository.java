@@ -6,14 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.betterworld.models.Charity;
 import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.Notification;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,29 +20,29 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.hilt.android.scopes.ActivityScoped;
 
-import static com.example.betterworld.utils.Constants.NOTIFICATIONS_COLLECTION;
+import static com.example.betterworld.utils.Constants.NOTIFICATIONS_REF;
 import static com.example.betterworld.utils.Constants.USERS_REF;
+import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @ActivityScoped
 public class NotificationRepository {
-    private final CollectionReference _notificationRef;
-    private final FirebaseAuth firebaseAuth;
     List<Notification> notificationList;
-
+    private  CollectionReference _notificationRef;
 
     private static final String TAG = "NotificationRepository";
 
     @Inject
-    NotificationRepository(FirebaseAuth firebaseAuth, @Named(USERS_REF) CollectionReference userRef) {
+    NotificationRepository( @Named(NOTIFICATIONS_REF) CollectionReference _notificationRef) {
         notificationList = new ArrayList<>();
-        this.firebaseAuth = firebaseAuth;
-        final String uid = firebaseAuth.getCurrentUser().getUid();
-        this._notificationRef = userRef.document(uid).collection(NOTIFICATIONS_COLLECTION);
+        this._notificationRef = _notificationRef;
 
+    }
+
+    public  int notificationSize(){
+       return notificationList.size();
     }
 
     public MutableLiveData<DataOrException<List<Notification>, Exception>> watchNotifications() {
@@ -79,5 +76,24 @@ public class NotificationRepository {
             }
         });
         return mutableLiveData;
+    }
+
+    public MutableLiveData<DataOrException<Notification, Exception>> createNotificationOnFireStore(Notification notification) {
+        MutableLiveData<DataOrException<Notification, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        _notificationRef
+                .document(notification.getCharityId())
+                .set(notification.toMap())
+                .addOnCompleteListener(notificationTask -> {
+                    DataOrException<Notification, Exception> dataOrException = new DataOrException<>();
+                    if (notificationTask.isSuccessful()) {
+                        dataOrException.data = notification;
+                        logErrorMessage("Charity has been Created");
+                    } else {
+                        logErrorMessage("error on");
+                        dataOrException.exception = notificationTask.getException();
+                    }
+                    dataOrExceptionMutableLiveData.setValue(dataOrException);
+                });
+        return dataOrExceptionMutableLiveData;
     }
 }

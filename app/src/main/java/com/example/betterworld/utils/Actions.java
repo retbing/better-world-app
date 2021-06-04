@@ -54,8 +54,10 @@ public class Actions {
     }
 
 
-    public static void goToDonationDetailActivity(Activity activity) {
+    public static void goToDonationDetailActivity(Activity activity,float amount,String charityId) {
         Intent intent = new Intent(activity, DonationDetailActivity.class);
+        intent.putExtra("DONATION_AMOUNT", amount);
+        intent.putExtra("CHARITY_ID", charityId);
         activity.startActivity(intent);
     }
 

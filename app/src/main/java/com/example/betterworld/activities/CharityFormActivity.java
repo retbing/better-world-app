@@ -11,38 +11,35 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityFormBinding;
-import com.example.betterworld.models.Charity;
-import com.example.betterworld.models.DataOrException;
+
 import com.example.betterworld.utils.Actions;
-import com.example.betterworld.utils.HelperClass;
+
 import com.example.betterworld.viewmodels.CharityViewModel;
-import com.example.betterworld.viewmodels.LoginViewModel;
+
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-import static com.example.betterworld.utils.Actions.goToLoginActivity;
+
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
-import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
+
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
@@ -156,10 +153,10 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private void _createCharity() {
 //       String profession =  activityCharityFormBinding.etProfession.getText().toString();
-//       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
-//       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
-//       String address =  activityCharityFormBinding.etAddress.getText().toString();
-//       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
+       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
+       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
+       String address =  activityCharityFormBinding.etAddress.getText().toString();
+       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
 
         charityViewModel.uploadImage(imageUri).observe(this, fileNameOrExp -> {
             if (fileNameOrExp.data != null) {
@@ -173,7 +170,24 @@ public class CharityFormActivity extends AppCompatActivity {
                 charityViewModel.createCharity(title, categoryId, categoryName, whoBenefits, description, target, startDate, dueDate, fileName).observe(
                         this, charityOrExp -> {
                             if (charityOrExp.data != null) {
-                                _charityFormPageSuccess();
+                                charityViewModel.editUserInFireStore(
+                                        new HashMap<String, Object>() {{
+                                            put("address", address);
+                                            put("nameOfInstitution", nameOfInstitution);
+                                            put("socialMediaAccount", socialMediaAccount);
+                                            put("phoneNumber", phoneNumber);
+                                            put("address", address);
+                                        }}
+
+                                ).observe(
+                                        this, userOrExp -> {
+                                            if (userOrExp.data != null) {
+                                                _charityFormPageSuccess();
+                                            } else {
+                                                Snackbar.make(activityCharityFormBinding.clCharityForm, "Error while updating user data. Please try again later.", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                );
                             } else {
                                 Snackbar.make(activityCharityFormBinding.clCharityForm, "Error while creating charity. Please try again later.", Snackbar.LENGTH_SHORT).show();
                             }

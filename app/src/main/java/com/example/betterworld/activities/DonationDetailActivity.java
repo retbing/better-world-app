@@ -11,28 +11,47 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityDonationDetailBinding;
+import com.example.betterworld.viewmodels.DonationViewModel;
+import com.example.betterworld.viewmodels.NotificationViewModel;
+
+import java.util.UUID;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToCharityDetailsActivity;
 import static com.example.betterworld.utils.Actions.goToCharityFormActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
+@AndroidEntryPoint
 public class DonationDetailActivity extends AppCompatActivity {
     ActivityDonationDetailBinding activityDonationDetailBinding;
+    @Inject
+    DonationViewModel donationViewModel;
+    @Inject
+    NotificationViewModel notificationViewModel;
+
     int bg_btn_selected, bg_btn_unselected;
     int textColorLightGrey,textColorWhite;
     Drawable bg_tv_selected, bg_tv_unselected;
     TextView tvTransfer, tvPaypal, tvCreditCard;
     AppCompatImageButton btnTransfer, btnPaypal, btnCreditCard, btnReturnPage;
-    AppCompatButton btnHome, btnDonate;
+    AppCompatButton btnHome, btnDonate,btnAnonymousDonate;
     FrameLayout flSuccessful,flTransparent;
+    Float amountOfDonation;
+    String CharityID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityDonationDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_donation_detail);
+        amountOfDonation =getIntent().getFloatExtra("DONATION_AMOUNT",0);
+        CharityID =  getIntent().getStringExtra("CHARITY_ID");
         _initComponents();
     }
 
@@ -50,7 +69,9 @@ public class DonationDetailActivity extends AppCompatActivity {
         btnTransfer = activityDonationDetailBinding.btnBankTransfer;
         btnReturnPage = activityDonationDetailBinding.btnReturnPage;
         btnDonate = activityDonationDetailBinding.btnDonate;
+        btnAnonymousDonate = activityDonationDetailBinding.btnAonymousDonate;
         btnHome = activityDonationDetailBinding.btnHome;
+        activityDonationDetailBinding.tvTotalDonate.setText("$ "+String.valueOf(amountOfDonation));
 
         flSuccessful = activityDonationDetailBinding.frameLayoutSuccess;
         flTransparent = activityDonationDetailBinding.frameLayoutTransparent;
@@ -68,7 +89,8 @@ public class DonationDetailActivity extends AppCompatActivity {
         //btnReturnPage.setOnClickListener(view -> goToCharityDetailsActivity(this, getIntent().getStringExtra("CHARITY_ID")));
 
         btnHome.setOnClickListener(view -> gotoMainActivity(this));
-        btnDonate.setOnClickListener(view -> checkDonationClearly());
+        btnDonate.setOnClickListener(view -> checkDonationClearly(false));
+        btnAnonymousDonate.setOnClickListener(view -> checkDonationClearly(true));
     }
 
 
@@ -121,10 +143,27 @@ public class DonationDetailActivity extends AppCompatActivity {
         }
     }
 
-    void checkDonationClearly(){
+    void checkDonationClearly(Boolean isAnonymous){
         //TODO: Add donation control and save database
+        donationViewModel.createDonation(UUID.randomUUID().toString(),"",CharityID,amountOfDonation,isAnonymous)
+                .observe(this,dataOrExc->{
+                    if (dataOrExc != null){
+                        notificationViewModel.createNotification(UUID.randomUUID().toString(),CharityID,"$ "+amountOfDonation +" have been donated")
+                                .observe(this,dataOrException->{
+                                    if (dataOrException != null){
+                                        flTransparent.setVisibility(View.VISIBLE);
+                                        flSuccessful.setVisibility(View.VISIBLE);
+                                    }
+                                    else {
+                                        Toast.makeText(this, "notification not sent!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                    else {
+                        Toast.makeText(this, "Donation unsucessfull!", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        flTransparent.setVisibility(View.VISIBLE);
-        flSuccessful.setVisibility(View.VISIBLE);
     }
+
 }
