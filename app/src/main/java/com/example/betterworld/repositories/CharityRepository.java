@@ -25,12 +25,14 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,6 +41,7 @@ import dagger.hilt.android.scopes.ActivityScoped;
 
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
 import static com.example.betterworld.utils.Constants.CHARITIES_STORAGE_REF;
+import static com.example.betterworld.utils.Constants.TAG;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 
@@ -176,5 +179,30 @@ public class CharityRepository {
             }
         });
         return mutableLiveData;
+    }
+    public MutableLiveData<DataOrException<Integer,Exception>> updateCharity(String uuid, Map<String, Object> charityMap){
+
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        // Add a new document with a generated ID
+        charityCollection
+                .document(uuid)
+                .set(charityMap, SetOptions.merge())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull  Task<Void> task) {
+                        DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                        if (task.isSuccessful()) {
+                            dataOrException.data = 1;
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }else{
+                            dataOrException.exception = task.getException();
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                        dataOrExceptionMutableLiveData.setValue(dataOrException);
+                    }
+                });
+
+        return dataOrExceptionMutableLiveData;
+
     }
 }

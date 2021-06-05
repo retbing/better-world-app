@@ -44,7 +44,7 @@ public class DonationViewModel extends ViewModel {
 
             Donation donation = new Donation(donationId,userId,username,userImageUrl,charityId,amount,isAnonymous);
 
-            return _donationRepository.createCharityOnFireStore(donation);
+            return _donationRepository.createDonationOnFireStore(donation);
 
         } else {
             Log.d(TAG, "createCharity: " + "logout the user!! user is null");
@@ -52,17 +52,4 @@ public class DonationViewModel extends ViewModel {
         }
     }
 
-   public void showMesage(){
-        Log.d(TAG,"DonationDetailActivity called");
-        _donationRepository.sendDonationNotification();
-    }
-
-//
-//    public MutableLiveData<DataOrException<User, Exception>> getUserByID(String UUID) {
-//        return _authRepository.getUserFromFirestoreByID(UUID);
-//    }
-//
-//    public MutableLiveData<DataOrException<Charity, Exception>> getCharityByID(String chariyId) {
-//        return _charityRepository.getCharityByIDFromFireStore(chariyId);
-//    }
 }
