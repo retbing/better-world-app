@@ -14,6 +14,7 @@ import com.example.betterworld.activities.HomeActivity;
 import com.example.betterworld.activities.LoginActivity;
 import com.example.betterworld.activities.NotificationActivity;
 import com.example.betterworld.activities.PaymentActivity;
+import com.example.betterworld.activities.PaymentMethodActivity;
 import com.example.betterworld.activities.ProfileActivity;
 import com.example.betterworld.activities.ProfileEdit;
 import com.example.betterworld.activities.RegisterActivity;
@@ -44,6 +45,11 @@ public class Actions {
 
     public static void goToPaymentActivity(Activity activity) {
         Intent intent = new Intent(activity, PaymentActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void goToPaymentMethodActivity(Activity activity) {
+        Intent intent = new Intent(activity, PaymentMethodActivity.class);
         activity.startActivity(intent);
     }
 

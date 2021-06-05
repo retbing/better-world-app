@@ -22,9 +22,13 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
 import static com.example.betterworld.utils.Actions.goToEditProfileActivity;
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
+import static com.example.betterworld.utils.Actions.goToPaymentActivity;
+import static com.example.betterworld.utils.Actions.goToPaymentMethodActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
+import static com.example.betterworld.utils.Actions.gotoProfileActivity;
 
 
 @AndroidEntryPoint
@@ -51,6 +55,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void _initComponents() {
         checkIfUserIsAuthenticatedAndPopulateProfile();
+        activityProfileBinding.btnBlur.setOnClickListener(view -> {
+            goToCharityStartActivity(this);
+        });
+        activityProfileBinding.btnProfile.setOnClickListener(view -> {
+            gotoProfileActivity(this);
+        });
+        activityProfileBinding.editPaymentMethod.setOnClickListener(view -> {goToPaymentMethodActivity(this);});
     }
 
     private void checkIfUserIsAuthenticatedAndPopulateProfile() {
