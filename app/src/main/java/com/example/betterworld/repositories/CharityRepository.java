@@ -186,19 +186,40 @@ public class CharityRepository {
         // Add a new document with a generated ID
         charityCollection
                 .document(uuid)
-                .set(charityMap, SetOptions.merge())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull  Task<Void> task) {
-                        DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DataOrException<Charity,Exception> dataOrException = new DataOrException<>();
                         if (task.isSuccessful()) {
-                            dataOrException.data = 1;
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }else{
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Charity charity = Charity.fromMap(document.getData());
+                                if( (charityMap.get("donated")) != null){
+                                    charityMap.put("donated",((double)charityMap.get("donated"))+charity.getDonated());
+                                }
+                                document.getReference().update(charityMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull  Task<Void> updateTask) {
+                                                DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                                                if (updateTask.isSuccessful()) {
+                                                    dataOrException.data = 1;
+                                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                }else{
+                                                    dataOrException.exception = updateTask.getException();
+                                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                }
+                                                dataOrExceptionMutableLiveData.setValue(dataOrException);
+                                            }
+                                        });
+                            } else {
+                                dataOrException.exception = task.getException();
+                            }
+                        } else {
                             dataOrException.exception = task.getException();
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                            logErrorMessage(task.getException().getMessage());
                         }
-                        dataOrExceptionMutableLiveData.setValue(dataOrException);
                     }
                 });
 

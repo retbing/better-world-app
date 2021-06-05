@@ -66,7 +66,7 @@ public class CharityDetailsActivity extends AppCompatActivity {
 
          Glide.with(CharityDetailsActivity.this).load(dataOrExp.data.getImageUrl()).into(activityCharityDetailsBinding.imageView2);
                 activityCharityDetailsBinding.textView11.setText((String.valueOf(dataOrExp.data.getTarget())));
-                activityCharityDetailsBinding.textView13.setText(String.valueOf(dataOrExp.data.getTarget()));
+                activityCharityDetailsBinding.textView13.setText(String.valueOf(-dataOrExp.data.getDonated() + dataOrExp.data.getTarget()));
                 activityCharityDetailsBinding.textView14.setText( dataOrExp.data.getDescription());
                 activityCharityDetailsBinding.button.setText( dataOrExp.data.getCategoryName());
                 activityCharityDetailsBinding.textView9.setText( getDateDiff(new Date(),dataOrExp.data.getDueDate()) +" days left");

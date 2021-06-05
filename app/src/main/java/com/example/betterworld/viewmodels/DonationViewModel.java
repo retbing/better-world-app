@@ -35,7 +35,7 @@ public class DonationViewModel extends ViewModel {
     }
 
     public MutableLiveData<DataOrException<Donation, Exception>> createDonation(
-            String donationId, String userImageUrl, String charityId, Float amount,Boolean isAnonymous) {
+            String donationId, String userImageUrl, String charityId, double amount,Boolean isAnonymous) {
         if (_authRepository.getUser() != null) {
 
             final String username = _authRepository.getUser().getUsername();

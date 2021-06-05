@@ -9,21 +9,72 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Charity implements Serializable {
-    final public static String DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/better-world-app.appspot.com/o/default_charity_image.png?alt=media&token=39dea2da-d450-47d8-8aad-af2977d42925";
-    final String charityId;
-    final String title;
-    final String description;
-    final String whoBenefits;
-    final String imageUrl;
-    final double target;
-    final double donated;
-    final Date dueDate;
-    final Date startDate;
-    final String categoryId;
-    final String categoryName;
-    final String userId;
-    final String userName;
+     public static String DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/better-world-app.appspot.com/o/default_charity_image.png?alt=media&token=39dea2da-d450-47d8-8aad-af2977d42925";
+     String charityId;
+     String title;
+     String description;
+     String whoBenefits;
+     String imageUrl;
+     double target;
+     double donated;
+     Date dueDate;
+     Date startDate;
+     String categoryId;
+     String categoryName;
+     String userId;
+     String userName;
 
+    public void setCharityId(String charityId) {
+        this.charityId = charityId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setWhoBenefits(String whoBenefits) {
+        this.whoBenefits = whoBenefits;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setTarget(double target) {
+        this.target = target;
+    }
+
+    public void setDonated(double donated) {
+        this.donated = donated;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Charity(String charityId, String title, String description, String whoBenefits,
                    String imageUrl, double target, double donated, long dueDate,

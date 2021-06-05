@@ -21,14 +21,11 @@ import static com.example.betterworld.utils.Constants.TAG;
 public class HomeViewModel {
     private AuthRepository _authRepository;
     private SplashViewModel _spaSplashViewModel;
-    private HomeRepository _homeRepository;
-    private NotificationRepository notificationRepository;
 
     @Inject
-    public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel,HomeRepository _homeRepository) {
+    public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel) {
         this._authRepository = _authRepository;
         this._spaSplashViewModel = _spaSplashViewModel;
-        this._homeRepository = _homeRepository;
     }
 
     public FirebaseUser checkIfUserIsAuthenticated() {
@@ -36,15 +33,6 @@ public class HomeViewModel {
     }
     public MutableLiveData<DataOrException<User, Exception>> getUserFromFirestore(String uuid, String email) {
         return  _authRepository.getUserFromFirestore(uuid, email);
-    }
-    public void subscribeToDonation(){
-
-        _homeRepository.subScribeToTopic();
-    }
-
-
-    public  int notificationSize(){
-        return notificationRepository.notificationSize();
     }
 
 }

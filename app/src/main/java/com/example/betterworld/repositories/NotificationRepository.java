@@ -28,7 +28,8 @@ import static com.example.betterworld.utils.Constants.USERS_REF;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @ActivityScoped
-public class NotificationRepository {
+public class
+NotificationRepository {
     List<Notification> notificationList;
     private  CollectionReference _notificationRef;
 

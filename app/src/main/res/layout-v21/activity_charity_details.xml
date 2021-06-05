@@ -131,10 +131,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/bw_black"
-                        android:textSize="16sp"
                         android:fontFamily="@font/gordita_regular"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/bw_black"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textView12"

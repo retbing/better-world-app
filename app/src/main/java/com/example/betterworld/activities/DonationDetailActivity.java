@@ -43,14 +43,14 @@ public class DonationDetailActivity extends AppCompatActivity {
     AppCompatImageButton btnTransfer, btnPaypal, btnCreditCard, btnReturnPage;
     AppCompatButton btnHome, btnDonate,btnAnonymousDonate;
     FrameLayout flSuccessful,flTransparent;
-    Float amountOfDonation;
+    double amountOfDonation;
     String CharityID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityDonationDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_donation_detail);
-        amountOfDonation =getIntent().getFloatExtra("DONATION_AMOUNT",0);
+        amountOfDonation =getIntent().getDoubleExtra("DONATION_AMOUNT",0);
         CharityID =  getIntent().getStringExtra("CHARITY_ID");
         _initComponents();
     }

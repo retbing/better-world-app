@@ -10,10 +10,10 @@ public class Donation {
     final String userName;
     final String userImageUrl;
     final String charityId;
-    final float amount;
+    final double amount;
     final boolean isAnonymous;
 
-    public Donation(String donationId, String userId, String userName, String userImageUrl, String charityId, float amount, boolean isAnonymous) {
+    public Donation(String donationId, String userId, String userName, String userImageUrl, String charityId, double amount, boolean isAnonymous) {
         this.donationId = donationId;
         this.userId = userId;
         this.userName = userName;
@@ -43,7 +43,7 @@ public class Donation {
         return charityId;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

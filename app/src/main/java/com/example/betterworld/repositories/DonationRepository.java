@@ -24,18 +24,19 @@ import static com.example.betterworld.utils.Constants.TAG;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
+
 @ActivityScoped
 public class DonationRepository {
 
      CollectionReference donationCollection;
-    FirebaseMessaging firebaseMessaging;
+     CharityRepository charityRepository;
 
 
     @Inject
-    public DonationRepository(@Named(DONATION_REF) CollectionReference charitiesRef,FirebaseMessaging  firebaseMessaging) {
+    public DonationRepository(@Named(DONATION_REF) CollectionReference charitiesRef,CharityRepository charityRepository) {
         this.donationCollection = charitiesRef;
-        this.firebaseMessaging = firebaseMessaging;
-
+        this.charityRepository = charityRepository;
     }
 
     public MutableLiveData<DataOrException<Donation, Exception>> createDonationOnFireStore(Donation donation) {
@@ -47,6 +48,11 @@ public class DonationRepository {
                     DataOrException<Donation, Exception> dataOrException = new DataOrException<>();
                     if (donationTask.isSuccessful()) {
                         dataOrException.data = donation;
+                        charityRepository.updateCharity(donation.getCharityId(),
+                                new HashMap<String, Object>() {{
+                                    put("donated", donation.getAmount());
+                                }}
+                                );
                         logErrorMessage("Charity has been Created");
                     } else {
                         logErrorMessage("error on");
