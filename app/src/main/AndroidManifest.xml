@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BetterWorld">
-        <activity android:name=".activities.ProfileEdit"/>
+        <activity android:name=".activities.PaymentMethodActivity"></activity>
+        <activity android:name=".activities.ProfileEdit" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.PaymentActivity" />
         <activity android:name=".activities.CharityDetailsActivity" />

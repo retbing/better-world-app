@@ -68,4 +68,11 @@
     <string name="thank_you">Thank You</string>
     <string name="donate_succesful">Your donation has been succeed and will be transfered soon to the needy</string>
     <string name="donate">Donate</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="save_changes">Save Changes</string>
 </resources>

@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
 import static com.example.betterworld.utils.Actions.goToEditProfileActivity;
+import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.Constants.TAG;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +55,7 @@ public class ProfileEdit extends AppCompatActivity {
 
     private void _initComponetnts() {
         checkAuthAndPopulateFileds();
-        activityProfileEditBinding.uploadAttirbute.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
+        activityProfileEditBinding.uploadAttribute.setOnClickListener(view -> Actions.startImagePickingActivity(this, GALLERY_REQUEST_CODE));
         activityProfileEditBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +80,15 @@ public class ProfileEdit extends AppCompatActivity {
                 gotoProfileActivity(ProfileEdit.this);
             }
         });
+
+
+        activityProfileEditBinding.btnBlur.setOnClickListener(view -> {
+            goToCharityStartActivity(this);
+        });
+        activityProfileEditBinding.btnProfile.setOnClickListener(view -> {
+            gotoProfileActivity(this);
+        });
+        activityProfileEditBinding.btnReturnPage.setOnClickListener(view -> {gotoProfileActivity(this);});
 
     }
 
