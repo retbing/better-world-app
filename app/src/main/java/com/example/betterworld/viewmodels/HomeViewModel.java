@@ -22,13 +22,14 @@ public class HomeViewModel {
     private AuthRepository _authRepository;
     private SplashViewModel _spaSplashViewModel;
     private HomeRepository _homeRepository;
-    private NotificationRepository notificationRepository;
+    private NotificationRepository _notificationRepository;
 
     @Inject
-    public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel,HomeRepository _homeRepository) {
+    public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel,HomeRepository _homeRepository, NotificationRepository _notificationRepository) {
         this._authRepository = _authRepository;
         this._spaSplashViewModel = _spaSplashViewModel;
         this._homeRepository = _homeRepository;
+        this._notificationRepository = _notificationRepository;
     }
 
     public FirebaseUser checkIfUserIsAuthenticated() {
@@ -44,7 +45,7 @@ public class HomeViewModel {
 
 
     public  int notificationSize(){
-        return notificationRepository.notificationSize();
+        return _notificationRepository.notificationSize();
     }
 
 }
