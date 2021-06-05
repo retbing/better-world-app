@@ -51,27 +51,41 @@
                             android:textSize="16sp" />
                     </LinearLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:background="@drawable/button_notification"
-                        android:id="@+id/notification_icon"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:contentDescription="TODO"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_notification" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/notification_att"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:cardBackgroundColor="@color/bw_red"
-                        app:cardCornerRadius="10dp"
-                        app:layout_constraintEnd_toEndOf="@+id/notification_icon"
-                        app:layout_constraintTop_toTopOf="@+id/notification_icon" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:background="@drawable/button_notification"
+                            android:id="@+id/notification_icon"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:contentDescription="TODO"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_notification" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/notification_att"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            app:cardBackgroundColor="@color/bw_red"
+                            app:cardCornerRadius="80dp"
+                            app:layout_constraintEnd_toEndOf="@+id/notification_icon"
+                            app:layout_constraintTop_toTopOf="@+id/notification_icon" >
+                            <TextView
+                                android:id="@+id/notificationSize"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:layout_gravity="center"
+                                android:textSize="8dp"
+                                />
+                        </androidx.cardview.widget.CardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
@@ -142,12 +156,20 @@
                             android:textSize="15sp" />
                     </LinearLayout>
 
+
+                    <ScrollView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        >
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_charityCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+                        android:scrollbars="none">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                    </ScrollView>
                 </LinearLayout>
 
 

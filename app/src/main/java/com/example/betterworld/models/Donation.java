@@ -1,5 +1,8 @@
 package com.example.betterworld.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Donation {
 
     final String donationId;
@@ -46,5 +49,18 @@ public class Donation {
 
     public boolean isAnonymous() {
         return isAnonymous;
+    }
+
+    public Map<String, Object> toMap(
+    ) {
+        Map<String, Object> donationMap = new HashMap<>();
+        donationMap.put("donationId", donationId);
+        donationMap.put("userId", userId);
+        donationMap.put("userName", userName);
+        donationMap.put("amount", amount);
+        donationMap.put("charityId", charityId);
+        donationMap.put("isAnonymous", isAnonymous);
+
+        return donationMap;
     }
 }
