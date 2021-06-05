@@ -9,6 +9,7 @@ import com.example.betterworld.models.DataOrException;
 import com.example.betterworld.models.User;
 import com.example.betterworld.repositories.AuthRepository;
 import com.example.betterworld.repositories.HomeRepository;
+import com.example.betterworld.repositories.NotificationRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +22,7 @@ public class HomeViewModel {
     private AuthRepository _authRepository;
     private SplashViewModel _spaSplashViewModel;
     private HomeRepository _homeRepository;
+    private NotificationRepository notificationRepository;
 
     @Inject
     public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel,HomeRepository _homeRepository) {
@@ -39,4 +41,10 @@ public class HomeViewModel {
 
         _homeRepository.subScribeToTopic();
     }
+
+
+    public  int notificationSize(){
+        return notificationRepository.notificationSize();
+    }
+
 }

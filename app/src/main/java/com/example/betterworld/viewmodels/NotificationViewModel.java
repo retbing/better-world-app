@@ -26,10 +26,6 @@ public class NotificationViewModel {
         this._notificationRepository = notificationRepository;
     }
 
-    public  int notificationSize(){
-        return _notificationRepository.notificationSize();
-    }
-
     public void watchNotifications() {
         notificationLiveData = _notificationRepository.watchNotifications();
     }

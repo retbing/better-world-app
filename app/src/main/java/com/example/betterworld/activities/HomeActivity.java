@@ -43,13 +43,8 @@ public class HomeActivity extends AppCompatActivity {
 
     @Inject
     HomeViewModel homeViewModel;
-    @Inject
-    NotificationViewModel notificationModel;
 
-    RecyclerView categoryBtnRecyclerView;
 
-    // Array list for recycler view data source
-    ArrayList<String> source;
 
     // Layout Manager
     RecyclerView.LayoutManager recyclerViewLayoutManagerBtn, recyclerViewLayoutManagerCard;
@@ -73,21 +68,14 @@ public class HomeActivity extends AppCompatActivity {
     private void _initComponents() {
         FirebaseUser fbUser = homeViewModel.checkIfUserIsAuthenticated();
         if (fbUser != null) {
-            homeViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
-                if (dataOrException.data != null) {
-                    activityHomeBinding.tvUsername.setText(dataOrException.data.getUsername());
-                } else {
-                    goToLoginActivity(this);
-                }
-            });
-            _setupRecyclerView();
+            activityHomeBinding.tvUsername.setText(fbUser.getDisplayName());
             charityViewModel.watchCharities("").observe(this, dataOrExp -> {
                 if (dataOrExp.data != null) {
                     _setCharityAdapter(dataOrExp.data);
                 }
             });
 
-//            activityHomeBinding.notificationSize.setText(notificationModel.notificationSize());
+            activityHomeBinding.notificationSize.setText(homeViewModel.notificationSize());
             activityHomeBinding.notificationIcon.setOnClickListener(view->{
                 gotoNotificationActivity(this);
             });
@@ -108,48 +96,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void _setupRecyclerView() {
-        source = new ArrayList<>();
-        source.add("Education");
-        source.add("Health");
-        source.add("Animal");
-        source.add("Environment");
-
-        recyclerViewLayoutManagerBtn
-                = new LinearLayoutManager(
-                getApplicationContext());
-        recyclerViewLayoutManagerCard
-                = new LinearLayoutManager(
-                getApplicationContext());
-
-        horizontalLayoutBtn
-                = new LinearLayoutManager(
-                HomeActivity.this,
-                LinearLayoutManager.HORIZONTAL,
-                false);
-
-        horizontalLayoutCard
-                = new LinearLayoutManager(
-                HomeActivity.this,
-                LinearLayoutManager.HORIZONTAL,
-                false);
-
-         activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(recyclerViewLayoutManagerBtn);
-        activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(horizontalLayoutBtn);
-
-        activityHomeBinding.rvCharityCard.setLayoutManager(recyclerViewLayoutManagerCard);
-        activityHomeBinding.rvCharityCard.setLayoutManager(horizontalLayoutCard);
-
-
-
-        adapter = new CategoryBottonAdapter(source);
-
-        activityHomeBinding.categoryBtnRecyclerView.setAdapter(adapter);
-
-    }
 
     private void _setCharityAdapter(List<Charity> charityList) {
         final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList, this);
         activityHomeBinding.rvCharityCard.setAdapter(adapter);
+        final CategoryBottonAdapter categoriesAdapter = new CategoryBottonAdapter(this);
+        activityHomeBinding.categoryBtnRecyclerView.setAdapter(categoriesAdapter);
     }
 }

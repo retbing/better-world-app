@@ -52,14 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginFields().observe(this, new Observer<LoginFields>() {
             @Override
             public void onChanged(LoginFields loginFields) {
-                Toast.makeText(LoginActivity.this, "Data changed on email and password", Toast.LENGTH_LONG).show();
                 _loginWithEmailAndPassword();
             }
         });
     }
 
     private void _initComponents() {
-        Toast.makeText(this, "Initiating elements", Toast.LENGTH_LONG).show();
         activityLoginBinding.tvForgotPassword.setOnClickListener(view -> goToForgotPasswordActivity(this));
         activityLoginBinding.tvCreateNewAccount.setOnClickListener(view ->
                 goToRegisterActivity(this));
@@ -74,13 +72,8 @@ public class LoginActivity extends AppCompatActivity {
     private void _loginWithEmailAndPassword() {
         final String email = activityLoginBinding.etEmail.getText().toString();
         final String password = activityLoginBinding.etPassword.getText().toString();
-
-        Toast.makeText(this, "Email :" + email
-                        + "  password: " + password
-                , Toast.LENGTH_LONG).show();
         loginViewModel.signInWithEmailAndPassword(email, password);
         loginViewModel.authenticatedUserLiveData.observe(this, dataOrException -> {
-
             if (dataOrException.data != null) {
                 Toast.makeText(LoginActivity.this, "Logged in successfully as " + dataOrException.data.getUsername(), Toast.LENGTH_SHORT).show();
                 gotoMainActivity(LoginActivity.this);
@@ -97,9 +90,6 @@ public class LoginActivity extends AppCompatActivity {
     private void _signingWithGoogle() {
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        loginViewModel.getLoginFields().remove;
-    }
+
+
 }

@@ -156,12 +156,20 @@
                             android:textSize="15sp" />
                     </LinearLayout>
 
+
+                    <ScrollView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        >
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_charityCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+                        android:scrollbars="none">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                    </ScrollView>
                 </LinearLayout>
 
 

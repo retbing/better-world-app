@@ -68,14 +68,18 @@ public class ProfileEdit extends AppCompatActivity {
                         .observe(ProfileEdit.this,dataOrExc->{
                             if (dataOrExc.data != null){
                                 Toast.makeText(ProfileEdit.this, "User Update successful", Toast.LENGTH_LONG).show();
+                                if(imageUri != null){
+                                    createUserProfilePic();
+                                }
+                                else {
+                                    gotoProfileActivity(ProfileEdit.this);
+                                }
                             }else{
-                                Toast.makeText(ProfileEdit.this, "User Update Not successful", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ProfileEdit.this, "User Update Not successful try Again", Toast.LENGTH_LONG).show();
                             }
                         });
-                if(imageUri != null){
-                    createUserProfilePic();
-                }
-                gotoProfileActivity(ProfileEdit.this);
+
+
             }
         });
 
@@ -134,7 +138,10 @@ public class ProfileEdit extends AppCompatActivity {
                 profileViewModel.editUserInFireStore(fbUser.getUid(),new HashMap<String, Object>() {{
                     put("imageUrl", fileName);
                 }}).observe(ProfileEdit.this,datOrEx->{
-                    Toast.makeText(this, "Image upload successfull!", Toast.LENGTH_SHORT).show();
+                    if (datOrEx != null) {
+                        Toast.makeText(this, "Image upload successfull!", Toast.LENGTH_SHORT).show();
+                        gotoProfileActivity(ProfileEdit.this);
+                    }
                 });
 
             } else {
