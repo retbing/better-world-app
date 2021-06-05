@@ -14,13 +14,11 @@ import android.widget.Toast;
 import com.example.betterworld.R;
 import com.example.betterworld.adapters.CategoryBottonAdapter;
 import com.example.betterworld.adapters.CharitiesHomeAdapter;
-import com.example.betterworld.adapters.NotificationAdapter;
 import com.example.betterworld.databinding.ActivityHomeBinding;
 import com.example.betterworld.models.Charity;
-import com.example.betterworld.models.Notification;
 import com.example.betterworld.viewmodels.CharityViewModel;
 import com.example.betterworld.viewmodels.HomeViewModel;
-import com.example.betterworld.utils.Actions;
+import com.example.betterworld.viewmodels.NotificationViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
-import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
 import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.Actions.gotoProfileActivity;
@@ -47,10 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     @Inject
     HomeViewModel homeViewModel;
 
-    RecyclerView categoryBtnRecyclerView;
 
-    // Array list for recycler view data source
-    ArrayList<String> source;
 
     // Layout Manager
     RecyclerView.LayoutManager recyclerViewLayoutManagerBtn, recyclerViewLayoutManagerCard;
@@ -74,22 +68,15 @@ public class HomeActivity extends AppCompatActivity {
     private void _initComponents() {
         FirebaseUser fbUser = homeViewModel.checkIfUserIsAuthenticated();
         if (fbUser != null) {
-            homeViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
-                if (dataOrException.data != null) {
-                    activityHomeBinding.tvUsername.setText(dataOrException.data.getUsername());
-                } else {
-                    goToLoginActivity(this);
-                }
-            });
-            _setupRecyclerView();
+            activityHomeBinding.tvUsername.setText(fbUser.getDisplayName());
             charityViewModel.watchCharities("").observe(this, dataOrExp -> {
                 if (dataOrExp.data != null) {
                     _setCharityAdapter(dataOrExp.data);
                 }
             });
 
+            activityHomeBinding.notificationSize.setText(homeViewModel.notificationSize());
             activityHomeBinding.notificationIcon.setOnClickListener(view->{
-                Toast.makeText(this, "Come here", Toast.LENGTH_SHORT).show();
                 gotoNotificationActivity(this);
             });
 
@@ -109,48 +96,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void _setupRecyclerView() {
-        source = new ArrayList<>();
-        source.add("Education");
-        source.add("Health");
-        source.add("Animal");
-        source.add("Environment");
-
-        recyclerViewLayoutManagerBtn
-                = new LinearLayoutManager(
-                getApplicationContext());
-        recyclerViewLayoutManagerCard
-                = new LinearLayoutManager(
-                getApplicationContext());
-
-        horizontalLayoutBtn
-                = new LinearLayoutManager(
-                HomeActivity.this,
-                LinearLayoutManager.HORIZONTAL,
-                false);
-
-        horizontalLayoutCard
-                = new LinearLayoutManager(
-                HomeActivity.this,
-                LinearLayoutManager.HORIZONTAL,
-                false);
-
-         activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(recyclerViewLayoutManagerBtn);
-        activityHomeBinding.categoryBtnRecyclerView.setLayoutManager(horizontalLayoutBtn);
-
-        activityHomeBinding.rvCharityCard.setLayoutManager(recyclerViewLayoutManagerCard);
-        activityHomeBinding.rvCharityCard.setLayoutManager(horizontalLayoutCard);
-
-
-
-        adapter = new CategoryBottonAdapter(source);
-
-        activityHomeBinding.categoryBtnRecyclerView.setAdapter(adapter);
-
-    }
 
     private void _setCharityAdapter(List<Charity> charityList) {
         final CharitiesHomeAdapter adapter = new CharitiesHomeAdapter(charityList, this);
         activityHomeBinding.rvCharityCard.setAdapter(adapter);
+        final CategoryBottonAdapter categoriesAdapter = new CategoryBottonAdapter(this);
+        activityHomeBinding.categoryBtnRecyclerView.setAdapter(categoriesAdapter);
     }
 }

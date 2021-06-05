@@ -33,6 +33,7 @@ public class CharityDetailsActivity extends AppCompatActivity {
     CharityViewModel charityDetailsViewModel;
     private ActivityCharityDetailsBinding activityCharityDetailsBinding;
     String thisCharity;
+    private float  amountOfDonation = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,12 @@ public class CharityDetailsActivity extends AppCompatActivity {
         activityCharityDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_details);
         Intent intent = getIntent();
         thisCharity = intent.getStringExtra("CHARITY_ID");
+        Toast.makeText(this, "CHARITY_ID: "+thisCharity, Toast.LENGTH_SHORT).show();
         Toast.makeText(CharityDetailsActivity.this, String.format("Charity Id:%s",thisCharity), Toast.LENGTH_SHORT).show();
-
         _initComponents();
     }
 
     private void _initComponents(){
-        activityCharityDetailsBinding.tvDonationAmt.setText("0");
         activityCharityDetailsBinding.btnJoin.setOnClickListener(view -> visibleNumbersFrameLayouts());
         activityCharityDetailsBinding.btnClose.setOnClickListener(view -> goneNumbersFrameLayouts());
         activityCharityDetailsBinding.btn1.setOnClickListener(view -> setNumberToAmount("1"));
@@ -60,7 +60,7 @@ public class CharityDetailsActivity extends AppCompatActivity {
         activityCharityDetailsBinding.btn9.setOnClickListener(view -> setNumberToAmount("9"));
         activityCharityDetailsBinding.btn0.setOnClickListener(view -> setNumberToAmount("0"));
         activityCharityDetailsBinding.btnDelete.setOnClickListener(view -> setNumberToAmount("x"));
-        activityCharityDetailsBinding.btnDonate.setOnClickListener(view -> goToDonationDetailActivity(this));
+        activityCharityDetailsBinding.btnDonate.setOnClickListener(view -> goToDonationDetailActivity(this,amountOfDonation,thisCharity));
 
         charityDetailsViewModel.getCharityByID(thisCharity).observe(this, dataOrExp -> {
             if (dataOrExp.data != null) {
@@ -69,6 +69,7 @@ public class CharityDetailsActivity extends AppCompatActivity {
                 activityCharityDetailsBinding.textView11.setText((String.valueOf(dataOrExp.data.getTarget())));
                 activityCharityDetailsBinding.textView13.setText(String.valueOf(dataOrExp.data.getTarget()));
                 activityCharityDetailsBinding.textView14.setText( dataOrExp.data.getDescription());
+                activityCharityDetailsBinding.button.setText( dataOrExp.data.getCategoryName());
                 activityCharityDetailsBinding.textView9.setText( getDateDiff(new Date(),dataOrExp.data.getDueDate()) +" days left");
                 activityCharityDetailsBinding.textView7.setText(dataOrExp.data.getTitle());
 
@@ -156,12 +157,17 @@ public class CharityDetailsActivity extends AppCompatActivity {
                 break;
             case "x":
                 int length = activityCharityDetailsBinding.tvDonationAmt.getText().length();
-                if(length > 2){
+                if(length >=2){
                     amount = amount.substring(0,length-1);
+                    setTextToTextView(amount);
+                }
+                else{
+                    amount = "";
                     setTextToTextView(amount);
                 }
                 break;
         }
+        amountOfDonation = Float.parseFloat(amount);
 
     }
 

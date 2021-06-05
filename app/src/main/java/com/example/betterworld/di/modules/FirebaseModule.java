@@ -3,6 +3,8 @@ package com.example.betterworld.di.modules;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -17,6 +19,9 @@ import dagger.hilt.components.SingletonComponent;
 import static com.example.betterworld.utils.Constants.CHARITIES_COLLECTION;
 import static com.example.betterworld.utils.Constants.CHARITIES_REF;
 import static com.example.betterworld.utils.Constants.CHARITIES_STORAGE_REF;
+import static com.example.betterworld.utils.Constants.DONATIONS_COLLECTION;
+import static com.example.betterworld.utils.Constants.DONATION_REF;
+import static com.example.betterworld.utils.Constants.NOTIFICATIONS_COLLECTION;
 import static com.example.betterworld.utils.Constants.NOTIFICATIONS_REF;
 import static com.example.betterworld.utils.Constants.PAYMENT_METHOD_COLLECTION;
 import static com.example.betterworld.utils.Constants.PAYMENT_METHOD_REF;
@@ -38,6 +43,11 @@ public class FirebaseModule {
     @Singleton
     public static FirebaseFirestore provideFirebaseFirestore() {
         return FirebaseFirestore.getInstance();
+    }
+    @Provides
+    @Singleton
+    public static FirebaseMessaging provideFirebaseMessaging() {
+        return FirebaseMessaging.getInstance();
     }
 
     @Provides
@@ -73,6 +83,20 @@ public class FirebaseModule {
     @Named(CHARITIES_REF)
     public static CollectionReference provideCharitiesCollectionReference(FirebaseFirestore rootRef) {
         return rootRef.collection(CHARITIES_COLLECTION);
+    }
+
+    @Provides
+    @Singleton
+    @Named(NOTIFICATIONS_REF)
+    public static CollectionReference provideNotificationsCollectionReference(FirebaseFirestore rootRef) {
+        return rootRef.collection(NOTIFICATIONS_COLLECTION);
+    }
+
+    @Provides
+    @Singleton
+    @Named(DONATION_REF)
+    public static CollectionReference provideDonationsCollectionReference(FirebaseFirestore rootRef) {
+        return rootRef.collection(DONATIONS_COLLECTION);
     }
 
     @Provides

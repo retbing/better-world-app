@@ -193,6 +193,9 @@ public class AuthRepository {
     public void signOut() {
         auth.signOut();
     }
+    public FirebaseAuth auth() {
+        return  auth;
+    }
 
     public User getUser() {
         return user;

@@ -13,6 +13,7 @@ import com.example.betterworld.repositories.CharityRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -67,5 +68,9 @@ public class CharityViewModel extends ViewModel {
     }
     public MutableLiveData<DataOrException<Charity, Exception>> getCharityByID(String chariyId) {
         return _charityRepository.getCharityByIDFromFireStore(chariyId);
+    }
+
+    public MutableLiveData<DataOrException<Integer, Exception>> editUserInFireStore( Map<String, Object> userMap) {
+        return  _authRepository.updateAuthUser(_authRepository.auth().getUid(), userMap);
     }
 }

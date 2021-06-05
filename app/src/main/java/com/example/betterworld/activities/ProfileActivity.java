@@ -44,6 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         activityProfileBinding  =  DataBindingUtil.setContentView(this, R.layout.activity_profile);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         _initComponents();
     }
 

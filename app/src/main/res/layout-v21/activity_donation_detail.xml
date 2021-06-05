@@ -86,7 +86,8 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAonymousDonate"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="35dp"

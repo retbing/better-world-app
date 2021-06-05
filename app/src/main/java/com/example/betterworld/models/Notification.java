@@ -9,6 +9,7 @@ import com.google.firebase.Timestamp;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 
@@ -33,7 +34,7 @@ public class Notification {
     public static Notification fromMap(Map<String, Object> map) {
         final String notificationId = (String) map.get("notificationId");
         final String charityId = (String) map.get("charityId");
-        final long createdAt = (Long) map.get("createdAt");
+        long createdAt = (new Date()).getTime();
         final boolean seen = (Boolean) map.get("seen");
         final String type = (String) map.get("type");
         final String content = (String) map.get("content");
@@ -62,7 +63,7 @@ public class Notification {
     }
 
     public String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, YYYY");
+        SimpleDateFormat sdf = new SimpleDateFormat();
 
         return sdf.format(createdAt);
     }
@@ -75,4 +76,17 @@ public class Notification {
         return content;
     }
 
+
+    public Map<String, Object> toMap(
+    ) {
+        Map<String, Object> charityMap = new HashMap<>();
+        charityMap.put("content", content);
+        charityMap.put("type", type);
+        charityMap.put("seen", seen);
+        charityMap.put("createdAt", createdAt);
+        charityMap.put("charityId", charityId);
+        charityMap.put("notificationId", notificationId);
+
+        return charityMap;
+    }
 }
