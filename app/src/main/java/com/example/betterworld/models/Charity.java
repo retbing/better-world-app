@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.betterworld.utils.HelperClass.getDateDiff;
+
 public class Charity implements Serializable {
     final public static String DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/better-world-app.appspot.com/o/default_charity_image.png?alt=media&token=39dea2da-d450-47d8-8aad-af2977d42925";
     final String charityId;
@@ -26,8 +28,8 @@ public class Charity implements Serializable {
 
 
     public Charity(String charityId, String title, String description, String whoBenefits,
-                   String imageUrl, double target, double donated, long dueDate,
-                   long startDate, String categoryId, String categoryName, String userId, String userName) {
+                   String imageUrl, double target, double donated, long startDate,
+                   long dueDate, String categoryId, String categoryName, String userId, String userName) {
 
         this.charityId = charityId;
         this.title = title;
@@ -36,8 +38,8 @@ public class Charity implements Serializable {
         this.imageUrl = imageUrl;
         this.target = target;
         this.donated = donated;
-        this.dueDate = new Date(dueDate);
         this.startDate = new Date(startDate);
+        this.dueDate = new Date(dueDate);
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.userId = userId;
@@ -78,7 +80,7 @@ public class Charity implements Serializable {
         String categoryName = (String) userMap.get("categoryName");
         String userId = (String) userMap.get("userId");
         String userName = (String) userMap.get("userName");
-        return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, dueDate, startDate, categoryId, categoryName, userId, userName);
+        return new Charity(charityId, title, description, whoBenefits, imageUrl, target, donated, startDate, dueDate, categoryId, categoryName, userId, userName);
     }
 
     public String getCharityId() {
@@ -109,19 +111,21 @@ public class Charity implements Serializable {
         return donated;
     }
 
-
-
-
-    public int getPercentToInteger(){
-        return (int) Math.round((donated*100/target));
+    public double getRemaining() {
+        if (target - donated <= 0) return 0;
+        else return target - donated;
     }
 
-    public String getPercentToString(){
-        return "%" + String.valueOf(Math.round((donated*100/target)));
+    public int getPercentToInteger() {
+        return (int) Math.round((donated * 100 / target));
     }
 
-    public String targetToString(){
-        return String.valueOf(target) +"$";
+    public String getPercentToString() {
+        return "%" + String.valueOf(Math.round((donated * 100 / target)));
+    }
+
+    public String targetToString() {
+        return String.valueOf(target) + "$";
     }
 
     public Date getDueDate() {
@@ -145,6 +149,18 @@ public class Charity implements Serializable {
     }
 
     public String getUserName() {
-        return userName;
+        return "By " + userName;
+    }
+
+    public long daysLeft() {
+        return getDateDiff(new Date(), getDueDate());
+    }
+
+    public long totalDays() {
+        return getDateDiff(getStartDate(), getDueDate());
+    }
+
+    public long daysPassed() {
+        return getDateDiff(getStartDate(), new Date());
     }
 }

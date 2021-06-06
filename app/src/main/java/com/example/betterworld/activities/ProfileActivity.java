@@ -29,6 +29,7 @@ import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToPaymentMethodActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 import static com.example.betterworld.utils.Actions.gotoProfileActivity;
+import static com.example.betterworld.utils.Constants.RETBING_SUPPORT_EMAIL;
 
 
 @AndroidEntryPoint
@@ -59,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             goToCharityStartActivity(this);
         });
         activityProfileBinding.btnProfile.setOnClickListener(view -> {
-            gotoProfileActivity(this);
+
         });
         activityProfileBinding.editPaymentMethod.setOnClickListener(view -> {goToPaymentMethodActivity(this);});
     }
@@ -67,12 +68,12 @@ public class ProfileActivity extends AppCompatActivity {
     private void checkIfUserIsAuthenticatedAndPopulateProfile() {
         FirebaseUser fbUser = profileViewModel.checkIfUserIsAuthenticated();
         if (fbUser != null) {
-            Toast.makeText(this, "User Is Found", Toast.LENGTH_SHORT).show();
             profileViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
                 if (dataOrException.data != null) {
                     activityProfileBinding.userEmail.setText(fbUser.getEmail());
                     activityProfileBinding.userName.setText(dataOrException.data.getFirstName() +" "+dataOrException.data.getLastName());
                     activityProfileBinding.userId.setText(dataOrException.data.getUserId());
+                    activityProfileBinding.tvSupportEmail.setText(RETBING_SUPPORT_EMAIL);
                     Glide.with(ProfileActivity.this).load(dataOrException.data.getImageUrl()).into(activityProfileBinding.userThumbnail);
                     activityProfileBinding.editUser.setOnClickListener(new View.OnClickListener() {
                         @Override

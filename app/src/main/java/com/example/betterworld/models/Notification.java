@@ -15,6 +15,10 @@ import java.util.Date;
 
 public class Notification {
 
+    public static final String DONATION = "donation";
+    public static final String ACHIEVEMENT = "achievement";
+    public static final String REMINDER = "reminder";
+
     final String notificationId;
     final String charityId;
     final String type;
@@ -34,7 +38,7 @@ public class Notification {
     public static Notification fromMap(Map<String, Object> map) {
         final String notificationId = (String) map.get("notificationId");
         final String charityId = (String) map.get("charityId");
-        long createdAt = (new Date()).getTime();
+        long createdAt =  (long) map.get("createdAt");
         final boolean seen = (Boolean) map.get("seen");
         final String type = (String) map.get("type");
         final String content = (String) map.get("content");
@@ -42,23 +46,16 @@ public class Notification {
         return new Notification(notificationId, charityId, content, type, createdAt, seen);
     }
 
-    public String getNotificationId() {
-        return notificationId;
-    }
-
-
-    public boolean isSeen() {
-        return seen;
-    }
-
 
     public int getNotificationIcon() {
-        if (type.equals("donation")) {
+        if (type.equals(DONATION)) {
             return R.drawable.ic_icon_material_attach_money;
-        } else if (type.equals("achievement")) {
+        } else if (type.equals(ACHIEVEMENT)) {
             return R.drawable.ic_icon_material_check_circle;
-        } else {
+        } else if (type.equals(REMINDER)) {
             return R.drawable.ic_icon_material_date_range;
+        } else {
+            return R.drawable.ic_notification;
         }
     }
 
@@ -83,7 +80,7 @@ public class Notification {
         charityMap.put("content", content);
         charityMap.put("type", type);
         charityMap.put("seen", seen);
-        charityMap.put("createdAt", createdAt);
+        charityMap.put("createdAt", createdAt.getTime());
         charityMap.put("charityId", charityId);
         charityMap.put("notificationId", notificationId);
 

@@ -72,10 +72,16 @@ public class User implements Serializable {
     }
 
     public String getFirstName() {
+        if (firstName == null) {
+            return "Please Enter";
+        }
         return firstName;
     }
 
     public String getLastName() {
+        if(lastName == null) {
+            return "Your Name";
+        }
         return lastName;
     }
 

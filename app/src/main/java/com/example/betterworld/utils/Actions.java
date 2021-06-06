@@ -18,6 +18,7 @@ import com.example.betterworld.activities.PaymentMethodActivity;
 import com.example.betterworld.activities.ProfileActivity;
 import com.example.betterworld.activities.ProfileEdit;
 import com.example.betterworld.activities.RegisterActivity;
+import com.example.betterworld.activities.SearchActivity;
 import com.example.betterworld.models.Charity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -33,13 +34,19 @@ public class Actions {
         activity.startActivity(intent);
         activity.finish();
     }
-    public  static  void  gotoProfileActivity(Activity activity){
+
+    public static void gotoProfileActivity(Activity activity) {
         Intent intent = new Intent(activity, ProfileActivity.class);
         activity.startActivity(intent);
     }
-    public  static  void  goToEditProfileActivity(Activity activity){
+
+    public static void goToEditProfileActivity(Activity activity) {
         Intent intent = new Intent(activity, ProfileEdit.class);
         activity.startActivity(intent);
+    }
+
+    public static void popOut(Activity activity) {
+        activity.onBackPressed();
     }
 
 
@@ -55,15 +62,27 @@ public class Actions {
 
     public static void goToCharityDetailsActivity(Activity activity, String CHARITY_ID) {
         Intent intent = new Intent(activity, CharityDetailsActivity.class);
-        intent.putExtra("CHARITY_ID",CHARITY_ID);
+        intent.putExtra("CHARITY_ID", CHARITY_ID);
+        activity.startActivity(intent);
+    }
+
+    public static void goToCharitySearchActivity(Activity activity) {
+        Intent intent = new Intent(activity, SearchActivity.class);
         activity.startActivity(intent);
     }
 
 
-    public static void goToDonationDetailActivity(Activity activity,float amount,String charityId) {
+
+    public static void goToDonationDetailActivity(Activity activity, float amount, String charityId, String userId, String userName, String imageUrl, String title) {
         Intent intent = new Intent(activity, DonationDetailActivity.class);
         intent.putExtra("DONATION_AMOUNT", amount);
         intent.putExtra("CHARITY_ID", charityId);
+        intent.putExtra("CHARITY_NAME", title);
+        intent.putExtra("CHARITY_OWNER_ID", userId);
+        intent.putExtra("CHARITY_USER_NAME", userName);
+        intent.putExtra("CHARITY_IMAGE_URL", imageUrl);
+
+
         activity.startActivity(intent);
     }
 
@@ -83,7 +102,7 @@ public class Actions {
         activity.startActivity(intent);
     }
 
-    public  static void goToCharityStartActivity(Activity activity) {
+    public static void goToCharityStartActivity(Activity activity) {
         Intent intent = new Intent(activity, ChooseCategoryActivity.class);
         activity.startActivity(intent);
     }
@@ -112,11 +131,13 @@ public class Actions {
 
     }
 
-    public static void launchImageCrop(Activity activity, Uri uri) {
+    public static void launchImageCrop(Activity activity, Uri uri, int x, int y) {
         CropImage.activity(uri)
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1920, 1080)
+                .setAspectRatio(x, y)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .start(activity);
     }
+
+
 }

@@ -8,12 +8,17 @@ import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.betterworld.R;
+import com.example.betterworld.viewmodels.CharityViewModel;
 
 import java.util.List;
 
-public class CategoryBottonAdapter extends RecyclerView.Adapter<CategoryBottonAdapter.MyView> {
+import javax.inject.Inject;
+
+public class CategoryButtonAdapter extends RecyclerView.Adapter<CategoryButtonAdapter.MyView> {
 
     private List<String> list;
+
+    CharityViewModel charityViewModel;
 
     public class MyView
             extends RecyclerView.ViewHolder {
@@ -29,9 +34,10 @@ public class CategoryBottonAdapter extends RecyclerView.Adapter<CategoryBottonAd
         }
     }
 
-    public CategoryBottonAdapter(List<String> horizontalList)
+    public CategoryButtonAdapter(CharityViewModel charityViewModel, List<String> horizontalList)
     {
         this.list = horizontalList;
+        this.charityViewModel = charityViewModel;
     }
 
     @Override
@@ -55,6 +61,9 @@ public class CategoryBottonAdapter extends RecyclerView.Adapter<CategoryBottonAd
     {
 
         holder.categoryBtn.setText(list.get(position));
+        holder.categoryBtn.setOnClickListener(view -> {
+            charityViewModel.watchCharities("#environment");
+        });
     }
 
     @Override

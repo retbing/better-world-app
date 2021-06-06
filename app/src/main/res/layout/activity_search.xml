@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SearchActivity"
+    android:orientation="vertical"
+
+    android:padding="16dp"
+   >
+
+    <EditText
+        android:id="@+id/et_charity_search"
+        android:ems="20"
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:background="@drawable/edit_view_bg_grey"
+        android:layout_height="56dp"
+        android:padding="15dp"
+        android:hint="@string/search"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        />
+
+    <ListView
+        android:id="@+id/lv_charity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:dividerHeight="18dp"
+        android:divider="@android:color/transparent"/>
+
+
+
+
+</LinearLayout>
+</layout>

@@ -20,159 +20,167 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:orientation="horizontal">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15sp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_hello"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/gordita_regular"
-                            android:text="@string/hello"
-                            android:textColor="@color/bw_dark"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tv_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/gordita_medium"
-                            android:text="Username"
-                            android:textColor="@color/bw_dark"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:background="@drawable/button_notification"
-                            android:id="@+id/notification_icon"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:contentDescription="TODO"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_notification" />
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/notification_att"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="7dp"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            app:cardBackgroundColor="@color/bw_red"
-                            app:cardCornerRadius="80dp"
-                            app:layout_constraintEnd_toEndOf="@+id/notification_icon"
-                            app:layout_constraintTop_toTopOf="@+id/notification_icon" >
-                            <TextView
-                                android:id="@+id/notificationSize"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:layout_gravity="center"
-                                android:textSize="8dp"
-                                />
-                        </androidx.cardview.widget.CardView>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="146dp"
-                    app:cardBackgroundColor="@color/bw_green"
-                    app:cardCornerRadius="18dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_cardTitle"
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/open_sans_semibold"
-                            android:text="@string/homePageCardTitle"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textSize="18dp" />
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_donate"
-                            android:layout_width="96dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/button_donate_bg_blue"
-                            android:text="@string/btnDonate"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/categoryBtnRecyclerView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:scrollbars="none" />
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_hello"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gordita_regular"
+                        android:text="@string/hello"
+                        android:textColor="@color/bw_dark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gordita_medium"
+                        android:text="Username"
+                        android:textColor="@color/bw_dark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/notification_icon"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/button_notification"
+                        android:contentDescription="TODO"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_notification" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/notification_att"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="10dp"
+                        app:cardBackgroundColor="@color/bw_red"
+                        app:cardCornerRadius="80dp"
+                        app:layout_constraintEnd_toEndOf="@+id/notification_icon"
+                        app:layout_constraintTop_toTopOf="@+id/notification_icon">
+
+                        <TextView
+                            android:id="@+id/notificationSize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0"
+                            android:textSize="8dp" />
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="146dp"
+                app:cardBackgroundColor="@color/bw_green"
+                app:cardCornerRadius="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_cardTitle"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="@string/homePageCardTitle"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_donate"
+                        android:layout_width="96dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_donate_bg_blue"
+                        android:text="@string/btnDonate"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categoryBtnRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scrollbars="none" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_charities"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_charities"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gordita_medium"
+                                android:text="@string/charities"
+                                android:textColor="@color/bw_dark"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_charityCard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gordita_medium"
-                            android:text="@string/charities"
-                            android:textColor="@color/bw_dark"
-                            android:textSize="15sp" />
+                            android:orientation="horizontal"
+                            android:scrollbars="none">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
                     </LinearLayout>
-
-
-                    <ScrollView
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        >
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_charityCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:scrollbars="none">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-                    </ScrollView>
                 </LinearLayout>
 
-
+            </ScrollView>
 
 
         </LinearLayout>

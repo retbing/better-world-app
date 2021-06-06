@@ -6,21 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.example.betterworld.R;
-import com.example.betterworld.adapters.CategoryBottonAdapter;
+import com.example.betterworld.adapters.CategoryButtonAdapter;
 import com.example.betterworld.adapters.CharitiesHomeAdapter;
-import com.example.betterworld.adapters.NotificationAdapter;
 import com.example.betterworld.databinding.ActivityHomeBinding;
 import com.example.betterworld.models.Charity;
-import com.example.betterworld.models.Notification;
 import com.example.betterworld.viewmodels.CharityViewModel;
 import com.example.betterworld.viewmodels.HomeViewModel;
-import com.example.betterworld.utils.Actions;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -30,8 +24,8 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static com.example.betterworld.utils.Actions.goToCharitySearchActivity;
 import static com.example.betterworld.utils.Actions.goToLoginActivity;
-import static com.example.betterworld.utils.Actions.goToPaymentActivity;
 import static com.example.betterworld.utils.Actions.goToCharityStartActivity;
 import static com.example.betterworld.utils.Actions.gotoNotificationActivity;
 import static com.example.betterworld.utils.Actions.gotoProfileActivity;
@@ -56,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView.LayoutManager recyclerViewLayoutManagerBtn, recyclerViewLayoutManagerCard;
 
     // adapter class object
-    CategoryBottonAdapter adapter;
+    CategoryButtonAdapter adapter;
 
     // Linear Layout Manager
     LinearLayoutManager horizontalLayoutBtn , horizontalLayoutCard;
@@ -74,7 +68,8 @@ public class HomeActivity extends AppCompatActivity {
     private void _initComponents() {
         FirebaseUser fbUser = homeViewModel.checkIfUserIsAuthenticated();
         if (fbUser != null) {
-            homeViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail()).observe(this, dataOrException -> {
+            homeViewModel.getUserFromFirestore(fbUser.getUid(), fbUser.getEmail());
+            homeViewModel.firestoreUserMutableLiveData.observe(this, dataOrException -> {
                 if (dataOrException.data != null) {
                     activityHomeBinding.tvUsername.setText(dataOrException.data.getUsername());
                 } else {
@@ -98,6 +93,9 @@ public class HomeActivity extends AppCompatActivity {
             });
             activityHomeBinding.btnProfile.setOnClickListener(view -> {
                 gotoProfileActivity(this);
+            });
+            activityHomeBinding.btnSearch.setOnClickListener(view -> {
+                goToCharitySearchActivity(this);
             });
 
         } else {
@@ -143,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        adapter = new CategoryBottonAdapter(source);
+        adapter = new CategoryButtonAdapter(charityViewModel, source);
 
         activityHomeBinding.categoryBtnRecyclerView.setAdapter(adapter);
 

@@ -24,6 +24,8 @@ public class HomeViewModel {
     private HomeRepository _homeRepository;
     private NotificationRepository _notificationRepository;
 
+    public  MutableLiveData<DataOrException<User, Exception>> firestoreUserMutableLiveData;
+
     @Inject
     public HomeViewModel(AuthRepository _authRepository,SplashViewModel _spaSplashViewModel,HomeRepository _homeRepository, NotificationRepository _notificationRepository) {
         this._authRepository = _authRepository;
@@ -35,8 +37,8 @@ public class HomeViewModel {
     public FirebaseUser checkIfUserIsAuthenticated() {
         return _spaSplashViewModel.checkIfUserIsAuthenticated();
     }
-    public MutableLiveData<DataOrException<User, Exception>> getUserFromFirestore(String uuid, String email) {
-        return  _authRepository.getUserFromFirestore(uuid, email);
+    public void getUserFromFirestore(String uuid, String email) {
+        firestoreUserMutableLiveData =  _authRepository.getUserFromFirestore(uuid, email);
     }
     public void subscribeToDonation(){
 
@@ -44,8 +46,5 @@ public class HomeViewModel {
     }
 
 
-    public  int notificationSize(){
-        return _notificationRepository.notificationSize();
-    }
 
 }

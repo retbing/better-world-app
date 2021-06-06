@@ -59,10 +59,10 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5sp"
-                android:layout_marginRight="88dp"
+                android:layout_marginRight="14dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginEnd="88dp">
+                android:layout_marginEnd="14dp">
 
                 <TextView
                     android:id="@+id/user_name"
@@ -235,9 +235,9 @@
                     android:textSize="12sp"
                     android:fontFamily="@font/gordita_regular"/>
                 <TextView
+                    android:id="@+id/tv_support_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="biniabera274@gmail.com"
                     android:textColor="@color/bw_black"
                     android:textSize="14sp"
                     android:fontFamily="@font/gordita_medium"/>

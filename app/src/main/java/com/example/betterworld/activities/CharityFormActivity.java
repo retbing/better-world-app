@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -40,6 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
 
+import static com.example.betterworld.utils.HelperClass.getDateDiff;
 import static com.example.betterworld.utils.HelperClass.logErrorMessage;
 
 @AndroidEntryPoint
@@ -81,7 +83,9 @@ public class CharityFormActivity extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 Uri imageUri = data.getData();
-                Actions.launchImageCrop(this, imageUri);
+                if (imageUri != null) {
+                    Actions.launchImageCrop(this, imageUri, 1920, 1080);
+                }
             }
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
@@ -119,8 +123,8 @@ public class CharityFormActivity extends AppCompatActivity {
         onDateStartedSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                startedDate = month + "/" + day + "/" + year;
+
+                startedDate =  (month + 1) + "/" + day + "/" + year;
                 activityCharityFormBinding.etDateStarted.setText(startedDate);
 
                 Calendar calendar = Calendar.getInstance();
@@ -133,8 +137,8 @@ public class CharityFormActivity extends AppCompatActivity {
         onDateEndedSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                endedDate = month + "/" + day + "/" + year;
+
+                endedDate = (month + 1) + "/" + day + "/" + year;
                 activityCharityFormBinding.etDateEnded.setText(endedDate);
 
                 Calendar calendar = Calendar.getInstance();
@@ -143,7 +147,7 @@ public class CharityFormActivity extends AppCompatActivity {
             }
         };
 
-
+        activityCharityFormBinding.etPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     public static void hideKeyboardFrom(Context context, View view) {
@@ -153,10 +157,10 @@ public class CharityFormActivity extends AppCompatActivity {
 
     private void _createCharity() {
 //       String profession =  activityCharityFormBinding.etProfession.getText().toString();
-       String nameOfInstitution =  activityCharityFormBinding.etNameOfInstitution.getText().toString();
-       String socialMediaAccount =  activityCharityFormBinding.etSocialMediaAccount.getText().toString();
-       String address =  activityCharityFormBinding.etAddress.getText().toString();
-       String phoneNumber =  activityCharityFormBinding.etPhoneNumber.getText().toString();
+        String nameOfInstitution = activityCharityFormBinding.etNameOfInstitution.getText().toString();
+        String socialMediaAccount = activityCharityFormBinding.etSocialMediaAccount.getText().toString();
+        String address = activityCharityFormBinding.etAddress.getText().toString();
+        String phoneNumber = activityCharityFormBinding.etPhoneNumber.getText().toString();
 
         charityViewModel.uploadImage(imageUri).observe(this, fileNameOrExp -> {
             if (fileNameOrExp.data != null) {
@@ -223,14 +227,14 @@ public class CharityFormActivity extends AppCompatActivity {
                         activityCharityFormBinding.etAddress.setError("Fill this filed");
                     }
                     _controlPageStep(-1);
-                    break;
 
                 } else {
                     _charityFormPage2();
-                    break;
                 }
-
+                break;
             case 1:
+                logErrorMessage("Step : yoyoyoyo : " + step);
+
                 if (activityCharityFormBinding.etTitle.getText().toString().isEmpty()
                         || activityCharityFormBinding.etWhoBenefits.getText().toString().isEmpty()
                         || activityCharityFormBinding.etSocialMediaAccount.getText().toString().isEmpty()
@@ -248,31 +252,39 @@ public class CharityFormActivity extends AppCompatActivity {
                     if (activityCharityFormBinding.etDate.getText().toString().isEmpty()) {
                         activityCharityFormBinding.etDate.setError("Fill this filed");
                     }
+
                     _controlPageStep(-1);
-                    break;
+                } else if (getDateDiff(startDate, dueDate) <= 0) {
+                    activityCharityFormBinding.etDate.setError("At least 1 day");
+                    activityCharityFormBinding.etDateEnded.setError("At least 1 day later");
+                    _controlPageStep(-1);
+
                 } else {
                     _charityFormPage3();
-                    break;
                 }
-
+                break;
             case 2:
                 if (activityCharityFormBinding.etDescription.getText().toString().isEmpty()) {
                     activityCharityFormBinding.etDescription.setError("Fill this filed");
                     _controlPageStep(-1);
-                    break;
                 } else {
                     _charityFormPage4();
-                    break;
                 }
+                break;
             case 3:
                 if (activityCharityFormBinding.etPhoneNumber.getText().toString().isEmpty()) {
                     activityCharityFormBinding.etPhoneNumber.setError("Fill this filed");
                     _controlPageStep(-1);
-                    break;
+                } else if (activityCharityFormBinding.etPhoneNumber.getText().toString().length() != 14
+                        || !activityCharityFormBinding.etPhoneNumber.getText().toString().contains("(")
+                        || !activityCharityFormBinding.etPhoneNumber.getText().toString().contains(")")
+                        || !activityCharityFormBinding.etPhoneNumber.getText().toString().contains("-")) {
+                    activityCharityFormBinding.etPhoneNumber.setError("Invalid phone number");
+                    _controlPageStep(-1);
                 } else {
                     _createCharity();
-                    break;
                 }
+                break;
             case -1:
                 _charityFormPage1();
                 break;

@@ -18,4 +18,7 @@ public interface Constants {
     String NOTIFICATIONS = "notifications";
     String CHARITIES_STORAGE_REF = "charityThumbnails";
     String PROFILES_STORAGE_REF = "profilesThumbnails";
+
+
+    String RETBING_SUPPORT_EMAIL = "support@retbing.com";
 }

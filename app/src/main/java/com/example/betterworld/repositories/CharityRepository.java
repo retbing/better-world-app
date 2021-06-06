@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,30 +64,36 @@ public class CharityRepository {
         String fileName;
         if (uri == null) {
             fileName = Charity.DEFAULT_IMAGE;
+            DataOrException<String, Exception> dataOrException = new DataOrException<>();
+            dataOrException.data = fileName;
+
+            dataOrExceptionMutableLiveData.setValue(dataOrException);
         } else {
             fileName = HelperClass.createUniqueImageName(uri);
-        }
-        charityStorage.child(fileName).putFile(uri).addOnCompleteListener(uploadTask -> {
-            DataOrException<String, Exception> dataOrException = new DataOrException<>();
-            if (uploadTask.isSuccessful()) {
-                charityStorage.child(fileName).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                        DataOrException<String, Exception> dataOrException = new DataOrException<>();
 
-                        if(task.isSuccessful()) {
-                            dataOrException.data = task.getResult().toString();
-                        } else {
-                            dataOrException.exception = task.getException();
+            charityStorage.child(fileName).putFile(uri).addOnCompleteListener(uploadTask -> {
+                DataOrException<String, Exception> dataOrException = new DataOrException<>();
+                if (uploadTask.isSuccessful()) {
+                    charityStorage.child(fileName).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                            DataOrException<String, Exception> dataOrException = new DataOrException<>();
+
+                            if (task.isSuccessful()) {
+                                dataOrException.data = task.getResult().toString();
+                            } else {
+                                dataOrException.exception = task.getException();
+                            }
+                            dataOrExceptionMutableLiveData.setValue(dataOrException);
                         }
-                        dataOrExceptionMutableLiveData.setValue(dataOrException);
-                    }
-                });
-            } else {
-                dataOrException.exception = uploadTask.getException();
-            }
+                    });
+                } else {
+                    dataOrException.exception = uploadTask.getException();
+                }
 
-        });
+            });
+        }
+
         return dataOrExceptionMutableLiveData;
     }
 
@@ -109,6 +116,7 @@ public class CharityRepository {
                 });
         return dataOrExceptionMutableLiveData;
     }
+
     public MutableLiveData<DataOrException<Charity, Exception>> getCharityByIDFromFireStore(String charityID) {
         MutableLiveData<DataOrException<Charity, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
         charityCollection
@@ -117,7 +125,7 @@ public class CharityRepository {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        DataOrException<Charity,Exception> dataOrException = new DataOrException<>();
+                        DataOrException<Charity, Exception> dataOrException = new DataOrException<>();
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
@@ -163,8 +171,8 @@ public class CharityRepository {
                     }
                     List<Charity> filteredList = new ArrayList<>();
 
-                    for(Charity charity : charityList) {
-                        if(charity.getCategoryId().contains(categoryId)) {
+                    for (Charity charity : charityList) {
+                        if (charity.getCategoryId().contains(categoryId)) {
                             filteredList.add(charity);
                         }
                     }
@@ -176,5 +184,82 @@ public class CharityRepository {
             }
         });
         return mutableLiveData;
+    }
+
+    public MutableLiveData<DataOrException<List<Charity>, Exception>> watchCharitiesByTitle(String charityTitle) {
+        MutableLiveData<DataOrException<List<Charity>, Exception>> mutableLiveData = new MutableLiveData<>();
+
+        charityCollection.get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+
+                    DataOrException<List<Charity>, Exception> dataOrException = new DataOrException<>();
+
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
+                            List<Charity> charities = new ArrayList<>();
+                            for (DocumentSnapshot ds : documentSnapshots) {
+                                Charity cd = Charity.fromMap(ds.getData());
+                                if (cd.getTitle().toLowerCase().contains(charityTitle.toLowerCase())) {
+                                    charities.add(cd);
+                                }
+                            }
+                            dataOrException.data = charities;
+                        } else {
+                            dataOrException.exception = task.getException();
+                        }
+
+                        mutableLiveData.setValue(dataOrException);
+
+                    }
+                }
+        );
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<DataOrException<Integer, Exception>> updateCharity(String uuid, Map<String, Object> charityMap) {
+
+        MutableLiveData<DataOrException<Integer, Exception>> dataOrExceptionMutableLiveData = new MutableLiveData<>();
+        // Add a new document with a generated ID
+        charityCollection
+                .document(uuid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DataOrException<Charity, Exception> dataOrException = new DataOrException<>();
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Charity charity = Charity.fromMap(document.getData());
+                                if ((charityMap.get("donated")) != null) {
+                                    charityMap.put("donated", ((float) charityMap.get("donated")) + charity.getDonated());
+                                }
+                                document.getReference().update(charityMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> updateTask) {
+                                                DataOrException<Integer, Exception> dataOrException = new DataOrException<>();
+                                                if (updateTask.isSuccessful()) {
+                                                    dataOrException.data = 1;
+                                                } else {
+                                                    dataOrException.exception = updateTask.getException();
+                                                }
+                                                dataOrExceptionMutableLiveData.setValue(dataOrException);
+                                            }
+                                        });
+                            } else {
+                                dataOrException.exception = task.getException();
+                            }
+                        } else {
+                            dataOrException.exception = task.getException();
+                            logErrorMessage(task.getException().getMessage());
+                        }
+                    }
+                });
+
+        return dataOrExceptionMutableLiveData;
+
     }
 }

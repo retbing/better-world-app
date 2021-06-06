@@ -5,19 +5,14 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityCharityDetailsBinding;
+import com.example.betterworld.models.Charity;
 import com.example.betterworld.viewmodels.CharityViewModel;
-
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -32,21 +27,20 @@ public class CharityDetailsActivity extends AppCompatActivity {
     @Inject
     CharityViewModel charityDetailsViewModel;
     private ActivityCharityDetailsBinding activityCharityDetailsBinding;
-    String thisCharity;
-    private float  amountOfDonation = 0;
+    String charityId;
+    Charity charity;
+    private float amountOfDonation = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityCharityDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_charity_details);
         Intent intent = getIntent();
-        thisCharity = intent.getStringExtra("CHARITY_ID");
-        Toast.makeText(this, "CHARITY_ID: "+thisCharity, Toast.LENGTH_SHORT).show();
-        Toast.makeText(CharityDetailsActivity.this, String.format("Charity Id:%s",thisCharity), Toast.LENGTH_SHORT).show();
+        charityId = intent.getStringExtra("CHARITY_ID");
         _initComponents();
     }
 
-    private void _initComponents(){
+    private void _initComponents() {
         activityCharityDetailsBinding.btnJoin.setOnClickListener(view -> visibleNumbersFrameLayouts());
         activityCharityDetailsBinding.btnClose.setOnClickListener(view -> goneNumbersFrameLayouts());
         activityCharityDetailsBinding.btn1.setOnClickListener(view -> setNumberToAmount("1"));
@@ -60,121 +54,101 @@ public class CharityDetailsActivity extends AppCompatActivity {
         activityCharityDetailsBinding.btn9.setOnClickListener(view -> setNumberToAmount("9"));
         activityCharityDetailsBinding.btn0.setOnClickListener(view -> setNumberToAmount("0"));
         activityCharityDetailsBinding.btnDelete.setOnClickListener(view -> setNumberToAmount("x"));
-        activityCharityDetailsBinding.btnDonate.setOnClickListener(view -> goToDonationDetailActivity(this,amountOfDonation,thisCharity));
-
-        charityDetailsViewModel.getCharityByID(thisCharity).observe(this, dataOrExp -> {
-            if (dataOrExp.data != null) {
-
-         Glide.with(CharityDetailsActivity.this).load(dataOrExp.data.getImageUrl()).into(activityCharityDetailsBinding.imageView2);
-                activityCharityDetailsBinding.textView11.setText((String.valueOf(dataOrExp.data.getTarget())));
-                activityCharityDetailsBinding.textView13.setText(String.valueOf(dataOrExp.data.getTarget()));
-                activityCharityDetailsBinding.textView14.setText( dataOrExp.data.getDescription());
-                activityCharityDetailsBinding.button.setText( dataOrExp.data.getCategoryName());
-                activityCharityDetailsBinding.textView9.setText( getDateDiff(new Date(),dataOrExp.data.getDueDate()) +" days left");
-                activityCharityDetailsBinding.textView7.setText(dataOrExp.data.getTitle());
-
-                charityDetailsViewModel.getUserByID(dataOrExp.data.getUserId()).observe(CharityDetailsActivity.this,dataOrExc->{
-                    if (dataOrExc.data != null) {
-                        activityCharityDetailsBinding.textView8.setText("By :"+dataOrExc.data.getUsername());
-                    }else{
-                        activityCharityDetailsBinding.textView8.setText("By : Unknown User");
-                    }
-                });
+        activityCharityDetailsBinding.btnDonate.setOnClickListener(view -> {
+            if(charity != null) {
+                goToDonationDetailActivity(this, amountOfDonation, charity.getCharityId(), charity.getUserId(), charity.getUserName(), charity.getImageUrl(), charity.getTitle());
             }
-            else{
+        });
+
+        charityDetailsViewModel.watchCharityById(charityId).observe(this, dataOrExp -> {
+            if (dataOrExp.data != null) {
+                this.charity = dataOrExp.data;
+                Glide.with(CharityDetailsActivity.this).load(dataOrExp.data.getImageUrl()).into(activityCharityDetailsBinding.imageView2);
+                activityCharityDetailsBinding.textView11.setText((String.valueOf(dataOrExp.data.getTarget())));
+                activityCharityDetailsBinding.textView13.setText(String.valueOf(dataOrExp.data.getRemaining()));
+                activityCharityDetailsBinding.textView14.setText(dataOrExp.data.getDescription());
+                activityCharityDetailsBinding.button.setText(dataOrExp.data.getCategoryName());
+                activityCharityDetailsBinding.textView9.setText(String.valueOf(dataOrExp.data.daysLeft()) + " days left");
+                activityCharityDetailsBinding.textView7.setText(dataOrExp.data.getTitle());
+                activityCharityDetailsBinding.pbDonated.setProgress(dataOrExp.data.getPercentToInteger());
+                activityCharityDetailsBinding.progressBar2.setProgress((int) (100 * dataOrExp.data.daysPassed() / dataOrExp.data.totalDays()));
+                activityCharityDetailsBinding.textView8.setText( dataOrExp.data.getUserName());
+            } else {
                 Toast.makeText(CharityDetailsActivity.this, "Data doesn't Found", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-    public  String getDateDiff(Date startDate, Date endDate) {
-        long startTime = startDate.getTime();
-        long endTime = endDate.getTime();
-        long diffTime = endTime - startTime;
-        long diffDays = diffTime / (1000 * 60 * 60 * 24);
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        return String.valueOf(diffDays);
-    }
 
-    private void visibleNumbersFrameLayouts(){
+
+    private void visibleNumbersFrameLayouts() {
         activityCharityDetailsBinding.frameLayoutNumbers.setVisibility(View.VISIBLE);
         activityCharityDetailsBinding.frameLayoutTransparent.setVisibility(View.VISIBLE);
     }
 
-    private void goneNumbersFrameLayouts(){
+    private void goneNumbersFrameLayouts() {
         activityCharityDetailsBinding.frameLayoutNumbers.setVisibility(View.GONE);
         activityCharityDetailsBinding.frameLayoutTransparent.setVisibility(View.GONE);
+        setTextToTextView("0");
+
     }
 
-    private void setNumberToAmount(String number){
+    private void setNumberToAmount(String number) {
         String amount = activityCharityDetailsBinding.tvDonationAmt.getText().toString();
-        if(activityCharityDetailsBinding.tvDonationAmt.getText().toString().equals("0")){
-            setTextToTextView(" ");
+        String newAmount = "" + amount;
+        if (newAmount.equals("0")) {
+            setTextToTextView("");
+            newAmount = "";
         }
 
-        switch (number){
+        switch (number) {
             case "1":
-                amount += "1";
-                setTextToTextView(amount);
+                newAmount += "1";
                 break;
             case "2":
-                amount += "2";
-                setTextToTextView(amount);
+                newAmount += "2";
                 break;
             case "3":
-                amount += "3";
-                setTextToTextView(amount);
+                newAmount += "3";
                 break;
             case "4":
-                amount += "4";
-                setTextToTextView(amount);
+                newAmount += "4";
                 break;
             case "5":
-                amount += "5";
-                setTextToTextView(amount);
+                newAmount += "5";
                 break;
             case "6":
-                amount += "6";
-                setTextToTextView(amount);
+                newAmount += "6";
                 break;
             case "7":
-                amount += "7";
-                setTextToTextView(amount);
+                newAmount += "7";
                 break;
             case "8":
-                amount += "8";
-                setTextToTextView(amount);
+                newAmount += "8";
                 break;
             case "9":
-                amount += "9";
-                setTextToTextView(amount);
+                newAmount += "9";
                 break;
             case "0":
-                if(!activityCharityDetailsBinding.tvDonationAmt.getText().toString().equals("0")){
-                    amount += "0";
-                    setTextToTextView(amount);
-                }
+                newAmount += "0";
                 break;
             case "x":
                 int length = activityCharityDetailsBinding.tvDonationAmt.getText().length();
-                if(length >=2){
-                    amount = amount.substring(0,length-1);
-                    setTextToTextView(amount);
-                }
-                else{
-                    amount = "";
-                    setTextToTextView(amount);
+                if (length >= 2) {
+                    newAmount = newAmount.substring(0, length - 1);
+                } else {
+                    newAmount = "0";
                 }
                 break;
         }
-        amountOfDonation = Float.parseFloat(amount);
+        setTextToTextView(newAmount);
+        amountOfDonation = Float.parseFloat(newAmount);
 
     }
 
-    private void setTextToTextView(String amount){
-        activityCharityDetailsBinding.tvDonationAmt.setText(amount);
+    private void setTextToTextView(String txt) {
+        activityCharityDetailsBinding.tvDonationAmt.setText(txt);
     }
-
 
 
 }

@@ -39,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="8dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button"
@@ -77,7 +78,7 @@
                     android:fontFamily="@font/gordita_medium"
                     android:textSize="24sp"
                     android:textColor="@color/bw_black"
-                    android:layout_marginBottom="45dp"
+                    android:layout_marginBottom="30dp"
                     android:text="Let's clean the beach" />
 
                 <TextView
@@ -98,7 +99,7 @@
                     android:orientation="horizontal">
 
                 <ProgressBar
-                    android:id="@+id/pb_"
+                    android:id="@+id/pb_donated"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -258,7 +259,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
-                    android:text="$"
+                    android:text=""
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
                     android:textColor="@color/bw_green_dark"
@@ -271,6 +272,7 @@
                     android:id="@+id/tv_donation_amt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:text="0"
                     android:textColor="@color/bw_green_dark"
                     android:fontFamily="@font/gordita_medium"

@@ -13,8 +13,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.betterworld.R;
 import com.example.betterworld.databinding.ActivityDonationDetailBinding;
+import com.example.betterworld.models.Notification;
 import com.example.betterworld.viewmodels.DonationViewModel;
 import com.example.betterworld.viewmodels.NotificationViewModel;
 
@@ -27,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import static com.example.betterworld.utils.Actions.goToCharityDetailsActivity;
 import static com.example.betterworld.utils.Actions.goToCharityFormActivity;
 import static com.example.betterworld.utils.Actions.gotoMainActivity;
+import static com.example.betterworld.utils.Actions.popOut;
 
 @AndroidEntryPoint
 public class DonationDetailActivity extends AppCompatActivity {
@@ -37,26 +40,35 @@ public class DonationDetailActivity extends AppCompatActivity {
     NotificationViewModel notificationViewModel;
 
     int bg_btn_selected, bg_btn_unselected;
-    int textColorLightGrey,textColorWhite;
+    int textColorLightGrey, textColorWhite;
     Drawable bg_tv_selected, bg_tv_unselected;
     TextView tvTransfer, tvPaypal, tvCreditCard;
     AppCompatImageButton btnTransfer, btnPaypal, btnCreditCard, btnReturnPage;
-    AppCompatButton btnHome, btnDonate,btnAnonymousDonate;
-    FrameLayout flSuccessful,flTransparent;
+    AppCompatButton btnHome, btnDonate, btnAnonymousDonate;
+    FrameLayout flSuccessful, flTransparent;
     Float amountOfDonation;
-    String CharityID;
+    String charityID, charityName, charityOwnerId, charityOwnerName, imageUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityDonationDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_donation_detail);
-        amountOfDonation =getIntent().getFloatExtra("DONATION_AMOUNT",0);
-        CharityID =  getIntent().getStringExtra("CHARITY_ID");
+        amountOfDonation = getIntent().getFloatExtra("DONATION_AMOUNT", 0);
+        charityID = getIntent().getStringExtra("CHARITY_ID");
+        charityName = getIntent().getStringExtra("CHARITY_NAME");
+        charityOwnerId = getIntent().getStringExtra("CHARITY_OWNER_ID");
+        charityOwnerName = getIntent().getStringExtra("CHARITY_OWNER_NAME");
+        imageUrl = getIntent().getStringExtra("CHARITY_IMAGE_URL");
         _initComponents();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    void _initComponents(){
+    void _initComponents() {
+        activityDonationDetailBinding.tvCharityTitle.setText(charityName);
+        activityDonationDetailBinding.tvBy.setText(charityOwnerName);
+        Glide.with(this).load(imageUrl).into(activityDonationDetailBinding.ivProfilePicture);
+
         bg_btn_selected = R.drawable.ic_circle;
         bg_btn_unselected = R.drawable.ic_empty_circle;
         bg_tv_selected = getResources().getDrawable(R.drawable.button_bg_credit_cards_selected);
@@ -71,7 +83,7 @@ public class DonationDetailActivity extends AppCompatActivity {
         btnDonate = activityDonationDetailBinding.btnDonate;
         btnAnonymousDonate = activityDonationDetailBinding.btnAonymousDonate;
         btnHome = activityDonationDetailBinding.btnHome;
-        activityDonationDetailBinding.tvTotalDonate.setText("$ "+String.valueOf(amountOfDonation));
+        activityDonationDetailBinding.tvTotalDonate.setText("$ " + String.valueOf(amountOfDonation));
 
         flSuccessful = activityDonationDetailBinding.frameLayoutSuccess;
         flTransparent = activityDonationDetailBinding.frameLayoutTransparent;
@@ -85,8 +97,8 @@ public class DonationDetailActivity extends AppCompatActivity {
         btnPaypal.setOnClickListener(view -> clickPaymentButtons("Paypal"));
         btnCreditCard.setOnClickListener(view -> clickPaymentButtons("Credit Card"));
 
-        //TODO: Return Charity Detail Page
-        //btnReturnPage.setOnClickListener(view -> goToCharityDetailsActivity(this, getIntent().getStringExtra("CHARITY_ID")));
+
+        btnReturnPage.setOnClickListener(view -> popOut(this));
 
         btnHome.setOnClickListener(view -> gotoMainActivity(this));
         btnDonate.setOnClickListener(view -> checkDonationClearly(false));
@@ -94,8 +106,8 @@ public class DonationDetailActivity extends AppCompatActivity {
     }
 
 
-    void clickPaymentButtons(String paymentMethod){
-        switch (paymentMethod){
+    void clickPaymentButtons(String paymentMethod) {
+        switch (paymentMethod) {
             case "Credit Card":
                 btnCreditCard.setImageResource(R.drawable.ic_circle);
                 tvCreditCard.setBackground(bg_tv_selected);
@@ -143,27 +155,31 @@ public class DonationDetailActivity extends AppCompatActivity {
         }
     }
 
-    void checkDonationClearly(Boolean isAnonymous){
+    void checkDonationClearly(boolean isAnonymous) {
         //TODO: Add donation control and save database
-        donationViewModel.createDonation(UUID.randomUUID().toString(),"",CharityID,amountOfDonation,isAnonymous)
-                .observe(this,dataOrExc->{
-                    if (dataOrExc != null){
-                        notificationViewModel.createNotification(UUID.randomUUID().toString(),CharityID,"$ "+amountOfDonation +" have been donated")
-                                .observe(this,dataOrException->{
-                                    if (dataOrException != null){
-                                        flTransparent.setVisibility(View.VISIBLE);
-                                        flSuccessful.setVisibility(View.VISIBLE);
-                                    }
-                                    else {
-                                        Toast.makeText(this, "notification not sent!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                    else {
-                        Toast.makeText(this, "Donation unsucessfull!", Toast.LENGTH_SHORT).show();
+        donationViewModel.createDonation(UUID.randomUUID().toString(), "", charityID, amountOfDonation, isAnonymous)
+                .observe(this, dataOrExc -> {
+                    if (dataOrExc != null) {
+                        flTransparent.setVisibility(View.VISIBLE);
+                        flSuccessful.setVisibility(View.VISIBLE);
+                        createNotifications(isAnonymous);
+
+                    } else {
+                        Toast.makeText(this, "Donation unsuccessful!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
+    }
+
+    void createNotifications(boolean isAnonymous) {
+        String content;
+        String username = notificationViewModel.getLoggedInUser().getUsername();
+        if (isAnonymous) {
+            content = "$ " + amountOfDonation + " have been donated to your '" + charityName + "' charity.";
+        } else {
+            content = "$ " + amountOfDonation + " have been donated to your charity '" + charityName + "' by " + username;
+        }
+        notificationViewModel.createNotification(charityOwnerId, charityID, content, Notification.DONATION);
     }
 
 }

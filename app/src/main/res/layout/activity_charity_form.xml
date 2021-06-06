@@ -436,6 +436,7 @@
                                 android:background="@drawable/edit_view_bg_grey"
                                 android:ems="20"
                                 android:inputType="phone"
+                                android:maxLength="14"
                                 android:padding="15dp" />
 
 
